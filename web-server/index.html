@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<div id="ssoLogin">
+
+</div>
+
+
+
+</body>
+<script type="text/javascript"> 
+	(function(w,s,el){
+		var sc = document.createElement("script");
+		w[el]= w[el] || function(){debugger
+			w[el]=w[el] || {};
+			w[el].ev=w[el].ev || [];
+			w[el].ev.push(arguments)
+		}
+		sc.type = "text/javascript";
+		sc.defer=1;
+		sc.src = s;
+		document.getElementsByTagName("head")[0].appendChild(sc);
+	})(window,"./dist/centralLogin.bundle.js","sso");
+
+	 function cb(){
+	 	alert("hello")
+	 }
+	 var ref={
+		emailOnly:false,
+		mobileOTP:false,
+		emailMobileOTP:false,
+		emailMobileNoOTP:true
+	 }
+	 var nonsocialLogin={
+	 		loginVia:["email","mobile"],
+	 		loginCredentials:["password","otp"],
+	 		loginPrefernce:"email"
+	 }
+	var x={
+		channelName:"timespoints",
+		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
+		channelLogo:"",
+		title:"",
+		subTitle:"Login to <strong class='bold'>The Navbharat Times </strong> with your Times account",
+		ru:"",
+		id:"ssoLogin",
+		companyName:"Times Points",
+		LoginType:[
+			{
+				name:"Google",
+				logoUrl:""
+			},
+
+			{
+				name:"Facebook",
+				label:"",
+				logoUrl:""
+			},
+			{
+				mobileOTP:true,
+			},{
+				nonsocialLogin:nonsocialLogin,
+			},
+			
+			{
+				name:"trueCaller",
+				label:"",
+				logoUrl:""
+			},
+			{
+				name:"Linkedin",
+				label:"",
+				logoUrl:""
+			},
+			{
+				
+				
+			}	
+		],
+		socialCallback:cb,
+		signupForm:{
+			email:false,
+			firstName:true,
+			lastName:true,
+			MobileNumber:false,
+			gender:false,
+			dob:false,
+		},
+		termsConditionLink:"",
+		privacyPolicyLink:"",
+
+
+		// email_password:true,
+		// email_otp: true,
+		// mobile_password:true,
+		// mobile_otp:true
+	};
+// 	setTimeout(function(){
+// sso("init",x)
+// 	},100)
+sso("init",x);
+// sso("print",x);
+
+
+
+</script>
+
+
+</html>

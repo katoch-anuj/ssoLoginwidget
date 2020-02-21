@@ -467,27 +467,8 @@ ol ol {
   margin-bottom: 0;
 }
 
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
-}
+
+
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
@@ -932,24 +913,7 @@ fieldset[disabled] a.btn {
 }
 
 .btn-register {
-  color: #fff;
-  background-color: #0095da;
-  border-color: #0095da;
-  margin: 0 auto;
-  margin-bottom: 0 !important;
-  font-size: 13px;
-    text-transform: uppercase
-}
-.btn-register:focus,
-.btn-register.focus {
-  color: #fff;
-  background-color: #0095da;
-  border-color: #0095da;
-}
-.btn-register:hover {
-  color: #fff;
-  background-color: #0095da;
-  border-color: #0095da;
+ 
 }
 
 .btn-truecaller,.btn-linkedin {
@@ -1052,11 +1016,7 @@ fieldset[disabled] .btn-danger.focus {
 /***** Cutom Css ****/
 
 .mainWrapper {
-  margin-right: auto;
-  margin-left: auto;
-  padding: 20px 15px;
-  max-width: 372px;
-  background: #fff;
+    background: #fff;
     border: 1px solid #e2e5e8;
     margin-bottom: 15px;
 
@@ -1069,6 +1029,7 @@ fieldset[disabled] .btn-danger.focus {
 }
 .logobrand {
     display: block;
+    margin-top:42px;
     width: 100%;
     height: auto;
     overflow: hidden;
@@ -1167,40 +1128,18 @@ fieldset[disabled] .btn-danger.focus {
 
 .textinput {
   height: 3.5em;
-  margin: 0 0 15px;
+  margin: 0 0 10px;
   position: relative;
   width: 100%;
 }
 
-.textinput input {
-  cursor: text;
-  font-size: 0.857em;
-  padding: 10px 12px;
-  position: absolute;
-  transition: all 0.15s ease;
-  width: 100%;
-    color: #626262;
-    font-size: 14px
-}
 
-.textinput label {
-  cursor: text;
-  font-size: 0.857em;
-  padding: 10px 12px;
-  position: absolute;
-  transition: all 0.15s ease;
-  width: 100%;
-}
 
-.textinput input {
-  border: 1px solid #e0dfdf;
-}
 
-.textinput label {
-  color: #999999;
 
-    padding: 18px 12px 0 12px;
-}
+
+
+
 
 .textinput input.filled ~ label,
 .textinput input:focus ~ label {
@@ -1470,10 +1409,7 @@ input[type="number"] {
     font-weight: 700
 }
 
-.mediumPanel {
-    width: 300px;
-    margin: 0 auto
-}
+
 
 .btn-google span {
     line-height: 42px !important
@@ -1583,7 +1519,7 @@ a {
        padding: 0;
   }
     .socialBlock {background: rgba(243, 244, 249, 0.6);}
-    .mainWrapper {margin-bottom: 0; width: 100%; max-width: inherit; padding: 25px 0}
+    
     .container{padding: 0}
 
 }
@@ -1599,37 +1535,240 @@ a {
   
 }*/
 .non-social-section input{
-  width: 100%;
-  line-height: normal;
-  border: 0;
-  font-size: 14px;
-  height: 28px;
-  border-bottom: 1px solid #888;
-  background: 0;
-  color: #222;
-  border-radius: 0;
+    padding:17px 16px;
+    width: 100%;
+    line-height: normal;
+    border: 0;
+    font-size: 14px;
+    background: 0;
+    color: #0e0523;
+    border-radius: 5px;
+    border: solid 1px #6d7278;
 
 }
 .non-social-section input:focus{
   outline: 0;
 }
+
 .continueBtn{
-  background: #be281a;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24), 0 0 2px 0 rgba(0,0,0,0.12);
+    cursor:pointer;
+    border:none;
+    color:#fff;
+    font-size:14px;
+    background-image:linear-gradient(101deg, #3023ae, #cf10ef 102%);
+    margin: auto;
+    background-repeat: no-repeat;
     height: 40px;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 500;
-    width:100%;
+    width: 200px;
+    border-radius: 20px;
+    margin-top:30px;
 }
+
 .btn-disable{
   opacity: .4
 }
-.forgot-password{
-    color: #0095da;
-    cursor:pointer;
-}
 
+.loginpage .sign-in-Heading,.loginpage .forgot-pwd-heading{
+  font-size: 18px;
+  margin:50px 0 44px 0;
+  text-align: center;
+  color: #000000;
+}
+.loginpage .boldFont{
+    font-family: "Gotham Bold";
+    font-weight: bold;
+}
+.loginpage .medFont {
+    font-family: "Gotham Medium";
+    font-weight: 500;
+}
+.loginpage .dflex{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.loginpage .reset-input{
+    background: none;
+    outline: none;
+    border: none;
+    width:100%;
+    padding-right:10px;
+}
+.loginpage .user-login-Detail{
+    font-size:14px;
+    color: #0e0523;
+    
+}
+.loginpage .user-section{
+    margin-bottom:17px;
+}
+.loginpage .custom-input{
+    align-items: center;
+    padding: 17px 13px;
+    border-radius: 5px;
+    border: solid 1px #6d7278;
+    background-color: #ffffff;
+}
+.loginpage .link{
+    cursor:pointer;
+     color: #3587e7;
+     font-size:11px;
+}
+.custom-input .input{
+    flex:2;
+}
+.loginpage .changelink{
+    cursor:pointer;
+    font-size:10px;
+}
+.loginpage .otpText{
+    color: #3587e7;
+    font-size:14px;
+}
+.sign-in-btn .signText{
+    cursor:pointer;
+    text-align:center;
+    font-size:14px;
+}
+.sign-in-text{
+    color: #000000;
+    text-align:center;
+    font-size:18px;
+    margin:50px 0 26px;
+}
+.initSignup{
+    text-align:center;
+    margin-top:65px;
+    font-size:14px;
+}
+.leftsection{
+    width:500px;
+    padding:0 75px;
+}
+.txtcenter{
+    text-align:center;
+}
+.mainWrapper{
+    width:800px;
+    margin:auto;
+    display:flex;
+    min-height: 540px;
+}
+.password-strength {
+    list-style: none;
+}
+.password-strength .uncheck{
+    background-image: url("./../img/uncheck.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
+}
+.txt{
+    color: #0e0523;
+    margin-bottom:22px;
+}
+.circle{
+    margin-top:17px;
+    color: #0e0523;
+}
+.password-strength .checked{
+    background-image: url("./../img/checked.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
+}
+.forgot-password .radio-uncheck{
+    background-image: url("./../img/radio-unselect.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
+}
+.forgot-password .radio-check{
+    background-image: url("./../img/radio-select.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
+}
+.footer-img{
+       background-image: url("./../img/group-dsk.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        /* height: 230px; */
+        width: 300px;
+    }
+.sign-up-wrapper{
+    text-align: center;
+    font-size: 18px;
+    text-align: center;
+    color: #000000;
+    margin:50px 0 26px 0;
+}
+.error{
+    color: #ff243f;
+    font-size: 14px;
+}
+.confirmPwd{
+    margin-top:46px;
+}
+@media screen and (max-width: 680px){
+    .sign-up-wrapper{
+        font-size: 14px;
+        margin:42px 0 31px 0;
+    }
+    .error{
+        font-size: 12px;
+    }
+    .continueBtn{
+        width:163px;
+    }
+    .leftsection{
+        width:100%;
+        padding:0 25px;
+    }
+    .mainWrapper{
+        max-width:320px;
+        margin:0 20px;
+        display:block;
+    }
+    .loginpage .sign-in-Heading,.loginpage .forgot-pwd-heading,{
+         font-size: 14px;
+         margin:42px 0 54px 0;
+    }
+    .loginpage .user-login-Detail{
+        font-size:12px;   
+    }
+    .sign-in-btn .signText{
+        font-size:12px;
+    }
+    .user-section{
+        margin-bottom:16px;
+    }
+    .sign-in-text{
+        color: #000000;
+        text-align:center;
+        font-size:14px;
+        margin:42px 0 16px;
+    }
+    .initSignup{
+        margin-top:27px;
+        font-size:12px;
+    }
+    .channel-collection{
+        width:320px;
+    }
+    .footer-img{
+       background-image: url("./../img/group-mob.png");
+        background-size: cover;
+        height: 230px;
+        width: 100%;
+    }
+    .non-social-section input{
+        font-size:12px;
+    }
+    ..logobrand {
+        margin-top:25px;
+    }
+}
 
 
 

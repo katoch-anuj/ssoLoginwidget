@@ -16,7 +16,7 @@
 <script type="text/javascript"> 
 	(function(w,s,el){
 		var sc = document.createElement("script");
-		w[el]= w[el] || function(){debugger
+		w[el]= w[el] || function(){
 			w[el]=w[el] || {};
 			w[el].ev=w[el].ev || [];
 			w[el].ev.push(arguments)
@@ -36,17 +36,16 @@
 		emailMobileOTP:false,
 		emailMobileNoOTP:true
 	 }
-	 var nonsocialLogin={
+	 var nonSocialLogin={
 	 		loginVia:["email","mobile"],
-	 		loginCredentials:["password","otp"],
-	 		loginPrefernce:"email"
+	 		loginCredentials:["password"]
 	 }
 	var x={
 		channelName:"timespoints",
 		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
-		channelLogo:"",
+		channelLogo:"./src/img/tp-logo.svg",
 		title:"",
-		subTitle:"Login to <strong class='bold'>The Navbharat Times </strong> with your Times account",
+		//subTitle:"Login to <strong class='bold'>The Navbharat Times </strong> with your Times account",
 		ru:"",
 		id:"ssoLogin",
 		companyName:"Times Points",
@@ -62,13 +61,11 @@
 				logoUrl:""
 			},
 			{
-				mobileOTP:true,
-			},{
-				nonsocialLogin:nonsocialLogin,
+				nonSocialLogin:nonSocialLogin,
 			},
 			
 			{
-				name:"trueCaller",
+				name:"TrueCaller",
 				label:"",
 				logoUrl:""
 			},
@@ -76,20 +73,17 @@
 				name:"Linkedin",
 				label:"",
 				logoUrl:""
-			},
-			{
-				
-				
-			}	
+			},	
 		],
 		socialCallback:cb,
 		signupForm:{
-			email:false,
-			firstName:true,
-			lastName:true,
-			MobileNumber:false,
-			gender:false,
-			dob:false,
+			Email:true,
+			FirstName:false,
+			LastName:false,
+			MobileNumber:true,
+			OTP:true,
+			Password:true,
+			Mandatory:["email"]
 		},
 		termsConditionLink:"",
 		privacyPolicyLink:"",

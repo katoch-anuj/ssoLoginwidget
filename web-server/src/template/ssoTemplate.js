@@ -1,17 +1,23 @@
 function LoginType(configParam){
     return `
     <div>
+        <div class="socialLogin dflex ">
         ${configParam.LoginType.map((config)=>`
-            ${config.name && (config.name.toLowerCase() =="facebook" || config.name.toLowerCase() =="google" || config.name.toLowerCase() =="truecaller" ||  config.name.toLowerCase() =="linkedin") ?
-                `<input class="truecallerNo hide" type="tel" placeholder="enter mobile number"></input>
-                    <button id="${config.name.toLowerCase()}-div" type="button" class="btn btn-${config.name.toLowerCase()}" >
-                    <img class="ico-${config.name.toLowerCase()}" src=${config.logoUrl?config.logoUrl:"ok"} alt=${config.name} ></img><span>${config.label?config.label:"Continue with "+config.name}</span>
+            
+                <input class="truecallerNo hide" type="tel" placeholder="enter mobile number"></input>
+                    <button id="${config.name.toLowerCase()}-div" type="button" class="btn mr10 btn-${config.name.toLowerCase()}" >
+                    <img class="ico-${config.name.toLowerCase()}" src=${config.logoUrl?config.logoUrl:"ok"} alt=${config.name} ></img>
+                    ${configParam.LoginType.length<=2 ?`<span>${config.label?config.label:config.name}</span>`:""}
                     </button>
-                `:
-                `${config.nonSocialLogin && config.nonSocialLogin.loginVia.length==2?
+             `).join("")} 
+        </div>
+        <div class="separator ovalsep">
+            <span class="boldFont ">OR</span>
+        </div>
+            ${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia.length==2?
                     `<div class="non-social-section">
                         <div class="emailAndMobile">
-                            ${config.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
+                            ${configParam.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
                             ` <input id="emailAndMobile" class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" placeholder="enter email or Mobile No" maxlength="100">`:
 
                             `<input id="emailAndMobile" class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" placeholder="enter mobile no or email"  maxlength="100">`
@@ -27,7 +33,7 @@ function LoginType(configParam){
                     <div>
                         <button type="button" class=" continueLoginBtn continueBtn btn boldFont"  value="CONTINUE"  disabled>Continue</button>
                     </div>`:
-                    `${config.nonSocialLogin && config.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
+                    `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
                         `<div class="non-social-section">
                             <div class="emailOnly">
                                 <input id="emailOnly" class="input-data boldFont" autocomplete="off" type="text" name="emailOnly" placeholder="enter email " maxlength="100">
@@ -42,7 +48,7 @@ function LoginType(configParam){
                         <div>
                             <button type="button" class=" continueLoginBtn continueBtn btn boldFont"  value="CONTINUE"  disabled>Continue</button>
                         </div>`:
-                        `${config.nonSocialLogin && config.nonSocialLogin.loginVia[0].toLowerCase()=="mobile"?
+                        `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="mobile"?
                             `<div class="non-social-section">
                                 <div class="mobileOnly">
                                     <input id="mobileOnly" class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly" placeholder="enter  Mobile No " maxlength="100">
@@ -52,6 +58,7 @@ function LoginType(configParam){
                                     <span id="generateOtp">Resend OTP</span>
                                 </div>
                             </div>
+                            <div class="unRegistered"></div>
                             <div class="error inputError">     
                             </div>
                             <div>
@@ -59,11 +66,10 @@ function LoginType(configParam){
                             </div>`:""
                         }`
                     }`
-                }`
-            }
-        `).join("")}
-    </div>
-    `
+                }        
+        
+    </div>`
+    
 }
 
 function signinWithOtp(configParam){
@@ -76,7 +82,7 @@ function signinWithOtp(configParam){
                         <div class="medFont">OTP has been sent to</div>
                         <div class="medFont user-otp-info"></div>
                     </div>
-                    <div class="link changeInputInOtp changelink medFont">Change</div>
+                    <div class="link  changelink medFont">Change</div>
                 </div>
 
                 <div class="custom-input dflex">
@@ -92,10 +98,10 @@ function signinWithOtp(configParam){
 }
 function pwdAndConfirmPwd(signup){
     return `   
-        <div class=" passwordSection ${signup?"":"confirmPwd hide"}">
+        <div class=" passwordSection ${signup?"signupPwdSection":"nonSignupPwdSection"}">
             <div class="form-group textinput">
-                <input id="passwordSignUp" required placeholder="Password" type="password" class="form-control ${signup?"signupPwd":""}  signupInfo passwordSignUp" />
-                <!--<span toggle="#password-field" class="sprite field-icon toggle-password"></span> -->
+                <input id="passwordSignUp" required placeholder="Password" type="password" class="form-control ${signup?"signupPwd signupInfo":" nonSignupInfo nonSignupPwd "}" />
+                
                 <label for="passwordSignUp"></label>
             </div>
             <div class="password-strength  hide">
@@ -105,13 +111,11 @@ function pwdAndConfirmPwd(signup){
                 <li class="uncheck chk4">1 special character (Such as #, $, %, &, !)</li>
             </div>
             <div class="form-group textinput">
-            <input id="confirmPassword"  placeholder="confirm Passowrd" required type="password" class="signupInfo form-control" />
-            <!--<span toggle="#password-field" class="sprite field-icon toggle-password"></span> -->
+            <input id="confirmPassword"  placeholder="confirm Passowrd" required type="password" class="${signup?" signupConfirmPwd signupInfo":"nonSignupInfo nomSignupConfirmPwd "} confirmPassword form-control " />
+            
             <label for="confirmPassword"></label>
           </div>
-        <div class="${signup?"hide":""}">
-            <button id="submitResetPwd" disabled class="btn submitResetPwd continueBtn ">Continue</button>
-        </div>
+        
 
       </div>`
         
@@ -127,6 +131,14 @@ function siginbtn(text,btnClass,className,configParam){
         </div>`
     
 }
+function successLogin(){
+    return`<div class="successPage hide">
+        <div class="successIcon"></div>
+        <div class="success-heading boldFont">Congratulation</div>
+        <div class="medFont">You are now registered with TimesPoints</div>
+    </div>`
+}
+
 function signinWithPassword(configParam){
     return `
          <div class="hide sign-with-pwd">
@@ -136,7 +148,7 @@ function signinWithPassword(configParam){
                     <div class="user-login-Detail">
                         <div class="medFont user-pwd-info"></div>
                     </div>
-                    <div class="link  changeInputInPwd changelink medFont">Change</div>
+                    <div class="link  changelink medFont">Change</div>
                 </div>
 
                 <div class="custom-input dflex">
@@ -149,50 +161,14 @@ function signinWithPassword(configParam){
         </div>`
 
 }
-function changeLoginVia(){
-    return`<div class="hide switch-login">
-         <div class="custom-input dflex">
-                <div class="input">
-                <input class="reset-input change-input boldFont" type="text" placeholder="Enter email or mobile number"/></div>
-            </div>
-            <div>
-            <button id="signInBtn" disabled class="btn signInBtn continueBtn ">Sign In</button>
-            </div>
-        </div>`
-}
-// function changeLoginViaPwd(){
-//     return`<div class="hide switch-login">
-//         <div id="login-type" class="boldFont switch-heading sign-in-Heading"></div>
-//          <div class="custom-input dflex">
-//                 <div class="input">
-//                 <input class="reset-input change-input boldFont" type="text" placeholder="Enter email or mobile number"/></div>
-//             </div>
-//             <div>
-//             <button id="signInBtn" disabled class="btn signInBtn continueBtn ">Sign In</button>
-//             </div>
-//         </div>`
-// }
-// function submitOtp(){
-//     return `<div class="forgetPwd hide">
-//         <div id="login-type" class="boldFont  sign-in-Heading">Forgot Password</div>
-//             <div class="dflex user-section">
-//                 <div class="user-login-Detail">
-//                     <div class="medFont">OTP has been sent to</div>
-//                     <div class="medFont user-otp-info"></div>
-//                 </div>
-//                 <div class="link changeLinkInSubmit changelink medFont">Change</div>
-//             </div>
 
-//             <div class="custom-input dflex">
-//                 <div class="input">
-//                 <input class="reset-input boldFont otpText" type="password" placeholder="Enter OTP"/></div>
-//                 <span class="link resend-otp-link medFont">Resend OTP</span>
-//             </div>
-//             <div>
-//                 <button  disabled class="boldFont btn submitInfo continueBtn">Continue</button>
-//             </div>
-//         </div>`
-// }
+function passwordChangedsuccess(){
+    return `<div class="password-changed hide">
+        <div class="boldFont forgot-pwd-heading">Password Changed Successfully</div>
+        <div>Your new password will be effective for TimesPoints and all other Times network sites.</div>
+        <button   class="boldFont btn signIn  continueBtn">Sign In</button>
+    </div>`
+}
 
 function forgotPassword(configParam){
     return `<div class="forgot-password hide">
@@ -216,17 +192,18 @@ function forgotPassword(configParam){
                             <div class="medFont">OTP has been sent to</div>
                             <div class="medFont user-otp-info"></div>
                         </div>
-                        <div class="link changeInputInOtp changelink medFont">Change</div>
+                        <div class="link  changelink medFont">Change</div>
                     </div>
 
                     <div class="custom-input dflex">
                         <div class="input">
-                            <input class="reset-input boldFont otpText" type="password" placeholder="Enter OTP"/>
+                            <input class="reset-input pwd-otp boldFont otpText" type="password" placeholder="Enter OTP"/>
                         </div>
                             <span class="link forgot-resent resend-otp-link medFont">Resend OTP</span>
                     </div>
                     <div>
-                <button  class="boldFont btn resetPwd continueBtn">Continue</button>
+                    ${pwdAndConfirmPwd()}
+                <button  disabled class="boldFont btn submitResetPwd  continueBtn">Continue</button>
             </div>
                 </div>
             
@@ -243,16 +220,16 @@ function registerconfirmation(){
                         <div class="medFont">OTP has been sent to</div>
                         <div class="medFont user-otp-info"></div>
                     </div>
-                    <div class="link changeInputInOtp changelink medFont">Change</div>
+                    <div class="link  changelink medFont">Change</div>
                 </div>
 
                 <div class="custom-input dflex">
                     <div class="input">
-                    <input class="reset-input otpPreference pwd-otp boldFont otpText" type="password" placeholder="Enter OTP"/></div>
+                    <input class="reset-input  pwd-otp boldFont otpText" type="password" placeholder="Enter OTP"/></div>
                     <span class="link  register-resent resend-otp-link medFont">Resend OTP</span>
                 </div>
                 <div>
-                <button  class="boldFont btn verifyUserInput continueBtn">Verify</button>
+                <button  class="boldFont btn verifyUser continueBtn">Verify</button>
                 </div>
             </div>
         </div>
@@ -274,7 +251,7 @@ function signupform(configParam){
                   <!-- <div id="emailError" class="errorMessages clearfix"></div> -->
                   ${configParam.signupForm.FirstName?
                     `<div class="form-group textinput">
-                      <input type="text" id="firstName" placeholder="First Name" class="form-control" />
+                      <input type="text" id="firstName" placeholder="First Name" class="form-control firstName" />
                       <label for="firstName"></label>
                     </div>`:""
                   }
@@ -286,13 +263,13 @@ function signupform(configParam){
                   } 
                    ${configParam.signupForm.Email?
                     `<div class="form-group textinput">
-                      <input ${configParam.signupForm.Mandatory.indexOf("email")>-1?"required":""} type="text" placeholder="Email" id="emailID" class="form-control signupInfo" />
-                      <label for="firstName"></label>
+                      <input type="text" placeholder="Email" id="emailID" class="form-control ${configParam.signupForm.Mandatory.indexOf("email")>-1?"signupError":""}   signupEmail signupInfo" />
+                      <label for="Email"></label>
                     </div>`:""
                   }
                    ${configParam.signupForm.MobileNumber?
                     `<div class="form-group textinput">
-                      <input ${configParam.signupForm.Mandatory.indexOf("mobile")>-1?"required":""} type="text" placeholder="Mobile No." id="mobileNumber" class="form-control signupInfo" />
+                      <input  type="text" placeholder="Mobile No." id="mobileNumber" class="form-control signupNumber ${configParam.signupForm.Mandatory.indexOf("mobile")>-1?"signupError":""} signupInfo" />
                       <label for="mobileNumber"></label>
                     </div>`:""
                   }
@@ -303,52 +280,19 @@ function signupform(configParam){
                     ${pwdAndConfirmPwd("signup")}
               `:""
                   }
-                  <div class="form-group hide mobile-no textinput">
-                    <!-- <div class="col-md-1" style="width: 50px; margin-right: 20px">
-                      <input type="text" id="std" class="form-control" value="+91" disabled />
-                    </div> -->
-                    <div class="form-group textinput" >
-                      <input type="number" id="mobileNo" class="form-control"/>
-                      <label for="mobileNo">Mobile Number</label>
-                    </div>
-                    <div id="mobileReg-error" class="errorMsgs" style="display: none;"> Please enter valid Mobile</div>
-
-                  </div>
-                  <div id="mobileError" class="mobileErrors"></div>
-                  
-                  <div class="form-group">
+                 <div class="form-group">
                     <div class="g-recaptcha" data-sitekey="6LfzjVEUAAAAAFrGrUQnzmaty9snHSijupcBFIrv"></div>
-                  </div>
-                      <div class="checkbox form-group">
-                        <label>
-                          <input type="checkbox" id="agePrivacy" value='1'>
-                          <!--<span class="ptop2"><font color="FF0000">*</font> I agree with the <a href="https://www.indiatimes.com/termsandcondition/" target="_blank">Terms & Conditions</a> and <a href="https://www.indiatimes.com/privacypolicy/" target="_blank">Privacy Policy</a> of Times of India </span> </label>-->
-                          <span class="ptop2"><font color="FF0000">*</font> I warrant that I am 18 years old and read, understood and agree with
-    the <a href=${configParam.termsConditionLink} target="_blank">Terms & Conditions</a> and <a href=${configParam.privacyPolicyLink}target="_blank">Privacy Policy</a> of Times Internet Login
-    Policy </span> </label>
-                      </div>
-                      <div id="tNc-error" class="errorMsgs" style="display: none;"> Please accept Terms & Conditions to proceed. </div>
-                      <div class="checkbox form-group">
-                        <label>
-                          <input type="checkbox" id="shareDataAllowed" value="1">
-                          <!--<span>Send me offers and promotions</span> </label>-->
-                            <span class="ptop2"><font color="FF0000">*</font>I agree to the use of my login credential information across all Times
-    Internet Properties</span> </label>
-
-                      </div>
-                        <div id="dataSharing-error" class="errorMsgs" style="display: none;"> Please agree to use credentials across all Times Intenet Properties. </div>
-
-                        <div class="checkbox form-group">
-                        <label>
-                          <input type="checkbox" id="myTimesPolicy" value='false'>
-                          <!--<span> Please show me personalized content and advertisements as per the <a href="https://www.indiatimes.com/privacypolicy/" target="_blank">Privacy Policy</a></span> </label>-->
-                          <span> I agree to the processing of my information to earn TimesPoints
-    across Times Internet Properties</span> </label>
-
-                      </div>
-
+                  </div> 
+                 <div class="terms t-uncheck">
+                     <span>I agree to the </span>
+                     <span class="link">Term and conditions</span>
+                 </div>
+                 <div class="consent terms t-uncheck">
+                     <span>I consnet to allow my data to be used to personalised ads </span>
+                 </div>
                   <div class="form-group">
-                    <button type="button" id="registerbtn"  class="btn btn-register sign-up continueBtn"><span style="float:inherit; padding:0px;">Sign In</span></button>
+                    <button type="button" id="registerbtn"  disabled class="btn btn-register sign-up continueBtn">
+                    <span style="float:inherit; padding:0px;">Sign In</span></button>
                   </div>
                 </fieldset>
               </form>
@@ -367,6 +311,7 @@ export function createHTMLTemplate(configParam){
                     <div class="leftsection">
                         <a href="#" class="logobrand">
                         <img id="channelLogo" src=${configParam.channelLogo}></a>
+                        ${successLogin()}
                         <div class="loginForm show">
                             <div class=""> 
                                 <p>${configParam.subTitle}</p>
@@ -390,9 +335,10 @@ export function createHTMLTemplate(configParam){
                        
                        
                         ${forgotPassword(configParam)}
-                        ${pwdAndConfirmPwd()}
+                        
                         ${signupform(configParam)}
                         ${registerconfirmation()}
+                        ${passwordChangedsuccess()}
                     </div>
                     <div class="footer-img"></div>
                         
@@ -402,7 +348,7 @@ export function createHTMLTemplate(configParam){
 
                 
             <button id="emailMobile-div" type="button" class="btn btn-email" style="display: none;">
-              <span class="sprite ico-email"></span><span>Continue with email or phone no</span>
+              <span class="sprite ico-email"></span><spanail or phone no</span>
             </button>
             <div id="signUpcvc-div" class="mediumPanel hide clearfix" >
               <div id="signUp-div-error" class="errorMsgs" style="display: none;"> You are registered already!</div>
@@ -521,6 +467,7 @@ export function createHTMLTemplate(configParam){
         </div>
       </div>
     </div>
+    
   </section>
 	`		
 }

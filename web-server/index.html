@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 
@@ -38,7 +38,7 @@
 	 }
 	 var nonSocialLogin={
 	 		loginVia:["email","mobile"],
-	 		loginCredentials:["password"]
+	 		loginCredentials:["password","otp"]
 	 }
 	var x={
 		channelName:"timespoints",
@@ -49,6 +49,7 @@
 		ru:"",
 		id:"ssoLogin",
 		companyName:"Times Points",
+		nonSocialLogin:nonSocialLogin,
 		LoginType:[
 			{
 				name:"Google",
@@ -60,10 +61,6 @@
 				label:"",
 				logoUrl:""
 			},
-			{
-				nonSocialLogin:nonSocialLogin,
-			},
-			
 			{
 				name:"TrueCaller",
 				label:"",

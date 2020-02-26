@@ -854,43 +854,21 @@ fieldset[disabled] a.btn {
   pointer-events: none;
 }
 .btn-facebook {
-  color: #fff;
-  background-color: #4267b2;
   border-color: #4267b2;
     margin: 0 auto;
     text-align: left !important;
     padding: 6px;
 }
-.btn-facebook:focus,
-.btn-facebook.focus {
-  color: #fff;
-  background-color: #3c5a99;
-  border-color: #3c5a99;
-}
-.btn-facebook:hover {
-  color: #fff;
-  background-color: #3c5a99;
-  border-color: #3c5a99;
-}
+
 
 .btn-google {
-  color: #fff;
-  background-color: #4285f4;
   border-color: #4285f4;
     margin: 0 auto;
     text-align: left !important;
     padding: 0 !important
 }
-.btn-google:focus,
-.btn-google.focus {
-  color: #fff;
-  background-color: #3574dd;
-  border-color: #3574dd;
-}
-.btn-google:hover {
-  color: #fff;
-  background-color: #3574dd;
-  border-color: #3574dd;
+.mr10{
+    margin-right:10px;
 }
 .btn-email {
   color: #0095da;
@@ -914,6 +892,19 @@ fieldset[disabled] a.btn {
 
 .btn-register {
  
+}
+.t-uncheck{
+    background-image: url("./../img/terms-unchecked.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
+}
+
+.t-check{
+    background-image: url("./../img/terms-checked.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
 }
 
 .btn-truecaller,.btn-linkedin {
@@ -1671,6 +1662,19 @@ a {
     margin-top:17px;
     color: #0e0523;
 }
+.successPage .successIcon{
+    height: 61px;
+    background-image: url("./../img/success.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 20px;
+}
+.successPage{
+    text-align: center;
+}
+.successPage .success-heading{
+    font-size:20px;
+}
 .password-strength .checked{
     background-image: url("./../img/checked.svg");
     background-repeat: no-repeat;
@@ -1710,6 +1714,18 @@ a {
 .confirmPwd{
     margin-top:46px;
 }
+.separator{
+    text-align: center;
+    display:flex;
+    align-items: center;
+}
+.ovalsep::before, .ovalsep::after{
+        border-bottom: 1px dashed gray;
+        content: '';
+        flex: 1;
+    }
+
+
 @media screen and (max-width: 680px){
     .sign-up-wrapper{
         font-size: 14px;
@@ -1752,6 +1768,7 @@ a {
     .initSignup{
         margin-top:27px;
         font-size:12px;
+        color: #000000;
     }
     .channel-collection{
         width:320px;

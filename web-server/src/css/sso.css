@@ -893,18 +893,25 @@ fieldset[disabled] a.btn {
 .btn-register {
  
 }
+.unRegistered-wrapper{
+    background-color: #fff2de;
+    padding: 10px 10px 16px 10px;
+}
 .t-uncheck{
     background-image: url("./../img/terms-unchecked.svg");
     background-repeat: no-repeat;
     background-position-y: center;
-    padding-left: 20px;
+    padding-left: 30px;
 }
 
 .t-check{
     background-image: url("./../img/terms-checked.svg");
     background-repeat: no-repeat;
     background-position-y: center;
-    padding-left: 20px;
+    padding-left: 30px;
+}
+.nonSignupPwdSection{
+        margin-top:10px;
 }
 
 .btn-truecaller,.btn-linkedin {
@@ -1559,7 +1566,7 @@ a {
   opacity: .4
 }
 
-.loginpage .sign-in-Heading,.loginpage .forgot-pwd-heading{
+.loginpage .sign-in-Heading,.loginpage .forgot-pwd-heading,.verify-heading{
   font-size: 18px;
   margin:50px 0 44px 0;
   text-align: center;
@@ -1616,7 +1623,7 @@ a {
     color: #3587e7;
     font-size:14px;
 }
-.sign-in-btn .signText{
+.signInBtn-wrapper .signText{
     cursor:pointer;
     text-align:center;
     font-size:14px;
@@ -1647,6 +1654,7 @@ a {
 }
 .password-strength {
     list-style: none;
+    margin:10px 0;
 }
 .password-strength .uncheck{
     background-image: url("./../img/uncheck.svg");
@@ -1753,7 +1761,7 @@ a {
     .loginpage .user-login-Detail{
         font-size:12px;   
     }
-    .sign-in-btn .signText{
+    .signInBtn-wrapper .signText{
         font-size:12px;
     }
     .user-section{

@@ -27,12 +27,9 @@ function LoginType(configParam){
                             <input id="password" type="text" placeholder="Enter the otp" class="enter-otp"></input>
                             <span id="generateOtp">Resend OTP</span>
                         </div>
-                        <div class="error inputError">     
-                         </div>
-                    </div>
-                    <div>
-                        <button type="button" class=" continueLoginBtn continueBtn btn boldFont"  value="CONTINUE"  disabled>Continue</button>
-                    </div>`:
+                        
+                        </div>
+                    `:
                     `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
                         `<div class="non-social-section">
                             <div class="emailOnly">
@@ -43,11 +40,7 @@ function LoginType(configParam){
                                 <span id="generateOtp">Resend OTP</span>
                             </div>
                         </div>
-                        <div class="error inputError">     
-                        </div>
-                        <div>
-                            <button type="button" class=" continueLoginBtn continueBtn btn boldFont"  value="CONTINUE"  disabled>Continue</button>
-                        </div>`:
+                        `:
                         `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="mobile"?
                             `<div class="non-social-section">
                                 <div class="mobileOnly">
@@ -58,15 +51,19 @@ function LoginType(configParam){
                                     <span id="generateOtp">Resend OTP</span>
                                 </div>
                             </div>
-                            <div class="unRegistered"></div>
-                            <div class="error inputError">     
-                            </div>
-                            <div>
-                                <button type="button" class=" continueLoginBtn continueBtn btn boldFont"  value="CONTINUE"  disabled>Continue</button>
-                            </div>`:""
+                            `:""
                         }`
                     }`
-                }        
+                } 
+            <div class="unRegistered-wrapper hide">
+                <div class="notify-icon"></div>
+                <div class="unRegistered"></div>
+            </div>
+                <div class="error inputError">     
+                </div>
+                <div>
+                    <button type="button" class=" continueLoginBtn continueBtn btn boldFont"  value="CONTINUE"  disabled>Continue</button>
+                </div>       
         
     </div>`
     
@@ -122,8 +119,8 @@ function pwdAndConfirmPwd(signup){
 }
 function siginbtn(text,btnClass,className,configParam){
     return`
-        <div class="sign-in-btn">
-            <button disabled class="btn submitInfo ${btnClass} continueBtn "> Continue</button>
+        <div class="signInBtn-wrapper">
+            <button disabled class="btn signInBtn ${btnClass} continueBtn "> Continue</button>
             ${configParam.nonSocialLogin.loginCredentials.length>1?
                 `<div class="link signText ${className}">${text}</div>`:""
             }
@@ -137,6 +134,35 @@ function successLogin(){
         <div class="success-heading boldFont">Congratulation</div>
         <div class="medFont">You are now registered with TimesPoints</div>
     </div>`
+}
+function enterotp(){
+    return `
+        <div>
+            <div class="dflex user-section">
+                <div class="user-login-Detail">
+                    <div class="medFont">OTP has been sent to</div>
+                    <div class="medFont user-otp-info"></div>
+                </div>
+            </div>
+
+            <div class="custom-input dflex">
+                <div class="input">
+                <input class="reset-input otpPreference pwd-otp boldFont otpText" type="password" placeholder="Enter OTP"/></div>
+                <span class="link  normal-resent resend-otp-link medFont">Resend OTP</span>
+            </div>
+        </div>`
+}
+
+function verifyUser(configParam){
+    return`
+        <div class="verify-user hide">
+            <div class="boldFont resetHeading verify-heading">Verify </div>
+        ${configParam.signupForm.Mandatory.length>1?
+           `<div>${enterotp()}</div>
+           <div> ${enterotp()}</div>` :`<div>${enterotp()}</div>`
+        }
+        <button disabled class="btn verifyBtn  continueBtn "> Verify</button> 
+        </div>`
 }
 
 function signinWithPassword(configParam){
@@ -181,7 +207,7 @@ function forgotPassword(configParam){
                         <div class="circle radio-uncheck medFont select-email"></div>
                     </div>
                      <div>
-                        <button  class="boldFont btn forgetContinue continueBtn">Continue</button>
+                        <button  class="boldFont btn forgetContinueBtn continueBtn">Continue</button>
                     </div>
                 </div>
 
@@ -210,31 +236,7 @@ function forgotPassword(configParam){
             
     </div>`
 }
-function registerconfirmation(){
-    return`<div class="registerConfirmation hide">
-            <div class="">
-            <div class="boldFont resetHeading sign-in-Heading">Verify your mail </div>
-            <div class="otpFormBody show">
-                <div class="dflex user-section">
-                    <div class="user-login-Detail">
-                        <div class="medFont">OTP has been sent to</div>
-                        <div class="medFont user-otp-info"></div>
-                    </div>
-                    <div class="link  changelink medFont">Change</div>
-                </div>
 
-                <div class="custom-input dflex">
-                    <div class="input">
-                    <input class="reset-input  pwd-otp boldFont otpText" type="password" placeholder="Enter OTP"/></div>
-                    <span class="link  register-resent resend-otp-link medFont">Resend OTP</span>
-                </div>
-                <div>
-                <button  class="boldFont btn verifyUser continueBtn">Verify</button>
-                </div>
-            </div>
-        </div>
-    </div>`
-}
 function signupform(configParam){
     return `
             <div id="signUp-div" class="mediumPanel hide clearfix" >
@@ -283,7 +285,7 @@ function signupform(configParam){
                  <div class="form-group">
                     <div class="g-recaptcha" data-sitekey="6LfzjVEUAAAAAFrGrUQnzmaty9snHSijupcBFIrv"></div>
                   </div> 
-                 <div class="terms t-uncheck">
+                 <div class="terms termsCondition t-uncheck">
                      <span>I agree to the </span>
                      <span class="link">Term and conditions</span>
                  </div>
@@ -333,11 +335,10 @@ export function createHTMLTemplate(configParam){
                         ${signinWithOtp(configParam)}
                         ${signinWithPassword(configParam)} 
                        
-                       
+                       ${verifyUser(configParam)}
                         ${forgotPassword(configParam)}
                         
                         ${signupform(configParam)}
-                        ${registerconfirmation()}
                         ${passwordChangedsuccess()}
                     </div>
                     <div class="footer-img"></div>

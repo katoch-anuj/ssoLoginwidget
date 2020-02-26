@@ -195,59 +195,20 @@ setTimeout(function(){
 //   }
 // }
 
-function resetAllField(){
-	var el=document.getElementsByClassName("sign-with-otp")[0];
-	hideSection(el,"show","hide");
-	var el=document.getElementsByClassName("sign-with-pwd")[0]
-	hideSection(el,"show","hide");
-	var el=document.getElementsByClassName("forgot-password")[0]
-	hideSection(el,"show","hide");
-	var el=document.getElementsByClassName("registerConfirmation")[0]
-	hideSection(el,"show","hide");
-	var el=document.getElementsByClassName("slectOtpGenPt")[0];
-	hideSection(el,"show","hide");
-	var el=document.getElementsByClassName("direct-otp")[0];
-	hideSection(el,"show","hide");
-	var el=document.getElementsByClassName("nonSignupInfo");	
-	emptyAllInput(el);
-	var el=document.getElementsByClassName("pwd-otp");	
-	emptyAllInput(el);
-	var el=document.getElementsByClassName("nonSignupPwdSection")[0].querySelectorAll(".checked");
-	for(var i=0;i<el.length;i++){
-		hideSection(el[i],"checked","uncheck")
-	}
-	
-}
-function emptyAllInput(el){
-	for(var i=0;i<el.length;i++){
-		el[i].value="";
-	}
-}
-function checkUserExists(identifier,UserExistsCb,userNotExistCb) {
-  jsso.checkUserExists(identifier, function(response) {
-    if (response.data.statusCode == 213 || response.data.statusCode == 212) {
-      //hide('signIn-div-error2');
-      UserExistsCb();
-      if(response.data.shareDataAllowed == null || response.data.shareDataAllowed == "0" || response.data.termsAccepted == null || response.data.termsAccepted == "0" ) {
-        //show('sso-permissions-div');
-        loginWithPermissionsFlag=5;
-      }
-      var el=document.getElementsByClassName("unRegistered")[0];
-      document.getElementsByClassName("continueLoginBtn")[0].innerHTML="Verify"
-
-      if(response.data.statusCode == 206){
-      	el.innerHTML="Please verify your mobile number"
-      }if(response.data.statusCode == 205){
-      	el.innerHTML="Please verify your email"
-      }
-    } else {
-       userNotExistCb()
-      return;
-    }
-
-  });
-}
-
+// function getUrlParam(parameter, defaultvalue){
+//     var urlparameter = defaultvalue;
+//     if(window.location.href.indexOf(parameter) > -1){
+//         urlparameter = getUrlVars()[parameter];
+//         }
+//     return urlparameter;
+// }
+// function getUrlVars() {
+//     var vars = {};
+//     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+//         vars[key] = value;
+//     });
+//     return vars;
+// }
 // function verifySignInCallback() {
 //     if (loginWithPermissionsFlag == 5) {
 //             verifyLoginWithPermissions();
@@ -402,96 +363,10 @@ function checkUserExists(identifier,UserExistsCb,userNotExistCb) {
 //       }
 //     }
 // }
-function registeruserCb(){
-	var el=document.getElementsByClassName("registerConfirmation")[0]
-	
-	toggleClass(el)
-	
-	var signUp=document.getElementById("signUp-div")
-	toggleClass(signUp)
-}
-function signupInfoCb(event){
 
-	var registerbtn=document.getElementById("registerbtn")
-	var value=event.target.value;
-	var elclass=event.target.classList;
 
-	if(configParam.signupForm.Mandatory>1){
-		if(jsso.isValidEmail(value) ){
-			if(jsso.isValidMobile(value)){
-				elclass.remove("signupError")
-			}else{
-				elclass.add("signupError")
-			}
-		}
-	}else if(configParam.signupForm.Mandatory[0].toLowerCase()=="email"){
-		if(elclass.contains("signupEmail")){
-			if(jsso.isValidEmail(value)){
-				elclass.remove("signupError")
-			}else{
-				elclass.add("signupError")
-			}
-		}
-	}else if(configParam.signupForm.Mandatory[0].toLowerCase()=="mobile"){
-		if(elclass.contains("signupNumber")){
-			if(jsso.isValidMobile(value)){
-				elclass.remove("signupError")
-			}else{
-				elclass.add("signupError")
-			}
-		}
-	}
-	if(!document.getElementsByClassName("sign-in-form")[0].querySelectorAll(".signupError")[0] && passwordValidation(event)){
-		enableBtn(registerbtn);
-	}else{
-		disableBtn(registerbtn)
-	}
-}
-function signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed, policy,registeruserCb){
-	jsso.registerUser(firstName, lastName, gender, dob, email, mobile, password, false , agePrivacy, shareDataAllowed, myTimes, function(response) {
 
-          if (response.code != 200) {
-            console.log("not 200");
-            console.log(response.code + ": " + response.message);
-            
-            return;
-          }
-          registerUserSsoid = response.data.ssoid;
-          registeruserCb()
-          
-        });
-}
-        
-      
 
-function registerUser(){
-	// configParam.signupForm.Mandatory.indexOf("email")>-1
-	// configParam.signupForm.Mandatory.indexOf("mobile")>-1
-
-	var firstName = document.getElementById("firstName") ? document.getElementById("firstName").value:"",
-		lastName = document.getElementById("lastName") ? document.getElementById("lastName").value : "",
-	//  gender = document.getElementById("gender").value,
-		password = document.getElementById("passwordSignUp") ? document.getElementById("passwordSignUp").value : "",
-		confirmPwd=document.getElementById("confirmPassword") ? document.getElementById("confirmPassword").value : "",
-		email = document.getElementById("emailID") ? document.getElementById("emailID").value : "",
-		mobile = document.getElementById("mobileNumber") ? document.getElementById("mobileNumber").value :"",
-		gender = document.getElementById("gender") ? document.getElementById("gender").value :"",
-		dob = document.getElementById("dob") ? document.getElementById("dob").value :"",
-		// shareDataAllowed = document.getElementById("shareDataAllowed").checked,
-		// policy = document.getElementById("myTimesPolicy").checked,
-		termsAccepted = document.getElementById("terms").checked,
-		isSendOffer = false;
-		if(email && emailValidation(email) && !mobile){
-			signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed, policy,registeruserCb)
-		}
-		else if(mobile && mobileValidation(mobile) && !email){
-			signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed, policy,registeruserCb)
-		}
-		else if((email && emailValidation(email)) && (mobile && mobileValidation(mobile))){
-			signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed, policy,registeruserCb)
-		}
-
-}
 
 
 // function verifyRegisterUser() {
@@ -809,29 +684,6 @@ function registerUser(){
 // }
 
 
-function checkIfUserLoggedIn() {
-  jsso.getUserProfile(function(response) {
-    if (response.code == 200) {
-    	renderTemplate(configParam);
-    	bindEventListeners();
-      loggedInUserProfile = response.data;
-      //var loggedInUserName=document.getElementById("loggedInUserName");
-      
-      //loggedInUserName.textContent=("Continue  as " + loggedInUserProfile.firstName);
-
-      // show('loggedInUser');
-      // show('switchUser');
-      // hide("socialLoginList")
-    }
-    else {
-    	renderTemplate(configParam);
-    	bindEventListeners();
-      // showAllSignInOptions();
-      // bindEventListeners();
-      // getDataForChannel();
-    }
-  });
-}
 
 
 // function continueLoggedInUser() {
@@ -879,399 +731,156 @@ function checkIfUserLoggedIn() {
 		// 	sc1.parentNode.insertBefore(sc, sc1);
 		// }
 		// Loading css dynamically
-		function addCss(href){
-		    var link  = document.createElement('link');
-		    link.rel  = 'stylesheet';
-		    link.type = 'text/css';
-		    link.href = href;
-		    document.getElementsByTagName('head')[0].appendChild(link);
-		}	
-		addCss("./src/css/sso.css")
+
 
 		//event Listener
-		function eventListener(element,event,callback,bubble=false){
-			element.addEventListener(event,callback,bubble)
-		}
+		
 
 		//xhr object 
-		function sendRequest(url,callback,postData){
-			var xhr = new XMLHttpRequest();
-			var method=postData?"POST":"GET";
-			xhr.open(method, url, true);
-			xhr.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					callback(this)
-				}else{
+		// function sendRequest(url,callback,postData){
+		// 	var xhr = new XMLHttpRequest();
+		// 	var method=postData?"POST":"GET";
+		// 	xhr.open(method, url, true);
+		// 	xhr.onreadystatechange = function() {
+		// 		if (this.readyState == 4 && this.status == 200) {
+		// 			callback(this)
+		// 		}else{
 
-				}
-			};
-			xhr.send(postData);
-		}
+		// 		}
+		// 	};
+		// 	xhr.send(postData);
+		// }
 
-		// getUrlParamters
-		function getUrlParam(parameter, defaultvalue){
-		    var urlparameter = defaultvalue;
-		    if(window.location.href.indexOf(parameter) > -1){
-		        urlparameter = getUrlVars()[parameter];
-		        }
-		    return urlparameter;
-		}
-		function getUrlVars() {
-		    var vars = {};
-		    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-		        vars[key] = value;
-		    });
-		    return vars;
-		}
 		
-		function toggleClass(element){
-			if(element.classList.contains("hide")){
-				element.classList.remove("hide")
-				element.classList.add("show")
-			}
-			else {
-				element.classList.contains("show") && element.classList.remove("show")
-				element.classList.add("hide")
-			}
-		}
-		function enableBtn(el){			el.classList.remove("btn-disable");
-			el.removeAttribute("disabled")
-		}
-		function disableBtn(el){
-			el.classList.add("btn-disable");
-			el.setAttribute("disabled","true")
-		}
+		
+	
 		//fetch channel Details
-		function getChannelData(){
-			jsso.getChannelDetails(channelName, ru,function(response){
-				if (response.code != 200) {
-					return;
-				}
-				channelData = response.data;
-			})
-		}
 
 
 
-	function getMobileLoginOtp(){
-		jsso.getMobileLoginOtp();
-	}
-	function getEmailLoginOtp(){
-		jsso.getEmailLoginOtp();
-	}
 
-	function mobileValidation(event,element){
-		var value=event.target && event.target.value || event;
-		var el=element || document.getElementsByClassName("continueLoginBtn")[0];
-		var err=document.getElementsByClassName("inputError")[0]
-		if(value.length==10){
-			var valid=jsso.isValidMobile(value);
-			if(valid){
-				err.innerHTML="";
-				enableBtn(el)
-				return true
-			}else{
-				err.innerHTML="Please enter valid mobile number"
-				disableBtn(el)
-				return false
-				
-			}
-		}else{
-			disableBtn(el)
-			return false
-		}
-	}
-	function emailValidation(event,element){
-		var value=event.target && event.target.value || event;
-		var valid=jsso.isValidEmail(value)
-		var el=element || document.getElementsByClassName("continueLoginBtn")[0];
-		var err=document.getElementsByClassName("inputError")[0]
-		//var valid=jsso.isValidEmail(value)
-		if(valid){
-			err.innerHTML="";
-			enableBtn(el)
-			return true
-		}else{
-			err.innerHTML="Please enter valid email address"
-			disableBtn(el);
-			return false
-		}
-	}
-	// function mobileValidation(value){
-	// 	if(value.length==10){
-	// 		return(jsso.isValidMobile(value));	
-	// 	}	
-	// }
-	function emailAndMobileValidation(event,el){
-		inputIdentifier=event.target.value;
-		if(event.target.value.indexOf("@")>0){
-			emailValidation(event,el)
-		}
-		else{
-			mobileValidation(event,el)
-		}
-	}
+	
+
 	
 
 	// only email is enabled
 
 
-	function checkEmailUserCb(response){
-		var status = response.data.status;
-		var el = document.getElementsByClassName("pwd-section")[0];
-		if(status=="VERIFIED_EMAIL"){
-			toggleClass(el);
-		}else{
-			if(status =="UNREGISTERED_EMAIL"){
-				var el=document.getElementById("signUp-div");
-				toggleClass(el);
-				var loginForm=document.getElementsByClassName("loginForm")[0];
-				toggleClass(loginForm);
-			}
-		}
-	}
+	// function checkEmailUserCb(response){
+	// 	var status = response.data.status;
+	// 	var el = document.getElementsByClassName("pwd-section")[0];
+	// 	if(status=="VERIFIED_EMAIL"){
+	// 		toggleClass(el);
+	// 	}else{
+	// 		if(status =="UNREGISTERED_EMAIL"){
+	// 			var el=document.getElementById("signUp-div");
+	// 			toggleClass(el);
+	// 			var loginForm=document.getElementsByClassName("loginForm")[0];
+	// 			toggleClass(loginForm);
+	// 		}
+	// 	}
+	// }
 
 
 	
 	
 	
 
-	function checkMobileUserCb(response){
-		// var status = response.data.status;
-		var mobileNo=document.getElementById("mobileOnly").value;
-		var el = document.getElementsByClassName("pwd-section")[0];
-			//jsso.getMobileLoginOtp(mobileNo,mobileOTPCb);
-		//if(status=="VERIFIED_MOBILE"){
-			toggleClass(el)
-		// }else{
-		// 	if(status =="UNREGISTERED_MOBILE"){
-		// 		toggleClass(el)
-		// 	}
-		// }
-	}
-	function mobileOTPCb(){
+	// function checkMobileUserCb(response){
+	// 	// var status = response.data.status;
+	// 	var mobileNo=document.getElementById("mobileOnly").value;
+	// 	var el = document.getElementsByClassName("pwd-section")[0];
+			
+	// 		toggleClass(el)
+		
+	// }
+	// function checkEmailUserCb(){
 
-	}
+	// }
 
 	
 	// email and mobile both allowed with otp
-	function emailMobileOTPCb(event){
-		var value=event.target.value;
-		var el=document.getElementsByClassName("continueLoginBtn")[0];
-		var valid=value.indexOf("@")>0 ? emailValidation(value) : mobileValidation(value);
-		if(valid){
-			enableBtn(el)
-		}	else{
-			disableBtn(el);
-		}
-	}
+	// function emailMobileOTPCb(event){
+	// 	var value=event.target.value;
+	// 	var el=document.getElementsByClassName("continueLoginBtn")[0];
+	// 	var valid=value.indexOf("@")>0 ? emailValidation(value) : mobileValidation(value);
+	// 	if(valid){
+	// 		enableBtn(el)
+	// 	}	else{
+	// 		disableBtn(el);
+	// 	}
+	// }
 
-	function checkEmailMobileOtpUserCb(response){
-		var status = response.data.status;
-		if(status=="VERIFIED_MOBILE" || status=="VERIFIED_EMAIL"){
-			var pwd=document.getElementsByClassName("pwd-section")[0];
-			toggleClass(pwd);
-		}else{
-			if(status =="UNREGISTERED_MOBILE" || status =="UNREGISTERED_EMAIL"){
-				var el=document.getElementById("signUp-div");
-				toggleClass(el);
-				var loginForm=document.getElementsByClassName("loginForm")[0];
-				toggleClass(loginForm);
-			// 	var pwd=document.getElementsByClassName("pwd-section")[0];
-			// toggleClass(pwd);
-			}
-		}
-	}
+	// function checkEmailMobileOtpUserCb(response){
+	// 	var status = response.data.status;
+	// 	if(status=="VERIFIED_MOBILE" || status=="VERIFIED_EMAIL"){
+	// 		var pwd=document.getElementsByClassName("pwd-section")[0];
+	// 		toggleClass(pwd);
+	// 	}else{
+	// 		if(status =="UNREGISTERED_MOBILE" || status =="UNREGISTERED_EMAIL"){
+	// 			var el=document.getElementById("signUp-div");
+	// 			toggleClass(el);
+	// 			var loginForm=document.getElementsByClassName("loginForm")[0];
+	// 			toggleClass(loginForm);
+	// 		// 	var pwd=document.getElementsByClassName("pwd-section")[0];
+	// 		// toggleClass(pwd);
+	// 		}
+	// 	}
+	// }
 
 	
 	// email and mobile both allowed but without otp
-	function emailMobileNoOTPCb(event){
-		var value = event.target.value
-		var el=document.getElementsByClassName("continueLoginBtn")[0];
-		var valid=value.indexOf("@")>0 ? emailValidation(value) : mobileValidation(value);
-		if(valid){
-			enableBtn(el);
-		}else{
-			disableBtn(el);
-		}
-	}
-	function checkEmailMobileNoOtpUserCb(response){
-		var status = response.data.status;
-		if(status=="VERIFIED_MOBILE" || status=="VERIFIED_EMAIL"){
-			var pwd=document.getElementsByClassName("pwd-section")[0];
-			toggleClass(pwd);
-		}else{
-			if(status =="UNREGISTERED_MOBILE" || status =="UNREGISTERED_EMAIL"){
-				var el=document.getElementById("signUp-div");
-				toggleClass(el);
-				var loginForm=document.getElementsByClassName("loginForm")[0];
-				toggleClass(loginForm);
-			}
-		}
-	}
+	// function emailMobileNoOTPCb(event){
+	// 	var value = event.target.value
+	// 	var el=document.getElementsByClassName("continueLoginBtn")[0];
+	// 	var valid=value.indexOf("@")>0 ? emailValidation(value) : mobileValidation(value);
+	// 	if(valid){
+	// 		enableBtn(el);
+	// 	}else{
+	// 		disableBtn(el);
+	// 	}
+	// }
+	// function checkEmailMobileNoOtpUserCb(response){
+	// 	var status = response.data.status;
+	// 	if(status=="VERIFIED_MOBILE" || status=="VERIFIED_EMAIL"){
+	// 		var pwd=document.getElementsByClassName("pwd-section")[0];
+	// 		toggleClass(pwd);
+	// 	}else{
+	// 		if(status =="UNREGISTERED_MOBILE" || status =="UNREGISTERED_EMAIL"){
+	// 			var el=document.getElementById("signUp-div");
+	// 			toggleClass(el);
+	// 			var loginForm=document.getElementsByClassName("loginForm")[0];
+	// 			toggleClass(loginForm);
+	// 		}
+	// 	}
+	// }
 
 
-	function verifyMobileCb(){
+	// function verifyMobileCb(){
 
-	}
-	function verifyEmailCb(){
+	// }
+	// function verifyEmailCb(){
 
-	}
-	function hideLoginform(){
-		var el=document.getElementsByClassName("loginForm")[0]
-		toggleClass(el)
-	}
+	// }
 	
-	function initSignUp(event){
-		hideLoginform();
-		var signUp=document.getElementById("signUp-div");
-		toggleClass(signUp);
-		
-		if(!event){
-			var el=document.getElementsByClassName("newUser-error")[0];
-			toggleClass(el)
-		}
-
-	}
-	function UserExistsCb(){
-		hideLoginform();
-	 	if(configParam.nonSocialLogin.loginCredentials[0].toLowerCase()=="password"){
-		 		var el=document.getElementsByClassName("sign-with-pwd")[0];
-				document.getElementsByClassName("user-pwd-info")[0].innerHTML=inputIdentifier
-				toggleClass(el)
-			
-		 }else{
-		 	var el=document.getElementsByClassName("sign-with-otp")[0];
-			toggleClass(el)
-		 	document.getElementsByClassName("user-otp-info")[0].innerHTML=inputIdentifier
-		 	if(inputIdentifier.indexOf("@")>0){
-		 		getEmailLoginOtp(inputIdentifier);
-		 	}else{
-		 		getMobileLoginOtp(inputIdentifier);
-			}
-	 	}
-	}
-	function userNotExistCb(){
-		initSignUp();
-
-	}
-	// Continue button
-	function continueLoginBtnCb(event){
-		inputIdentifier=document.getElementsByClassName("input-data")[0].value;
-		if(inputIdentifier.indexOf("@")>0){
-			userEmailInfo=inputIdentifier;
-		}else{
-			userMobileInfo=inputIdentifier;
-		}
-		checkUserExists(inputIdentifier,UserExistsCb,userNotExistCb);
-	}
+	
+	
+	
 
 	// Generate otp
-	function generateOTPCb(event){
-		inputIdentifier=document.getElementsByClassName("input-data")[0].value;
-		if(mobileValidation(inputIdentifier)){
-			getMobileLoginOtp(inputIdentifier);
-		}
-		else if(emailValidation(inputIdentifier)){
-			getEmailLoginOtp(inputIdentifier);
-		}
-		event.target.innerHTML="Resend";
-	}
+
 
 	// Social login callBacks
 
-	function FacebookLogin(channelData,socialCallback){
-		jsso.socialLogin("FACEBOOK","117787264903013",socialCallback)
 
-	}
-	function GoogleplusLogin(channelData,socialCallback){
-		jsso.socialLogin("GOOGLEPLUS","103703403489-b4t4lt8mr05brqpcdrmsu0di54cmjv4f.apps.googleusercontent.com",socialCallback)
-	}
-	function truecallerLogin(socialCallback){
-		var el=document.getElementsByClassName("truecallerNo")[0];
-			var value=el.value;
-			toggleClass(el);
-		jsso.truecallerLogin(value,function(response){
-				if(response.code==200){
-					var requestId=response.data.requestId;
-					trueCallerrVerify(requestId)
-				}
-		})
-	}
-	function trueCallerrVerify(requestId){
-		jsso.truecallerVerify(requestId,trueCallerCb)
 
-	}
-	function trueCallerCb(){
 
-	}
-	function linkedinLogin(channelData,socialCallback){
-		jsso.socialLogin("LINKEDIN","1607426726038643")
-	}
 
-	function getforgotPassword(){
-		//api hit to get data of user
-		var el=document.getElementsByClassName("forgot-password")[0];
-			showSection(el,"hide","show");
-		el.querySelectorAll(".user-otp-info")[0].innerHTML=inputIdentifier
-
-		var el=document.getElementsByClassName("sign-with-pwd")[0];
-			hideSection(el,"show","hide")
-		//var result="both";
-		var result="none";
-		if(result=="none"){
-			var el=document.getElementsByClassName("direct-otp")[0]
-			showSection(el,"hide","show")
-			if(inputIdentifier.indexOf("@")>0){
-				getEmailForgotPasswordOtp(ForgotEmailPwdCb)
-			}else{
-				getMobileForgotPasswordOtp(ForgotMobilePwdCb);
-			}
-
-		}else{
-			document.getElementsByClassName("select-mobile")[0].innerHTML=userMobileInfo
-			document.getElementsByClassName("select-email")[0].innerHTML=userEmailInfo
-			var el=document.getElementsByClassName("slectOtpGenPt")[0]
-			showSection(el,"hide","show")
-			inputIdentifier = document.getElementsByClassName("input-data")[0].value;	
-		}		
-	}
-
-	function ForgotMobilePwdCb(){
-
-	}
-	function ForgotEmailPwdCb(){
-
-	}
-	function getEmailForgotPasswordOtp(ForgotEmailPwdCb){
-		jsso.getEmailForgotPasswordOtp(inputIdentifier,function(response){
-
-		})
-	}
-	function getMobileForgotPasswordOtp(ForgotMobilePwdCb){
-		jsso.getMobileForgotPasswordOtp(inputIdentifier,function(response){
-
-		})
-	}
 	
-	function showSection(element,initialClass,nextClass){
-		if(element.classList.contains(initialClass)){
-			element.classList.remove(initialClass)
-			element.classList.add(nextClass)
-		}
-	}
-	function hideSection(element,initialClass,nextClass){
-		if(element.classList.contains(initialClass)){
-			element.classList.remove(initialClass)
-			element.classList.add(nextClass)
-		}
-	}
-	function changeLoginVia(event){
-		resetAllField()
-		var element=document.getElementsByClassName("loginForm")[0]
-		showSection(element,"hide","show")
-		
-	}
+	
+	
+
+
 	// function enterOtp(event){
 	// 	var element=document.getElementsByClassName("switch-login")[0];
 	// 	var el2=document.getElementsByClassName("switch-heading")[0];
@@ -1288,185 +897,680 @@ function checkIfUserLoggedIn() {
 	// 		el2.innerHTML="Sign in with OTP "
 	// 	}
 	// }
-	function disableResentLink(event){
 
-	}
-	function resendOtpCb(event){
-		// var val=document.getElementsByClassName("otpPreference")[0].value
-		var val=inputIdentifier;
-		if(val.indexOf("@")>0){
-			if(event.target.classList.contains("normal-resent")){
-				jsso.getEmailLoginOtp(val,function(){})
-			}else if(event.target.classList.contains("register-resent")){
-				jsso.resendEmailSignUpOtp(val, registerUserSsoid, function(response) {
-		     //  	if (response.code != 200) {
-			    //     reportError(response);
-			    //     return;
-			    // }
-
-		    });
-			}else if(event.target.classList.contains("forgot-resent")){
-				jsso.getEmailForgotPasswordOtp(val,function(){})
-			}
-
-		}else{
-
-			if(event.target.classList.contains("normal-resent")){
-				getMobileLoginOtp(val,function(){})
-			}else if(event.target.classList.contains("register-resent")){
-				jsso.resendMobileSignUpOtp(val, registerUserSsoid, function(response) {
-			  // if (response.code != 200) {
-			  //   reportError(response);
-			  //   return;
-			  // }
-
-			});
-			}else if(event.target.classList.contains("forgot-resent")){
-				jsso.getMobileForgotPasswordOtp(val,function(){})
-			}		
-		}
-	}
-	function signInbtncb(event){
-		checkUserExists(inputIdentifier,successCb,userNotExistCb)
+	
+	// function signInbtncb(event){
+	// 	checkUserExists(inputIdentifier,successCb,userNotExistCb)
 		
+	// }
+
+	// function successCb(){
+	// 	// var el=document.getElementsByClassName("switch-login")[0];
+	// 	// toggleClass(el)
+	// 	var element=document.getElementsByClassName("active")[0];
+	// 	toggleClass(element)
+	// 	element.classList.remove("active")
+	// 	if(element.classList.contains("sign-with-otp")){
+	// 		if(inputIdentifier.indexOf("@")>0){
+	// 			getMobileLoginOtp(inputIdentifier)
+	// 		}else{
+	// 			getEmailLoginOtp(inputIdentifier)
+	// 		}
+	// 	}
+	// }
+//}
+
+function eventListener(element,event,callback,bubble=false){
+	element.addEventListener(event,callback,bubble)
+}
+function addCss(href){
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = href;
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+addCss("./src/css/sso.css")
+function disableResentLink(event){
+
+}	
+
+function checkIfUserLoggedIn() {
+	jsso.getUserProfile(function(response) {
+		if (response.code == 200) {
+			renderTemplate(configParam);
+			bindEventListeners();
+			loggedInUserProfile = response.data;
+		}
+		else {
+			renderTemplate(configParam);
+			bindEventListeners();
+		}
+	});
+}
+function getChannelData(){
+	jsso.getChannelDetails(channelName, ru,function(response){
+		if (response.code != 200) {
+			return;
+		}
+		channelData = response.data;
+	})
+}
+
+function resetAllField(){
+	var el=document.getElementsByClassName("sign-with-otp")[0];
+	hideSection(el,"show","hide");
+	var el=document.getElementsByClassName("sign-with-pwd")[0]
+	hideSection(el,"show","hide");
+	var el=document.getElementsByClassName("forgot-password")[0]
+	hideSection(el,"show","hide");
+	var el=document.getElementsByClassName("slectOtpGenPt")[0];
+	hideSection(el,"show","hide");
+	var el=document.getElementsByClassName("direct-otp")[0];
+	var verifyuser=document.getElementsByClassName("verify-user")[0]
+	hideSection(verifyuser,"show","hide");
+	hideSection(el,"show","hide");
+	var el=document.getElementsByClassName("nonSignupInfo");	
+	emptyAllInput(el);
+	var el=document.getElementsByClassName("pwd-otp");	
+	emptyAllInput(el);
+	var el=document.getElementsByClassName("nonSignupPwdSection")[0].querySelectorAll(".checked");
+	for(var i=0;i<el.length;i++){
+		hideSection(el[i],"checked","uncheck")
 	}
-	function termsCb(event){
-		if(event.target.classList.contains("t-uncheck")){
-			event.target.classList.remove("t-uncheck");
-			event.target.classList.add("t-check");
+	
+}
+function emptyAllInput(el){
+	for(var i=0;i<el.length;i++){
+		el[i].value="";
+	}
+}
+//common function
+function toggleClass(element){
+	if(element.classList.contains("hide")){
+		element.classList.remove("hide")
+		element.classList.add("show")
+	}
+	else {
+		element.classList.contains("show") && element.classList.remove("show")
+		element.classList.add("hide")
+	}
+}
+
+function enableBtn(el){			
+	el.classList.remove("btn-disable");
+	el.removeAttribute("disabled")
+}
+
+function disableBtn(el){
+	el.classList.add("btn-disable");
+	el.setAttribute("disabled","true")
+}
+
+function showSection(element,initialClass,nextClass){
+	if(element.classList.contains(initialClass)){
+		element.classList.remove(initialClass)
+		element.classList.add(nextClass)
+	}
+}
+
+function hideSection(element,initialClass,nextClass){
+	if(element.classList.contains(initialClass)){
+		element.classList.remove(initialClass)
+		element.classList.add(nextClass)
+	}
+}
+
+function hideLoginform(){
+	var el=document.getElementsByClassName("loginForm")[0]
+	toggleClass(el)
+}
+
+
+//jsso function 
+function getMobileLoginOtp(identifier,mobileVerifycb){
+	jsso.getMobileLoginOtp(identifier,function(response){
+
+	});
+}
+function getEmailLoginOtp(identifier,emailVerfiyCb){
+	jsso.getEmailLoginOtp(identifier,function(response){
+
+	});
+}
+
+//validation
+function mobileValidation(event,element){
+	var value=event.target && event.target.value || event;
+	var el=element || document.getElementsByClassName("continueLoginBtn")[0];
+	var err=document.getElementsByClassName("inputError")[0]
+	if(value.length==10){
+		var valid=jsso.isValidMobile(value);
+		if(valid){
+			err.innerHTML="";
+			enableBtn(el)
+			return true
 		}else{
-			event.target.classList.remove("t-check");
-			event.target.classList.add("t-uncheck");
+			err.innerHTML="Please enter valid mobile number"
+			disableBtn(el)
+			return false
+			
 		}
+	}else{
+		disableBtn(el)
+		return false
 	}
-	function successCb(){
-		// var el=document.getElementsByClassName("switch-login")[0];
-		// toggleClass(el)
-		var element=document.getElementsByClassName("active")[0];
-		toggleClass(element)
-		element.classList.remove("active")
-		if(element.classList.contains("sign-with-otp")){
-			if(inputIdentifier.indexOf("@")>0){
-				getMobileLoginOtp(inputIdentifier)
-			}else{
-				getEmailLoginOtp(inputIdentifier)
-			}
+}
+
+function emailValidation(event,element){
+	var value=event.target && event.target.value || event;
+	var valid=jsso.isValidEmail(value)
+	var el=element || document.getElementsByClassName("continueLoginBtn")[0];
+	var err=document.getElementsByClassName("inputError")[0]
+	if(valid){
+		err.innerHTML="";
+		enableBtn(el)
+		return true
+	}else{
+		err.innerHTML="Please enter valid email address"
+		disableBtn(el);
+		return false
+	}
+}
+
+function emailAndMobileValidation(event,el){
+	document.getElementsByClassName("continueLoginBtn")[0].innerHTML="Continue"
+	inputIdentifier=event.target.value;
+	if(event.target.value.indexOf("@")>0){
+		emailValidation(event,el)
+	}
+	else{
+		mobileValidation(event,el)
+	}
+}
+
+
+//login
+function UserExistsCb(){
+	hideLoginform();
+ 	if(configParam.nonSocialLogin.loginCredentials[0].toLowerCase()=="password"){
+	 		var el=document.getElementsByClassName("sign-with-pwd")[0];
+			document.getElementsByClassName("user-pwd-info")[0].innerHTML=inputIdentifier
+			toggleClass(el)
+		
+	 }else{
+	 	var el=document.getElementsByClassName("sign-with-otp")[0];
+		toggleClass(el)
+	 	document.getElementsByClassName("user-otp-info")[0].innerHTML=inputIdentifier
+	 	if(inputIdentifier.indexOf("@")>0){
+	 		getEmailLoginOtp(inputIdentifier);
+	 	}else{
+	 		getMobileLoginOtp(inputIdentifier);
 		}
-	}
+ 	}
+}
+function userNotExistCb(){
+	initSignUp();
+}
 
-	function switchToPwdCb(event){
-		var el=document.getElementsByClassName("sign-with-pwd")[0];
+function initSignUp(event){
+	hideLoginform();
+	var signUp=document.getElementById("signUp-div");
+	toggleClass(signUp);
+	if(!event){
+		var el=document.getElementsByClassName("newUser-error")[0];
 		toggleClass(el)
-		var el=document.getElementsByClassName("sign-with-otp")[0];
-		toggleClass(el)
-		document.getElementsByClassName("user-pwd-info")[0].innerHTML=inputIdentifier
 	}
+}
+//anuj
+function checkUserExists(identifier,UserExistsCb,userNotExistCb) {
+  	jsso.checkUserExists(identifier, function(response) {
+  		var el=document.getElementsByClassName("unRegistered")[0];
+      	var wrapper=document.getElementsByClassName("unRegistered-wrapper")[0];
+      	var btn=document.getElementsByClassName("continueLoginBtn")[0]
+    	if (response.data.statusCode == 213 || response.data.statusCode == 212) {
+	      	UserExistsCb();
+	      	if(response.data.shareDataAllowed == null || response.data.shareDataAllowed == "0" || response.data.termsAccepted == null || response.data.termsAccepted == "0" ) {
+	        	loginWithPermissionsFlag=5;
+	      	}   
+    	}else if(response.data.statusCode == 206){
+	      	showSection(wrapper,"hide","show")
+	      	el.innerHTML="Please verify your mobile number"
+	      	btn.innerHTML="Verify & Sign In"
+	    }else if(response.data.statusCode == 205){
+	      	el.innerHTML="Please verify your email"
+	      	showSection(wrapper,"hide","show");
+	      	btn.innerHTML="Verify & Sign In";
+	    }else {
+	       userNotExistCb()
+	      return;
+	    }
+ 	});
+}
 
-	function switchToOtpCb(event){
+
+// Continue button
+function continueLoginBtnCb(event){
+	inputIdentifier=document.getElementsByClassName("input-data")[0].value;
+	var wrap=document.getElementsByClassName("unRegistered-wrapper")[0]
+	var el=document.getElementsByClassName("sign-with-otp")[0];
+	el.querySelectorAll(".signText")[0].classList.remove("hide");
+	hideSection(wrap,"show","hide");
+	if(event.target.innerText.toLowerCase()=="continue"){
 		if(inputIdentifier.indexOf("@")>0){
-			jsso.getEmailLoginOtp(inputIdentifier)
+			checkUserExists(inputIdentifier,UserExistsCb,userNotExistCb);
 		}else{
-			jsso.getMobileLoginOtp(inputIdentifier)
-		}
-		var el=document.getElementsByClassName("sign-with-pwd")[0];
-		toggleClass(el)
-		var el=document.getElementsByClassName("sign-with-otp")[0];
-		toggleClass(el)
-		document.getElementsByClassName("user-otp-info")[0].innerHTML=inputIdentifier
-	}
-
-	function forgetContinueCb(event){
-		event.target.classList.add("submitOtp")
-		var el=document.getElementsByClassName("slectOtpGenPt")[0]
-		var el2=document.getElementsByClassName("direct-otp")[0]
-		hideSection(el,"show","hide");
-		toggleClass(el2);
-	}
-
-	function submitPwdOtpCb(event){
-			if(inputIdentifier.indexOf("@")>0){
-				verifyEmailLogin(verifiedEmailCb)
-			}else{
-				verifyMobileLogin(verifiedMobileCb)
+			hideLoginform();
+		 	el.querySelectorAll(".signInBtn")[0].innerHTML="Verify & Sign In";
+		 	el.querySelectorAll(".signText")[0].classList.add("hide");
+			toggleClass(el)
+		 	document.getElementsByClassName("user-otp-info")[0].innerHTML=inputIdentifier
+		 	if(inputIdentifier.indexOf("@")>0){
+		 		getEmailLoginOtp(inputIdentifier);
+		 	}else{
+		 		getMobileLoginOtp(inputIdentifier);
 			}
-
+		}
 	}
-function verifiedMobileCb(){
+}
+
+function changeLoginVia(event){
+	resetAllField()
+	var element=document.getElementsByClassName("loginForm")[0]
+	showSection(element,"hide","show")	
+}
+
+
+function getforgotPassword(){
+	//api hit to get data of user
+	var el=document.getElementsByClassName("forgot-password")[0];
+		showSection(el,"hide","show");
+	el.querySelectorAll(".user-otp-info")[0].innerHTML=inputIdentifier
+
+	var el=document.getElementsByClassName("sign-with-pwd")[0];
+		hideSection(el,"show","hide")
+	var result="none";
+	if(result=="none"){
+		var el=document.getElementsByClassName("direct-otp")[0]
+		showSection(el,"hide","show")
+		if(inputIdentifier.indexOf("@")>0){
+			getEmailForgotPasswordOtp(ForgotEmailPwdCb)
+		}else{
+			getMobileForgotPasswordOtp(ForgotMobilePwdCb);
+		}
+	}else{
+		var el=document.getElementsByClassName("slectOtpGenPt")[0]
+		showSection(el,"hide","show")
+		inputIdentifier = document.getElementsByClassName("input-data")[0].value;	
+	}		
+}
+//anuj
+function ForgotMobilePwdCb(){
 
 }
-function verifiedEmailCb(){
+function ForgotEmailPwdCb(){
 
 }
-	function verifyEmailLogin(verifiedEmailCb){
-		var input = otp || passwordEntered;
+function getEmailForgotPasswordOtp(ForgotEmailPwdCb){
+	jsso.getEmailForgotPasswordOtp(inputIdentifier,function(response){
+
+	})
+}
+function getMobileForgotPasswordOtp(ForgotMobilePwdCb){
+	jsso.getMobileForgotPasswordOtp(inputIdentifier,function(response){
+
+	})
+}
+
+function forgetContinueCb(event){
+	event.target.classList.add("submitOtp")
+	var el=document.getElementsByClassName("slectOtpGenPt")[0]
+	var el2=document.getElementsByClassName("direct-otp")[0]
+	hideSection(el,"show","hide");
+	toggleClass(el2);
+}
+
+function switchToPwdCb(event){
+	var el=document.getElementsByClassName("sign-with-pwd")[0];
+	toggleClass(el)
+	var el=document.getElementsByClassName("sign-with-otp")[0];
+	toggleClass(el)
+	document.getElementsByClassName("user-pwd-info")[0].innerHTML=inputIdentifier
+}
+
+function switchToOtpCb(event){
+	if(inputIdentifier.indexOf("@")>0){
+		getEmailLoginOtp(inputIdentifier)
+	}else{
+		getMobileLoginOtp(inputIdentifier)
+	}
+	var el=document.getElementsByClassName("sign-with-pwd")[0];
+	toggleClass(el)
+	var el=document.getElementsByClassName("sign-with-otp")[0];
+	toggleClass(el)
+	document.getElementsByClassName("user-otp-info")[0].innerHTML=inputIdentifier
+}
+
+
+function signInBtnCb(){
+	var input = otp || passwordEntered;
+	if(inputIdentifier.indexOf("@")>0){
 		jsso.verifyEmailLogin(inputIdentifier,input,function(response){
 			if (response.code != 200) {
 				verifiedEmailCb()
 			}
 		})
-	}
-	function verifyMobileLogin(verifiedMobileCb){
-		var input=otp || passwordEntered;
+	}else{
 		jsso.verifyMobileLogin(inputIdentifier,input,function(response){
 			if (response.code != 200) {
 				verifiedMobileCb()
 			}
 		})
 	}
+}
+
+function verifyBtnCb(){
+	signInBtnCb();
+}
 
 
-	function pwdOtpCb(event){
-		if(event.target.value){
-				if(event.target.classList.contains("otpPreference")){
-					otp=event.target.value
-				enableBtn(document.getElementsByClassName("otpSubmit")[0])	
-			}else if(event.target.classList.contains("pwdPrefernce")){
-				passwordEntered=event.target.value;
-				enableBtn(document.getElementsByClassName("pwdSubmit")[0])
+//sign up function
+function termsCb(event){
+	if(event.target.classList.contains("t-uncheck")){
+		event.target.classList.remove("t-uncheck");
+		event.target.classList.add("t-check");
+	}else{
+		event.target.classList.remove("t-check");
+		event.target.classList.add("t-uncheck");
+	}
+}
+function registeruserCb(){
+	var el=document.getElementById("signUp-div")
+	toggleClass(el)
+	var verifyuser=document.getElementsByClassName("verify-user")[0]
+	toggleClass(verifyuser)
+}
+
+function signupInfoCb(event){
+	var registerbtn=document.getElementById("registerbtn")
+	var value=event.target.value;
+	var elclass=event.target.classList;
+	if(configParam.signupForm.Mandatory>1){
+		if(jsso.isValidEmail(value) ){
+			if(jsso.isValidMobile(value)){
+				elclass.remove("signupError")
 			}else{
-				otp=event.target.value;
+				elclass.add("signupError")
 			}
-		}else{
-			disableBtn(document.getElementsByClassName("otpSubmit")[0])
-			disableBtn(document.getElementsByClassName("pwdSubmit")[0])
 		}
-
-		
-		
-	}
-
-	function verifyUserCb(){
-		var loginForm=document.getElementsByClassName("loginForm")[0];
-		var footerImg=document.getElementsByClassName("footer-img")[0];
-		var successPage=document.getElementsByClassName("successPage")[0]
-		if(inputIdentifier.indexOf("@")>0){
-			jsso.verifyEmailSignUp(inputIdentifier,registerUserSsoid,otp,function(){
-				hideSection(footerImg,"show","hide");
-				hideSection(loginForm,"show","hide");
-				showSection(successPage,"hide","show")
-			})
-		}else{
-			jsso.verifyMobileSignUp(inputIdentifier,registerUserSsoid,otp,function(){
-				hideSection(footerImg,"show","hide");
-				hideSection(loginForm,"show","hide");
-				showSection(successPage,"hide","show")
-			})
-		}
-	}
-
-	function selectRadio(event){
-		var el=document.getElementsByClassName("circle");
-		for(var i=0;i<el.length;i++){
-			if(el[i].classList.contains("radio-check")){
-				el[i].classList.remove("radio-check");
-				el[i].classList.add("radio-uncheck")
+	}else if(configParam.signupForm.Mandatory[0].toLowerCase()=="email"){
+		if(elclass.contains("signupEmail")){
+			if(jsso.isValidEmail(value)){
+				elclass.remove("signupError")
+			}else{
+				elclass.add("signupError")
 			}
-
 		}
-		event.target.classList.remove("radio-uncheck")
-		event.target.classList.add("radio-check")
+	}else if(configParam.signupForm.Mandatory[0].toLowerCase()=="mobile"){
+		if(elclass.contains("signupNumber")){
+			if(jsso.isValidMobile(value)){
+				elclass.remove("signupError")
+			}else{
+				elclass.add("signupError")
+			}
+		}
 	}
+	if(!document.getElementsByClassName("sign-in-form")[0].querySelectorAll(".signupError")[0] && passwordValidation(event)){
+		enableBtn(registerbtn);
+	}else{
+		disableBtn(registerbtn)
+	}
+}
 
+//anuj
+
+
+function signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed,policy,registeruserCb){
+	jsso.registerUser(firstName, lastName, gender, dob, email, mobile, password, false , termsAccepted,shareDataAllowed, policy, function(response) {
+		if (response.code != 200) {
+			console.log("not 200");
+			console.log(response.code + ": " + response.message);
+			return;
+		}
+      	registeruserCb()  
+    });
+}
+
+        
+function generateOTPCb(event){
+	inputIdentifier=document.getElementsByClassName("input-data")[0].value;
+	if(mobileValidation(inputIdentifier)){
+		getMobileLoginOtp(inputIdentifier);
+	}
+	else if(emailValidation(inputIdentifier)){
+		getEmailLoginOtp(inputIdentifier);
+	}
+	event.target.innerHTML="Resend";
+}     
+
+function registerUser(){
+	var firstName = document.getElementById("firstName") ? document.getElementById("firstName").value:"",
+		lastName = document.getElementById("lastName") ? document.getElementById("lastName").value : "",
+	//  gender = document.getElementById("gender").value,
+		password = document.getElementsByClassName("signupPwd")[0] ? document.getElementsByClassName("signupPwd")[0].value : "",
+		//confirmPwd=document.getElementById("confirmPassword") ? document.getElementById("confirmPassword").value : "",
+		email = document.getElementById("emailID") ? document.getElementById("emailID").value : "",
+		mobile = document.getElementById("mobileNumber") ? document.getElementById("mobileNumber").value :"",
+		gender = document.getElementById("gender") ? document.getElementById("gender").value :"",
+		dob = document.getElementById("dob") ? document.getElementById("dob").value :"",
+		// shareDataAllowed = document.getElementById("shareDataAllowed").checked,
+		// policy = document.getElementById("myTimesPolicy").checked,
+		termsAccepted = "1",
+		shareDataAllowed = "1",
+		policy = "1",
+		// termsAccepted = document.getElementsByClassName("termsCondition")[0].checked,
+		// consent = document.getElementsByClassName("consent")[0].checked,
+		isSendOffer = false;
+		if(email && emailValidation(email) && !mobile){
+			signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed,policy,registeruserCb)
+		}
+		else if(mobile && mobileValidation(mobile) && !email){
+			signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed,policy,registeruserCb)
+		}
+		else if((email && emailValidation(email)) && (mobile && mobileValidation(mobile))){
+			signUpUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, termsAccepted, shareDataAllowed,policy,registeruserCb)
+		}
+}
+
+
+function resetPwdValidation(){
+	var btn=document.getElementsByClassName("submitResetPwd")[0];
+	var otp=document.getElementsByClassName("forgot-password")[0].querySelectorAll(".otpText")[0].value;
+	if(passwordValidation(event) && otp ){
+		enableBtn(btn)
+	}else{
+		disableBtn(btn)
+	}
+}
+
+function passwordValidation(event,clear){
+	var value=event.target.value;
+	if(event.target.classList.contains("signupInfo")){
+		var pwd=document.getElementsByClassName("signupPwdSection")[0];
+		 passwordEntered=document.getElementsByClassName("signupPwd")[0].value;
+	}
+	else {
+		passwordEntered=document.getElementsByClassName("nonSignupPwd")[0].value;
+		var pwd=document.getElementsByClassName("nonSignupPwdSection")[0]
+	}
+	var element=pwd.querySelectorAll(".password-strength")[0];
+	confirmPwd=pwd.querySelectorAll(".confirmPassword")[0].value;
+	
+	if(passwordEntered.length){
+		showSection(element,"hide","show");
+	}else{
+		hideSection(element,"show","hide");
+	}
+	var alpha = /^[A-Za-z0-9 ]+$/
+	var numeric = /\d/
+	var lowerCase = /.*[a-z].*/
+
+	if(passwordEntered.length>6){
+		showSection(element.querySelectorAll(".chk1")[0],"uncheck","checked")
+	}else{
+		hideSection(element.querySelectorAll(".chk1")[0],"checked","uncheck")
+	}
+	if(lowerCase.test(passwordEntered)){
+		showSection(element.querySelectorAll(".chk2")[0],"uncheck","checked")
+	}else{
+		hideSection(element.querySelectorAll(".chk2")[0],"checked","uncheck")
+	}
+	if(numeric.test(passwordEntered)){
+		showSection(element.querySelectorAll(".chk3")[0],"uncheck","checked")
+	}else{
+		hideSection(element.querySelectorAll(".chk3")[0],"checked","uncheck")
+	}
+	if(!alpha.test(passwordEntered)){
+		showSection(element.querySelectorAll(".chk4")[0],"uncheck","checked")
+	}else{
+		hideSection(element.querySelectorAll(".chk4")[0],"checked","uncheck")
+	}
+	
+	if(!element.querySelectorAll(".uncheck")[0] && confirmPasswordValidation(confirmPwd) ){
+		return true
+	}else{
+		return false
+	}
+}
+
+function signInCb(){
+	var loginForm=document.getElementsByClassName("loginForm")[0];
+		toggleClass(loginForm);
+	var el=document.getElementsByClassName("password-changed")[0]
+	toggleClass(el);
+}
+	
+
+function resendOtpCb(event){
+	// var val=document.getElementsByClassName("otpPreference")[0].value
+	var val=inputIdentifier;
+	if(val.indexOf("@")>0){
+		if(event.target.classList.contains("normal-resent")){
+			getEmailLoginOtp(val)
+		}else if(event.target.classList.contains("register-resent")){
+			jsso.resendEmailSignUpOtp(val, registerUserSsoid, function(response) {
+	     //  	if (response.code != 200) {
+		    //     reportError(response);
+		    //     return;
+		    // }
+
+	    });
+		}else if(event.target.classList.contains("forgot-resent")){
+			jsso.getEmailForgotPasswordOtp(val,function(){})
+		}
+
+	}else{
+
+		if(event.target.classList.contains("normal-resent")){
+			getMobileLoginOtp(val)
+		}else if(event.target.classList.contains("register-resent")){
+			jsso.resendMobileSignUpOtp(val, registerUserSsoid, function(response) {
+		  // if (response.code != 200) {
+		  //   reportError(response);
+		  //   return;
+		  // }
+
+		});
+		}else if(event.target.classList.contains("forgot-resent")){
+			jsso.getMobileForgotPasswordOtp(val,function(){})
+		}		
+	}
+}
+
+
+
+
+//anuj
+
+
+
+
+
+
+
+
+
+
+
+
+
+//social Login
+function FacebookLogin(channelData,socialCallback){
+	jsso.socialLogin("FACEBOOK","117787264903013",socialCallback)
+
+}
+function GoogleplusLogin(channelData,socialCallback){
+	jsso.socialLogin("GOOGLEPLUS","103703403489-b4t4lt8mr05brqpcdrmsu0di54cmjv4f.apps.googleusercontent.com",socialCallback)
+}
+function truecallerLogin(socialCallback){
+	var el=document.getElementsByClassName("truecallerNo")[0];
+		var value=el.value;
+		toggleClass(el);
+	jsso.truecallerLogin(value,function(response){
+			if(response.code==200){
+				var requestId=response.data.requestId;
+				trueCallerrVerify(requestId)
+			}
+	})
+}
+function trueCallerrVerify(requestId){
+	jsso.truecallerVerify(requestId,trueCallerCb)
+
+}
+function trueCallerCb(){
+}
+function linkedinLogin(channelData,socialCallback){
+	jsso.socialLogin("LINKEDIN","1607426726038643")
+}
+
+function pwdOtpCb(event){
+	if(event.target.value){
+			if(event.target.classList.contains("otpPreference")){
+				otp=event.target.value
+			enableBtn(document.getElementsByClassName("otpSubmit")[0])	
+		}else if(event.target.classList.contains("pwdPrefernce")){
+			passwordEntered=event.target.value;
+			enableBtn(document.getElementsByClassName("pwdSubmit")[0])
+		}else{
+			otp=event.target.value;
+		}
+	}else{
+		disableBtn(document.getElementsByClassName("otpSubmit")[0])
+		disableBtn(document.getElementsByClassName("pwdSubmit")[0])
+	}	
+}
+
+function verifyUserCb(){
+	var loginForm=document.getElementsByClassName("loginForm")[0];
+	var footerImg=document.getElementsByClassName("footer-img")[0];
+	var successPage=document.getElementsByClassName("successPage")[0]
+	if(inputIdentifier.indexOf("@")>0){
+		jsso.verifyEmailSignUp(inputIdentifier,registerUserSsoid,otp,function(){
+			hideSection(footerImg,"show","hide");
+			hideSection(loginForm,"show","hide");
+			showSection(successPage,"hide","show")
+		})
+	}else{
+		jsso.verifyMobileSignUp(inputIdentifier,registerUserSsoid,otp,function(){
+			hideSection(footerImg,"show","hide");
+			hideSection(loginForm,"show","hide");
+			showSection(successPage,"hide","show")
+		})
+	}
+}
+
+
+//forgot password
 function submitResetPwdCb(){
 	if(inputIdentifier.indexOf("@")>0){
 		verifyEmailForgotPassword()
@@ -1494,10 +1598,25 @@ function verifyEmailForgotPassword(){
 	})
 }
 function verifyMobileForgotPassword(){
-	jsso.verifyEmailForgotPassword(inputIdentifier,otp,passwordEntered,confirmPwd,function(response){
+	jsso.verifyMobileForgotPassword(inputIdentifier,otp,passwordEntered,confirmPwd,function(response){
 		verifyMobileForgotPasswordCb()
 	})
 }
+
+function selectRadio(event){
+	var el=document.getElementsByClassName("circle");
+	for(var i=0;i<el.length;i++){
+		if(el[i].classList.contains("radio-check")){
+			el[i].classList.remove("radio-check");
+			el[i].classList.add("radio-uncheck")
+		}
+
+	}
+	event.target.classList.remove("radio-uncheck")
+	event.target.classList.add("radio-check")
+}
+
+
 
 
 function confirmPasswordValidation(confirmPwd){
@@ -1507,77 +1626,41 @@ function confirmPasswordValidation(confirmPwd){
 		return false
 	}
 }
-function signInCb(){
-	var loginForm=document.getElementsByClassName("loginForm")[0];
-		toggleClass(loginForm);
-	var el=document.getElementsByClassName("password-changed")[0]
-	toggleClass(el);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+function verifiedMobileCb(){
+
+}
+function verifiedEmailCb(){
+
 }
 
-function resetPwdValidation(){
-	var btn=document.getElementsByClassName("submitResetPwd")[0];
-	var otp=document.getElementsByClassName("forgot-password")[0].querySelectorAll(".otpText")[0].value;
-	if(passwordValidation(event) && otp ){
-		enableBtn(btn)
-	}else{
-		disableBtn(btn)
-	}
-}
-	function passwordValidation(event,clear){
-		var value=event.target.value;
-		if(event.target.classList.contains("signupInfo")){
-			var pwd=document.getElementsByClassName("signupPwdSection")[0];
-			 passwordEntered=document.getElementsByClassName("signupPwd")[0].value;
-		}
-		else {
-			passwordEntered=document.getElementsByClassName("nonSignupPwd")[0].value;
-			var pwd=document.getElementsByClassName("nonSignupPwdSection")[0]
-		}
-		var element=pwd.querySelectorAll(".password-strength")[0];
-		confirmPwd=pwd.querySelectorAll(".confirmPassword")[0].value;
-		
-		if(passwordEntered.length){
-			showSection(element,"hide","show");
-		}else{
-			hideSection(element,"show","hide");
-		}
-		var alpha = /^[A-Za-z0-9 ]+$/
-		var numeric = /\d/
-		var lowerCase = /.*[a-z].*/
+	
 
-		if(passwordEntered.length>6){
-			showSection(element.querySelectorAll(".chk1")[0],"uncheck","checked")
-		}else{
-			hideSection(element.querySelectorAll(".chk1")[0],"checked","uncheck")
-		}
-		if(lowerCase.test(passwordEntered)){
-			showSection(element.querySelectorAll(".chk2")[0],"uncheck","checked")
-		}else{
-			hideSection(element.querySelectorAll(".chk2")[0],"checked","uncheck")
-		}
-		if(numeric.test(passwordEntered)){
-			
-			showSection(element.querySelectorAll(".chk3")[0],"uncheck","checked")
-		}else{
-			hideSection(element.querySelectorAll(".chk3")[0],"checked","uncheck")
-		}
-		if(!alpha.test(passwordEntered)){
-			
-			showSection(element.querySelectorAll(".chk4")[0],"uncheck","checked")
-		}else{
-			hideSection(element.querySelectorAll(".chk4")[0],"checked","uncheck")
-		}
-		
-		if(!element.querySelectorAll(".uncheck")[0] && confirmPasswordValidation(confirmPwd) ){
-			
-			return true
 
-		}else{
-			
-			return false
-		}
-	}
-		// SSO Methods start
+
+
+
+
+
+	// SSO Methods start
 		ssoMethods.init=function(ssoObj){
 			var defaultConfig={
 				channelName:"timespoints",
@@ -1647,23 +1730,7 @@ function resetPwdValidation(){
 					privacyPolicyLink : ssoObj.privacyPolicyLink || "",
 					signupForm:ssoObj.signupForm,
 					nonSocialLogin:ssoObj.nonSocialLogin,
-					// emailOnly:ssoObj.emailOnly || false,
-					// mobileOTP:ssoObj.mobileOTP || false,
-					// emailMobileOTP:ssoObj.emailMobileOTP || false,
-					// emailMobileNoOTP:ssoObj.emailMobileNoOTP || false,
-					// email :  (ssoObj.signupForm && ssoObj.signupForm.email) ==false ?false :true,
-					// firstName : (ssoObj.signupForm && ssoObj.signupForm.firstName) ==false ?false : true,
-					// lastName : (ssoObj.signupForm && ssoObj.signupForm.lastName) ==false ?false : true,
-					// Password : (ssoObj.signupForm && ssoObj.signupForm.email) ==false ?false : true,
-					// MobileNumber : (ssoObj.signupForm && ssoObj.signupForm.MobileNumber) ==false ?false : true,	
-
-					// linkedin : ssoObj.linkedin ==false ? false:  true,
-				 //    truecaller : ssoObj.truecaller ==false ? false:  true,
-					// email_password : ssoObj.email_password ==false ? false:  true,
-					// email_otp :  ssoObj.email_otp ==false ? false:  true,
-					// mobile_password : ssoObj.mobile_password ==false ? false:  true,
-					// mobile_otp : ssoObj.mobile_otp ==false ? false:  true
-			}
+				}
 			jsso = new JssoCrosswalk(channelName,"WEB");
 			//checkIfUserLoggedIn();
 
@@ -1671,91 +1738,110 @@ function resetPwdValidation(){
 			checkIfUserLoggedIn()	
 		}
 		function bindEventListeners(){
-			// var googlebtn=document.getElementsByClassName("google")[0];
-			// var emailPhonebtn=document.getElementsByClassName("email-phone")[0];
-			// var showAllbtn=document.getElementsByClassName("show-all-option")[0];
-			// var email=document.getElementsByClassName("email")[0];
-			// var signIn=document.getElementsByClassName("sign-in")[0];
-			//emailAndMobile=document.getElementById("emailAndMobile");
-			// emailOnly=document.getElementById("emailOnly");
-			// mobileOnly=document.getElementById("mobileOnly");
-			inputData=document.getElementsByClassName("input-data")[0];
-			// emailMobileOTP=document.getElementById("emailMobileOTP");
-			// emailMobileNoOTP=document.getElementById("emailMobileNoOTP");
-			var generateOtp=document.getElementById("generateOtp");
-			var continueLoginBtn=document.getElementsByClassName("continueLoginBtn")[0]
-			var registerbtn = document.getElementById("registerbtn");
+			var inputData=document.getElementsByClassName("input-data")[0];
+			var continueLoginBtn=document.getElementsByClassName("continueLoginBtn")[0];
 			var signup = document.getElementById("signUpLink");
-			
-			var switchToPwd=document.getElementsByClassName("switchToPwd")[0];
+			var changelink=document.getElementsByClassName("changelink");
+			var forgetPwdLink=document.getElementsByClassName("forget-password-link")[0];
 			var switchToOtp=document.getElementsByClassName("switchToOtp")[0];
-			
+			var signInBtn=document.getElementsByClassName("signInBtn");
+			var resendOtp=document.getElementsByClassName("resend-otp-link");
+			var submitResetPwd=document.getElementsByClassName("submitResetPwd")[0];
+			var registerbtn = document.getElementById("registerbtn");
+			var generateOtp=document.getElementById("generateOtp");
+			var switchToPwd=document.getElementsByClassName("switchToPwd")[0];
+			var pwdOtp=document.getElementsByClassName("pwd-otp");
+			var nonSignupInfo=document.getElementsByClassName("nonSignupInfo");
+			var signIn=document.getElementsByClassName("signIn")[0];
+			//for futire reference
+			var forgetContinueBtn=document.getElementsByClassName("forgetContinueBtn")[0]
+			var circle=document.getElementsByClassName("circle");
 
-			var userInput=document.getElementsByClassName("user-input")
-			// Social Login
+			//sign up events
+			var signupInfo=document.getElementsByClassName("signupInfo");
+			var terms=document.getElementsByClassName("terms");
+
+
 			var facebookbtn = document.getElementById("facebook-div");
 			var googlebtn = document.getElementById("google-div");
 			var truecallerbtn = document.getElementById("truecaller-div");
 			var linkedinbtn = document.getElementById("linkedin-div");
-			//var passwordSignUp=document.getElementsByClassName("passwordSignUp");
-			//var confirmPassword=document.getElementById("confirmPassword");
-			//confirmPassword && eventListener(confirmPassword,"blur",confirmPasswordValidation)
 
-			// var emailbtn = document.getElementById("emailMobile-div");
-			// var emailInput = document.getElementById("login_identifier");
-			 var signInbtn = document.getElementsByClassName("signInBtn")[0];
-			 var showAllSignIn = document.getElementById("showAllSignIn");
-			 var forgotPassword = document.getElementsByClassName("forgot-password")[0];
-			 var forgetContinue=document.getElementsByClassName("forgetContinue")[0]
-			 // var changeNumber=document.getElementsByClassName("changeNumber")[0];
-			 var changelink=document.getElementsByClassName("changelink");
-			 var resendOtp=document.getElementsByClassName("resend-otp-link");
-			 var forgetPwdLink=document.getElementsByClassName("forget-password-link")[0];
-			 var circle=document.getElementsByClassName("circle");
-			 var submitInfo=document.getElementsByClassName("submitInfo");
-			 var pwdOtp=document.getElementsByClassName("pwd-otp")
-			 var signupInfo=document.getElementsByClassName("signupInfo");
-			 var nonSignupInfo=document.getElementsByClassName("nonSignupInfo");
-			 var submitResetPwd=document.getElementsByClassName("submitResetPwd")[0];
-			 var verifyUser=document.getElementsByClassName("verifyUser")[0];
-			 var terms=document.getElementsByClassName("terms");
-			 var signIn=document.getElementsByClassName("signIn")[0];
-			 signIn && eventListener(signIn,"click",signInCb)
-			 verifyUser && eventListener(verifyUser,"click",verifyUserCb)
-			 circle && multipleEvent(circle,"click",selectRadio)
-			 signInbtn && eventListener(signInbtn,"click",signInbtncb)
-			 userInput && multipleEvent(userInput,"input",emailAndMobileValidation)
-			 
-			 inputData && eventListener(inputData,"input",emailAndMobileValidation)
-			 changelink && multipleEvent(changelink,"click",changeLoginVia)
-			 forgetContinue && eventListener(forgetContinue,"click",forgetContinueCb)
-			 submitInfo && multipleEvent(submitInfo,"click",submitPwdOtpCb)
-			 pwdOtp && multipleEvent(pwdOtp,"input",pwdOtpCb)
-			 signupInfo && multipleEvent(signupInfo,"input",signupInfoCb)
-			 nonSignupInfo && multipleEvent(nonSignupInfo,"input",resetPwdValidation)
-			 submitResetPwd && eventListener(submitResetPwd,"click",submitResetPwdCb)
-			 terms && multipleEvent(terms,"click",termsCb)
-			resendOtp && multipleEvent(resendOtp,"click",resendOtpCb);
-			forgetPwdLink && eventListener(forgetPwdLink,"click",getforgotPassword);
 
-			switchToPwd && eventListener(switchToPwd,"click",switchToPwdCb);
-			switchToOtp && eventListener(switchToOtp,"click",switchToOtpCb);
-			//passwordSignUp && multipleEvent(passwordSignUp,"input",passwordValidation);
-			// mobileOnly && eventListener(mobileOnly,"input",mobileValidation);
+			inputData && eventListener(inputData,"input",emailAndMobileValidation);
+			continueLoginBtn && eventListener(continueLoginBtn,"click",continueLoginBtnCb);
 			signup && eventListener(signup,"click",initSignUp)
-			emailMobileOTP && eventListener(emailMobileOTP,"input",emailMobileOTPCb)
-			generateOtp && eventListener(generateOtp,"click",generateOTPCb);
-			//anuj
-			// continueLoginBtn && eventListener(continueLoginBtn,"click",continueLoginBtnCb);
-			inputData && eventListener(inputData,"blur",continueLoginBtnCb)
-			emailMobileNoOTP && eventListener(emailMobileNoOTP,"input",emailMobileNoOTPCb)
+			changelink && multipleEvent(changelink,"click",changeLoginVia)
+			forgetPwdLink && eventListener(forgetPwdLink,"click",getforgotPassword);
+			switchToOtp && eventListener(switchToOtp,"click",switchToOtpCb);
+			signInBtn && multipleEvent(signInBtn,"click",signInBtnCb);
+			resendOtp && multipleEvent(resendOtp,"click",resendOtpCb);
+			submitResetPwd && eventListener(submitResetPwd,"click",submitResetPwdCb)
 			registerbtn && eventListener(registerbtn,"click",registerUser);
+			generateOtp && eventListener(generateOtp,"click",generateOTPCb);
+			switchToPwd && eventListener(switchToPwd,"click",switchToPwdCb);
+			pwdOtp && multipleEvent(pwdOtp,"input",pwdOtpCb)
+			nonSignupInfo && multipleEvent(nonSignupInfo,"input",resetPwdValidation)
+			signIn && eventListener(signIn,"click",signInCb)
+			//for future
+			forgetContinueBtn && eventListener(forgetContinueBtn,"click",forgetContinueCb)
+			circle && multipleEvent(circle,"click",selectRadio)
 
-			// eventListener for social Login
+			//sign up events
+			signupInfo && multipleEvent(signupInfo,"input",signupInfoCb)
+			terms && multipleEvent(terms,"click",termsCb)
+
+
+
 			facebookbtn && eventListener(facebookbtn,"click",FacebookLogin);
 			googlebtn && eventListener(googlebtn,"click",GoogleplusLogin);
 			truecallerbtn && eventListener(truecallerbtn,"click",truecallerLogin);
 			linkedinbtn && eventListener(linkedinbtn,"click",linkedinLogin);
+
+
+			
+			 
+			 
+			 
+			 
+			 var verifyUser=document.getElementsByClassName("verifyUser")[0];
+			 
+			 
+			 var verifyBtn=document.getElementsByClassName("verifyBtn")[0];
+			 verifyBtn && eventListener(verifyBtn,"click",verifyBtnCb)
+
+			 
+			 verifyUser && eventListener(verifyUser,"click",verifyUserCb)
+			 
+			 //signInbtn && eventListener(signInbtn,"click",signInbtncb)
+			 //userInput && multipleEvent(userInput,"input",emailAndMobileValidation)
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			
+			
+
+			
+			
+			//passwordSignUp && multipleEvent(passwordSignUp,"input",passwordValidation);
+			// mobileOnly && eventListener(mobileOnly,"input",mobileValidation);
+			
+			//emailMobileOTP && eventListener(emailMobileOTP,"input",emailMobileOTPCb)
+			
+			//anuj
+			 
+			//inputData && eventListener(inputData,"blur",continueLoginBtnCb)
+			//emailMobileNoOTP && eventListener(emailMobileNoOTP,"input",emailMobileNoOTPCb)
+			
+
+			// eventListener for social Login
+			
 			
 		}
 		function multipleEvent(el,event,cb){
@@ -1763,24 +1849,6 @@ function resetPwdValidation(){
 			 eventListener(el[i],event,cb)
 			}
 		}
-
-		// function googleInitiateLoginCallback()
-		// {
-		// 	sendRequest("https://www.google.com",function(){alert("hii")})
-		// }
-		// function continueWithEmailCallback(){
-			
-		// 	var loginSection=document.getElementsByClassName("login-section")[0];
-		// 	var socialLogin=document.getElementsByClassName("social-login")[0];
-		// 	loginSection.classList.remove("hide");
-		// 	socialLogin.classList.add("hide");
-		// }
-
-		function validEmailCallback(event){
-			var email=event.target.value;
-		}
-		
-		//sso methods end
 			
 		function renderTemplate(configParam){
 			var temp=createHTMLTemplate(configParam);
@@ -1799,7 +1867,8 @@ function resetPwdValidation(){
 		}
 		// window.sso=function(funct,ssoConfig){
 		// 	ssoMethods[funct](ssoConfig);
-		// }	
+		// }
+
 	})()	
 },0)
 

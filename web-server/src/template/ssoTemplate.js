@@ -3,17 +3,18 @@ function LoginType(configParam){
     <div>
         <div class="socialLogin dflex ">
         ${configParam.LoginType.map((config)=>`
-            
-                <input class="truecallerNo hide" type="tel" placeholder="enter mobile number"></input>
-                    <button id="${config.name.toLowerCase()}-div" type="button" class="btn mr10 btn-${config.name.toLowerCase()}" >
-                    <img class="ico-${config.name.toLowerCase()}" src=${config.logoUrl?config.logoUrl:"ok"} alt=${config.name} ></img>
-                    ${configParam.LoginType.length<=2 ?`<span>${config.label?config.label:config.name}</span>`:""}
+                    <button id="${config.name.toLowerCase()}-div" type="button" class="btn socialBtn mr20 btn-${config.name.toLowerCase()}" >
+                    <div class="social-imageWrapper ${configParam.LoginType.length<=2?"border-right":"text-center"}"><img class="social-image ico-${config.name.toLowerCase()}" src=${config.logoUrl?config.logoUrl:"ok"} alt=${config.name} ></img></div>
+                    ${configParam.LoginType.length<=2 ?`<div class="social-text">${config.label?config.label:"with "+config.name}</div>`:""}
                     </button>
              `).join("")} 
         </div>
-        <div class="separator ovalsep">
+        ${configParam.LoginType.length?
+            `<div class="separator ovalsep">
             <span class="boldFont ">OR</span>
-        </div>
+        </div>`:""
+        }
+        
             ${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia.length==2?
                     `<div class="non-social-section">
                         <div class="emailAndMobile">
@@ -133,6 +134,18 @@ function successLogin(){
         <div class="successIcon"></div>
         <div class="success-heading boldFont">Congratulation</div>
         <div class="medFont">You are now registered with TimesPoints</div>
+        <div>Did You Know?</div>
+        <div>Your account is valid across all Times Internet properties</div>
+        <div class="channel-image">
+            <img class="" src="./src/img/toi.png"></img>
+            <img class="" src="./src/img/nbt.png"></img>
+            <img class="" src="./src/img/et.png"></img>
+            <img class="" src="./src/img/mt.png"></img>
+            <img class="" src="./src/img/gaana.png"></img>
+            <img class="" src="./src/img/indiatimes.png"></img>
+            <img class="" src="./src/img/st.png"></img>
+        </div>
+        <button   class="boldFont btn successBtn  continueBtn">Continue</button>
     </div>`
 }
 function enterotp(){
@@ -246,7 +259,7 @@ function signupform(configParam){
                   <div class="newUser-error hide">
                     <div class="error  medFont">You are not register with TimesPoints.</div>
                     
-                    <div id="emailReg-error" class="error"> Please enter valid Email</div>
+                    <div id="emailReg-error" class="error"> Please sign up</div>
                   </div>
                  
                   <!-- <div id="emailErrorSignIn" class="emailErrors"> </div> -->
@@ -310,6 +323,7 @@ export function createHTMLTemplate(configParam){
         <div class="container" style="margin-bottom: 170px" id="nonLoggedInUser">
             <div class="row">
                 <div class="mainWrapper clearfix">
+                <img class="cross-icon" src="./src/img/close-icon.png"/>
                     <div class="leftsection">
                         <a href="#" class="logobrand">
                         <img id="channelLogo" src=${configParam.channelLogo}></a>
@@ -329,7 +343,7 @@ export function createHTMLTemplate(configParam){
                                 <span>Don’t have any account?</span>
                                 <span id="signUpLink" class="link sign-up-link"> Create one.</span>
                             </div>
-                            <div class="boldFont txtcenter">TIMES LOGIN</div>
+                            
 
                         </div>
                         ${signinWithOtp(configParam)}
@@ -340,7 +354,9 @@ export function createHTMLTemplate(configParam){
                         
                         ${signupform(configParam)}
                         ${passwordChangedsuccess()}
+                    <img src="./src/img/timeslogin.png" class="timesLoginLogo"></img>
                     </div>
+
                     <div class="footer-img"></div>
                         
                     

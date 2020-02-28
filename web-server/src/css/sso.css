@@ -862,13 +862,15 @@ fieldset[disabled] a.btn {
 
 
 .btn-google {
-  border-color: #4285f4;
     margin: 0 auto;
     text-align: left !important;
-    padding: 0 !important
+    
 }
 .mr10{
     margin-right:10px;
+}
+.mr20{
+    margin-right:20px;
 }
 .btn-email {
   color: #0095da;
@@ -914,14 +916,11 @@ fieldset[disabled] a.btn {
         margin-top:10px;
 }
 
-.btn-truecaller,.btn-linkedin {
-  color: #fff;
-  background-color: #21779f;
-  border-color: #21779f;
-  margin: 0 auto;
-  margin-bottom: 0 !important;
-  font-size: 13px;
-    text-transform: uppercase
+.btn-truecaller{
+    background-color: #008fed;
+}
+.btn-twitter {
+  background-color: #00abf0;
 }
 .btn-truecaller:focus,
 .btn-truecaller.focus {
@@ -1018,9 +1017,14 @@ fieldset[disabled] .btn-danger.focus {
     border: 1px solid #e2e5e8;
     margin-bottom: 15px;
 
-
 }
-
+.cross-icon{
+    height:13px;
+    position: absolute;
+    left: 96%;
+    height: 13px;
+    margin-top: 20px;
+}
 
 .sprite {
     background: url(../img/tsprite.png) no-repeat;
@@ -1378,33 +1382,51 @@ input[type="number"] {
     width: 360px;
     margin: 0 auto;
 }
-.ico-facebook {
+.socialLogin .social-text{
+    font-size:11px;
+    color:#fff;
+    margin-left:10px;
+    white-space: normal;
+}
+.socialLogin .socialBtn{
+    display:flex;
+    border-radius: 10px;
+    align-items:center;
+    justify-content: center;
+}
+.socialBtn:last-child{
+    margin-right:0;
+}
+#google-div {
+   background-color: #e75645;
+
+}
+#facebook-div {
+    background-color: #234da0;
+}
+/*.ico-facebook {
     background-position: -2px -214px;
     width: 32px;
     height: 32px;
     display: inline-block;
-    /*padding-right: 38px;*/
+    padding-right: 38px;
 }
-.ico-google {
-    background-position: -93px -214px;
-    width: 42px;
-    height: 42px;
-    display: inline-block;
 
-}
 .ico-email {
     background-position: -202px -214px;
     width: 32px;
     height: 32px;
     display: inline-block;
-    /*padding-right: 16px*/
-}
-.btn img,.btn span{
-    float: left;
+    padding-right: 16px
+}*/
+/*.btn span{
     line-height: 32px;
     padding-left: 15px;
     font-size: 14px;
     font-weight: 700
+}*/
+.social-image{
+    width:18px;
 }
 
 
@@ -1585,6 +1607,9 @@ a {
     justify-content: space-between;
     align-items: flex-end;
 }
+.socialLogin.dflex {
+    align-items: unset;
+}
 .loginpage .reset-input{
     background: none;
     outline: none;
@@ -1647,6 +1672,7 @@ a {
     text-align:center;
 }
 .mainWrapper{
+    position:relative;
     width:800px;
     margin:auto;
     display:flex;
@@ -1674,14 +1700,18 @@ a {
     height: 61px;
     background-image: url("./../img/success.svg");
     background-repeat: no-repeat;
-    background-position-y: center;
+    background-position: center;
     padding-left: 20px;
+    margin-bottom: 13px;
+    margin-top: 45px;
 }
 .successPage{
     text-align: center;
 }
 .successPage .success-heading{
     font-size:20px;
+    color: #000000;
+    margin-bottom:5px;
 }
 .password-strength .checked{
     background-image: url("./../img/checked.svg");
@@ -1732,7 +1762,31 @@ a {
         content: '';
         flex: 1;
     }
-
+/*.socialLogin{
+        flex-wrap:wrap;
+    }*/
+.timesLoginLogo{
+    width:84px;
+    display: block;
+    margin:22px auto 16px ;
+}
+.channel-image{
+    margin-top:10px;
+}
+.channel-image img{
+    width: 27px;
+}
+.social-imageWrapper{
+    display: inline-block;
+    padding: 5px;
+    
+}
+#facebook-div .border-right{
+    border-right: 1px solid #5a78c4;
+}
+#google-div .border-right{
+    border-right: 1px solid #c13828;
+}
 
 @media screen and (max-width: 680px){
     .sign-up-wrapper{
@@ -1790,9 +1844,13 @@ a {
     .non-social-section input{
         font-size:12px;
     }
-    ..logobrand {
+    .logobrand {
         margin-top:25px;
     }
+    .cross-icon{
+        left:92%;
+    }
+
 }
 
 

@@ -1450,6 +1450,12 @@ function signInCb(){
 	toggleClass(el);
 }
 	
+function successBtnCb(){
+	var loginForm=document.getElementsByClassName("loginForm")[0];
+		toggleClass(loginForm);
+	var el=document.getElementsByClassName("successPage")[0]
+	toggleClass(el);
+}
 
 function resendOtpCb(event){
 	// var val=document.getElementsByClassName("otpPreference")[0].value
@@ -1674,34 +1680,35 @@ function verifiedEmailCb(){
 				LoginType:[
 					{
 						name:"Google",
-						logoUrl:""
+						logoUrl:"./src/img/google.png"
 					},
 
 					{
 						name:"Facebook",
 						label:"",
-						logoUrl:""
-					},
-					{
-						nonSocialLogin:{
-							loginVia:["email","mobile"],
-					 		loginCredentials:["password","otp"],
-					 		loginPrefernce:"password"
-					 	}
+						logoUrl:"./src/img/fb.png"
 					},
 					
+					
 					{
-						name:"trueCaller",
+						name:"TrueCaller",
 						label:"",
-						logoUrl:""
+						logoUrl:"./src/img/truecaller.png"
 					},
 					{
-						name:"Linkedin",
+						name:"Twitter",
 						label:"",
-						logoUrl:""
+						logoUrl:"./src/img/twitter.png"
 					},
 						
 				],
+
+				nonSocialLogin:{
+					loginVia:["email","mobile"],
+			 		loginCredentials:["password","otp"],
+			 		loginPrefernce:"password"
+			 	},
+					
 				socialCallback:cb,
 				signupForm:{
 					email:false,
@@ -1714,7 +1721,18 @@ function verifiedEmailCb(){
 				termsConditionLink:"",
 				privacyPolicyLink:"",
 			}
+			if(ssoObj.LoginType){
+				for(var i=0;i<ssoObj.LoginType.length;i++){
+					if(!ssoObj.LoginType[i].logoUrl){
+						for (var j=0;j<defaultConfig.LoginType.length;j++){
+							if(defaultConfig.LoginType[j].name==ssoObj.LoginType[i].name)
+							ssoObj.LoginType[i].logoUrl=defaultConfig.LoginType[j].logoUrl
+						}
+					}
+				}	
+			}
 			var ssoObj={...defaultConfig,...ssoObj};
+			debugger
 				channelName = ssoObj.channelName && ssoObj.channelName.toLowerCase() ;
 				ru = ssoObj.ru;
 				socialCallback=ssoObj.socialCallback;
@@ -1753,6 +1771,8 @@ function verifiedEmailCb(){
 			var pwdOtp=document.getElementsByClassName("pwd-otp");
 			var nonSignupInfo=document.getElementsByClassName("nonSignupInfo");
 			var signIn=document.getElementsByClassName("signIn")[0];
+			var successBtn=document.getElementsByClassName("successBtn")[0]
+
 			//for futire reference
 			var forgetContinueBtn=document.getElementsByClassName("forgetContinueBtn")[0]
 			var circle=document.getElementsByClassName("circle");
@@ -1783,6 +1803,7 @@ function verifiedEmailCb(){
 			pwdOtp && multipleEvent(pwdOtp,"input",pwdOtpCb)
 			nonSignupInfo && multipleEvent(nonSignupInfo,"input",resetPwdValidation)
 			signIn && eventListener(signIn,"click",signInCb)
+			successBtn && eventListener(successBtn,"click",successBtnCb)
 			//for future
 			forgetContinueBtn && eventListener(forgetContinueBtn,"click",forgetContinueCb)
 			circle && multipleEvent(circle,"click",selectRadio)

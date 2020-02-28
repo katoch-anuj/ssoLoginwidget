@@ -1732,7 +1732,6 @@ function verifiedEmailCb(){
 				}	
 			}
 			var ssoObj={...defaultConfig,...ssoObj};
-			debugger
 				channelName = ssoObj.channelName && ssoObj.channelName.toLowerCase() ;
 				ru = ssoObj.ru;
 				socialCallback=ssoObj.socialCallback;

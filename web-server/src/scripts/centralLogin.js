@@ -735,7 +735,7 @@ function FacebookLogin(channelData){
 
 }
 function GoogleplusLogin(channelData){
-	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId,function(response){debugger
+	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId,function(response){
 		signInSucess()
 	})
 }
@@ -764,6 +764,8 @@ function linkedinLogin(channelData,socialCallback){
 }
 
 function pwdOtpCb(event){
+	otp="";
+	passwordEntered="";
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){
 			otp=event.target.value
@@ -787,7 +789,13 @@ function pwdOtpCb(event){
 				enableBtn(ssoMainWrapper.querySelector(".verifyBtn"))	
 			}
 		}
-		else{
+		else if(event.target.classList.contains("forgotInput")){
+			var btn=ssoMainWrapper.querySelector(".submitResetPwd");
+				if(ssoMainWrapper.querySelector(".nonSignupPwd").value){
+					enableBtn(btn)
+				}else{
+					disableBtn(btn)
+				}
 			otp=event.target.value;
 		}
 	}else{

@@ -25,55 +25,76 @@
 		sc.defer=1;
 		sc.src = s;
 		document.getElementsByTagName("head")[0].appendChild(sc);
-	})(window,"./dist/centralLogin.bundle.js","sso");
+	})(window,"./dist/centralLogin.bundle.js","ssoWidget");
 
 	 function cb(){
 	 	alert("hello")
 	 }
-	 var ref={
-		emailOnly:false,
-		mobileOTP:false,
-		emailMobileOTP:false,
-		emailMobileNoOTP:true
-	 }
+	 // var ref={
+		// emailOnly:false,
+		// mobileOTP:false,
+		// emailMobileOTP:false,
+		// emailMobileNoOTP:true
+	 // }
 	 var nonSocialLogin={
 	 		loginVia:["email","mobile"],
-	 		loginCredentials:["password","otp"]
+	 		loginWith:["otp","Password"]
 	 }
 	var x={
 		channelName:"timespoints",
+		// desktopViewWidth:
+		// mobileViewWidth:
 		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
 		channelLogo:"./src/img/tp-logo.svg",
-		title:"",
+		//title:"",
 		//subTitle:"Login to <strong class='bold'>The Navbharat Times </strong> with your Times account",
 		ru:"",
-		id:"ssoLogin",
-		companyName:"Times Points",
+		element:"ssoLogin",
+		//companyName:"Times Points",
 		nonSocialLogin:nonSocialLogin,
-		LoginType:[
-		{
-				name:"Facebook",
+		socialLogin:[
+			{
+				type:"Facebook",
 				label:"",
-				logoUrl:""
+				logoUrl:"",
+				clientId:"117787264903013"
 			},
 			{
-				name:"Google",
-				logoUrl:""
+				type:"Google",
+				logoUrl:"",
+				label:"",
+				clientId:"103703403489-b4t4lt8mr05brqpcdrmsu0di54cmjv4f.apps.googleusercontent.com"
 			}
 
 		],
-		socialCallback:cb,
+		signInCallback:function(){alert("you are successfully logged in")},
 		signupForm:{
-			Email:true,
-			FirstName:false,
-			LastName:false,
-			MobileNumber:true,
-			OTP:true,
-			Password:true,
-			Mandatory:["email"]
+			defaultFirstName:"Guest",
+			signUpFields:{
+				"Email":{
+					placeholder:"enter email",
+					required:true
+				},
+				"MobileNumber":{
+					placeholder:"enter mobile number",
+					required:true
+				},
+				"firstName":{
+					placeholder:"enter first name",
+					required:true
+				}
+			},
+			// recaptcha:{
+			// 	required:true
+			// },
+			signupVia:["Password"],
+			// MandatoryVerifyVia:["email","mobile"]
+			MandatoryVerifyVia:["emailormobile"]
+			
 		},
 		termsConditionLink:"",
 		privacyPolicyLink:"",
+		defaultSelected:true
 
 
 		// email_password:true,
@@ -84,7 +105,7 @@
 // 	setTimeout(function(){
 // sso("init",x)
 // 	},100)
-sso("init",x);
+ssoWidget("init",x);
 // sso("print",x);
 
 

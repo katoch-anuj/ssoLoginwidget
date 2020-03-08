@@ -1,6 +1,9 @@
 button{
 	display:block;
 }
+#ssoLogin{
+    width:800px;
+}
 .hide{
 	display:none;
 }
@@ -24,7 +27,6 @@ html {
 }
 body {
   margin: 0;
-    padding-top: 30px
 }
 @font-face {
     font-family: 'Roboto-Light';
@@ -350,10 +352,10 @@ body {
 .clearfix:after,
 .dl-horizontal dd:before,
 .dl-horizontal dd:after,
-.container:before,
-.container:after,
-.container-fluid:before,
-.container-fluid:after,
+.ssoContainer:before,
+.ssoContainer:after,
+.ssoContainer-fluid:before,
+.ssoContainer-fluid:after,
 .row:before,
 .row:after {
   display: table;
@@ -361,8 +363,8 @@ body {
 }
 .clearfix:after,
 .dl-horizontal dd:after,
-.container:after,
-.container-fluid:after,
+.ssoContainer:after,
+.ssoContainer-fluid:after,
 .row:after {
   clear: both;
 }
@@ -521,12 +523,6 @@ ol ol {
 
 
 
-label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
 input[type="search"] {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -830,7 +826,6 @@ fieldset[disabled] .checkbox label {
 .btn:hover,
 .btn:focus,
 .btn.focus {
-  color: #333;
   text-decoration: none;
 }
 .btn:active,
@@ -895,10 +890,26 @@ fieldset[disabled] a.btn {
 .btn-register {
  
 }
-.unRegistered-wrapper{
+.unverified{
     background-color: #fff2de;
     padding: 10px 10px 16px 10px;
 }
+
+.consent{
+    margin-top:10px;
+    line-height: 1;
+}
+.skipLink{
+    text-align:center;
+}
+.green-tick{
+    height: 20px;
+    background-image: url("./../img/green-tick.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 30px;
+}
+
 .t-uncheck{
     background-image: url("./../img/terms-unchecked.svg");
     background-repeat: no-repeat;
@@ -1012,7 +1023,7 @@ fieldset[disabled] .btn-danger.focus {
 }
 /***** Cutom Css ****/
 
-.mainWrapper {
+.ssoMainWrapper {
     background: #fff;
     border: 1px solid #e2e5e8;
     margin-bottom: 15px;
@@ -1129,8 +1140,7 @@ fieldset[disabled] .btn-danger.focus {
 
 
 .textinput {
-  height: 3.5em;
-  margin: 0 0 10px;
+  margin: 0 0 20px;
   position: relative;
   width: 100%;
 }
@@ -1439,7 +1449,7 @@ input[type="number"] {
 }
 
 
-.loginpage .socialBlock {
+.ssoLoginWidget .socialBlock {
     background: #fff;
     text-align: center;
     position: fixed;
@@ -1540,7 +1550,7 @@ a {
   }
     .socialBlock {background: rgba(243, 244, 249, 0.6);}
     
-    .container{padding: 0}
+    .ssoContainer{padding: 0}
 
 }
 
@@ -1588,21 +1598,21 @@ a {
   opacity: .4
 }
 
-.loginpage .sign-in-Heading,.loginpage .forgot-pwd-heading,.verify-heading{
+.ssoLoginWidget .sign-in-Heading,.ssoLoginWidget .forgot-pwd-heading,.verify-heading{
   font-size: 18px;
   margin:50px 0 44px 0;
   text-align: center;
   color: #000000;
 }
-.loginpage .boldFont{
+.ssoLoginWidget .boldFont{
     font-family: "Gotham Bold";
     font-weight: bold;
 }
-.loginpage .medFont {
+.ssoLoginWidget .medFont {
     font-family: "Gotham Medium";
     font-weight: 500;
 }
-.loginpage .dflex{
+.ssoLoginWidget .dflex{
     display:flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -1610,29 +1620,29 @@ a {
 .socialLogin.dflex {
     align-items: unset;
 }
-.loginpage .reset-input{
+.ssoLoginWidget .reset-input{
     background: none;
     outline: none;
     border: none;
     width:100%;
     padding-right:10px;
 }
-.loginpage .user-login-Detail{
+.ssoLoginWidget .user-login-Detail{
     font-size:14px;
     color: #0e0523;
     
 }
-.loginpage .user-section{
+.ssoLoginWidget .user-section{
     margin-bottom:17px;
 }
-.loginpage .custom-input{
+.ssoLoginWidget .custom-input{
     align-items: center;
     padding: 17px 13px;
     border-radius: 5px;
     border: solid 1px #6d7278;
     background-color: #ffffff;
 }
-.loginpage .link{
+.ssoLoginWidget .link{
     cursor:pointer;
      color: #3587e7;
      font-size:11px;
@@ -1640,15 +1650,15 @@ a {
 .custom-input .input{
     flex:2;
 }
-.loginpage .changelink{
+.ssoLoginWidget .changelink{
     cursor:pointer;
     font-size:10px;
 }
-.loginpage .otpText{
+.ssoLoginWidget .otpText{
     color: #3587e7;
     font-size:14px;
 }
-.signInBtn-wrapper .signText{
+.signInBtn-wrapper .toggleSignIn{
     cursor:pointer;
     text-align:center;
     font-size:14px;
@@ -1664,16 +1674,16 @@ a {
     margin-top:65px;
     font-size:14px;
 }
-.leftsection{
-    width:500px;
+.ssoLeftSection{
+    width:63%;
     padding:0 75px;
 }
 .txtcenter{
     text-align:center;
 }
-.mainWrapper{
+.ssoMainWrapper{
     position:relative;
-    width:800px;
+    width:100%;
     margin:auto;
     display:flex;
     min-height: 540px;
@@ -1731,19 +1741,27 @@ a {
     background-position-y: center;
     padding-left: 20px;
 }
-.footer-img{
-       background-image: url("./../img/group-dsk.png");
+.sso-footer-img{
+    background-color: #a83bf2;
+       /*background-image: url("./../img/group-dsk.png");
         background-size: contain;
-        background-repeat: no-repeat;
+        background-repeat: no-repeat;*/
         /* height: 230px; */
-        width: 300px;
+        width: 37%;
+        /*background-position: center;*/
     }
+.sso-footer-img img{
+    width:100%;
+}
 .sign-up-wrapper{
     text-align: center;
     font-size: 18px;
     text-align: center;
     color: #000000;
     margin:50px 0 26px 0;
+}
+.signupError{
+    color:red;
 }
 .error{
     color: #ff243f;
@@ -1787,8 +1805,14 @@ a {
 #google-div .border-right{
     border-right: 1px solid #c13828;
 }
+.mt25{
+    margin-top:25px;
+}
 
 @media screen and (max-width: 680px){
+    #ssoLogin{
+        width:320px;
+    }
     .sign-up-wrapper{
         font-size: 14px;
         margin:42px 0 31px 0;
@@ -1799,23 +1823,23 @@ a {
     .continueBtn{
         width:163px;
     }
-    .leftsection{
+    .ssoLeftSection{
         width:100%;
         padding:0 25px;
     }
-    .mainWrapper{
-        max-width:320px;
+    .ssoMainWrapper{
+        width:100%;
         margin:0 20px;
         display:block;
     }
-    .loginpage .sign-in-Heading,.loginpage .forgot-pwd-heading,{
+    .ssoLoginWidget .sign-in-Heading,.ssoLoginWidget .forgot-pwd-heading,{
          font-size: 14px;
          margin:42px 0 54px 0;
     }
-    .loginpage .user-login-Detail{
+    .ssoLoginWidget .user-login-Detail{
         font-size:12px;   
     }
-    .signInBtn-wrapper .signText{
+    .signInBtn-wrapper .toggleSignIn{
         font-size:12px;
     }
     .user-section{
@@ -1835,10 +1859,10 @@ a {
     .channel-collection{
         width:320px;
     }
-    .footer-img{
-       background-image: url("./../img/group-mob.png");
+    .sso-footer-img{
+      /* background-image: url("./../img/group-mob.png");
         background-size: cover;
-        height: 230px;
+        height: 230px;*/
         width: 100%;
     }
     .non-social-section input{

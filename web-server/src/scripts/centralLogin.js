@@ -360,6 +360,7 @@ function getforgotPassword(){
 
 function getEmailForgotPasswordOtp(customInput){
 	resetOtpTimer(customInput)
+	var errElement=ssoMainWrapper.querySelector(".forgot-password").querySelector(".signIn-error") 
 	jsso.getEmailForgotPasswordOtp(inputIdentifier,function(response){
 		if(response.code==200){
 			errElement.innerHTML=""
@@ -370,6 +371,7 @@ function getEmailForgotPasswordOtp(customInput){
 }
 function getMobileForgotPasswordOtp(customInput){
 	resetOtpTimer(customInput)
+	var errElement=ssoMainWrapper.querySelector(".forgot-password").querySelector(".signIn-error") 
 	jsso.getMobileForgotPasswordOtp(inputIdentifier,function(response){
 		if(response.code==200){
 			errElement.innerHTML=""
@@ -711,7 +713,7 @@ function resendOtpCb(event){
 			getMobileLoginOtp(inputIdentifier,customInput)
 		}else if(event.target.classList.contains("verifyResentLink")){
 			resetOtpTimer(customInput)
-			var errElement=customInput.nextElementSibling
+			// var errElement=ssoMainWrapper.querySelector(".verify-user").querySelector(".signIn-error")
 			jsso.resendMobileSignUpOtp(inputIdentifier, registerUserSsoid, function(response) {
 			 	if(response.code==200){
 			 		errElement.innerHTML=""

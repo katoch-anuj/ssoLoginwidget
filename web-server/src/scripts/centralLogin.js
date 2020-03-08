@@ -711,7 +711,7 @@ function resendOtpCb(event){
 			getMobileLoginOtp(inputIdentifier,customInput)
 		}else if(event.target.classList.contains("verifyResentLink")){
 			resetOtpTimer(customInput)
-			var errElement=ssoMainWrapper.querySelector(".verify-user").querySelector(".signIn-error")
+			var errElement=customInput.nextElementSibling
 			jsso.resendMobileSignUpOtp(inputIdentifier, registerUserSsoid, function(response) {
 			 	if(response.code==200){
 			 		errElement.innerHTML=""

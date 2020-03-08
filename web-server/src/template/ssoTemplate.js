@@ -73,7 +73,8 @@ function signinWithPassword(configParam){
                 <div class="custom-input dflex">
                     <div class="input">
                     <input class="reset-input pwdPrefernce pwd-otp boldFont otpText" type="password" placeholder="Enter Password"/></div>
-                    <span class="link forget-password-link medFont">Forgot Password</span>
+                    <span class="link forget-password-link  medFont">Forgot Password</span>
+                    
                 </div>
                 <div class="error signIn-error"></div>
                 ${siginbtn("Or Sign in with OTP","pwdSubmit","switchToOtpLink",configParam)}
@@ -87,7 +88,7 @@ function signinWithOtp(configParam){
         <div class="hide sign-with-otp">
             <div class="boldFont resetHeading sign-in-Heading">Sign in with OTP </div>
             <div class="otpFormBody">
-                ${enterotp(true,"otp")}
+                ${enterotp(configParam,true,"otp")}
                 ${siginbtn("Or Sign in with Password","otpSubmit","switchToPwdLink",configParam)}
             </div>
         </div>`
@@ -139,7 +140,7 @@ function successLogin(){
     </div>`
 }
 
-function enterotp(changeLink,triggerPoint,validation,placeholder){
+function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
     return `
         <div class="dflex user-section">
             <div class="user-login-Detail">
@@ -151,7 +152,12 @@ function enterotp(changeLink,triggerPoint,validation,placeholder){
         <div class="custom-input dflex">
             <div class="input">
             <input data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="password" placeholder="${placeholder?placeholder:"Enter OTP"}"/></div>
-            <span class="link show  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
+            <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
+           <div class="timerWrapper show">
+              <div class="pie spinner" style="animation: rota ${configParam.resendOtpTimer+"s"} linear infinite"></div>
+              <div class="pie filler" style="animation: opa ${configParam.resendOtpTimer+"s"} steps(1, end) infinite reverse"></div>
+              <div class="mask" style="animation: opa ${configParam.resendOtpTimer+"s"} steps(1, end) infinite"></div>
+            </div>
             <span class="green-tick hide"></span>
         </div>
         <div class="error signIn-error"></div>`
@@ -162,9 +168,9 @@ function verifyUser(configParam){
         <div class="verify-user hide">
             <div class="boldFont resetHeading verify-heading">Verify </div>
             ${(configParam.signupForm.signUpFields["Email"] &&configParam.signupForm.signUpFields["MobileNumber"]) ?
-           `<div class=" hide verifySection" >${enterotp(false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
-            <div class="mt25 hide verifySection "> ${enterotp(false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"enter OTP(optional)"}`)}</div>`
-            :`<div class="hide verifySection">${enterotp(false,"verify","required")}</div>`
+           `<div class=" hide verifySection" >${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
+            <div class="mt25 hide verifySection "> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"enter OTP(optional)"}`)}</div>`
+            :`<div class="hide verifySection">${enterotp(configParam,false,"verify","required")}</div>`
         }   
         <button disabled class="btn verifyBtn  continueBtn "> Verify</button> 
         <div class="skipLink hide">
@@ -198,7 +204,7 @@ function forgotPassword(configParam){
                     </div>
                 </div>
                 <div class="direct-otp hide">
-                    ${enterotp(true,"forgot")}
+                    ${enterotp(configParam,true,"forgot")}
                     <div>
                     ${pwdAndConfirmPwd()}
                     <button  disabled class="boldFont btn submitResetPwd  continueBtn">Continue</button>
@@ -237,7 +243,7 @@ function signupform(configParam){
                  <div class="terms sign-up-field termsCondition ">
                     <div class=" checkTerms ${configParam.defaultSelected?"t-check":"t-uncheck"}">
                      <span>I agree to the </span>
-                     <span class="link">Term and conditions</span>
+                     <a href="configParam.termsConditionLink" class="link">Term and conditions</a>
                      </div>
                      <div class="error termsError"></div>
                  </div>

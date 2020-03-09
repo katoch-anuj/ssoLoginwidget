@@ -1763,6 +1763,9 @@ a {
 .signupError{
     color:red;
 }
+.cross-icon{
+    cursor:pointer;
+}
 .error{
     color: #d61616;
     font-size: 14px;

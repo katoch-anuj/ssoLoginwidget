@@ -35,7 +35,7 @@ function updateGTMDataLayer(obj) {
 			if(window.dataLayer){
 				window.dataLayer.push(obj);
 			}
-			if(counter==configParam.gtmCheckCounter ||gtmFlag){
+			if(counter==configParam.gtmCheckCounter || window.dataLayer){
 				clearInterval(interval);
 				console.log("gtm not supported")
 			}
@@ -152,6 +152,22 @@ function hideLoginform(){
 	var el=ssoMainWrapper.querySelectorAll(".loginForm")[0]
 	toggleClass(el)
 }
+function crossIconCb(){
+	updateGTMDataLayer({
+		'event':'click_close_signin',
+		'eventCategory':'SignIn',
+		'eventAction':'click_close_signin',
+		'eventLabel':'{{dynamic}} Modal title'
+	});
+}
+function termsConditionLinkCb(){
+	updateGTMDataLayer({
+		'event':'click_terms_and_conditions',
+		'eventCategory':'SingUp',
+		'eventAction':'click_terms_and_conditions',
+		'eventLabel':'NA'
+	})
+}
 function resetOtpTimer(parentElement){
 	var showLoader=parentElement.querySelector(".timerWrapper");
 	var resendLink=parentElement.querySelector(".resend-otp-link");
@@ -245,14 +261,25 @@ function continueLoginBtnCb(event){
 		hideSection(wrap,"show","hide");
 		 var otpSection=ssoMainWrapper.querySelector(".sign-with-otp");
 		 otpSection.querySelector(".switchToPwdLink").classList.remove("hide");
+
 		if(event.target.innerText.toLowerCase()=="continue"){
+				otpSection.querySelector(".otpSubmit").innerHTML=" Sign In";
+			 	otpSection.querySelector(".otpVerifyTitle").innerHTML="OTP has been sent to"
 				checkUserExists(event,UserExistsCb,userNotExistCb);
 			}else{
+				updateGTMDataLayer({
+					'event':'click_verify_&_signin',
+					'eventCategory':'SignIn',
+					'eventAction':'click_verify_&_signin',
+					'eventLabel':inputIdentifier
+				});
 				hideLoginform();
-			 	//el.querySelectorAll(".signInBtn")[0].innerHTML="Verify & Sign In";
-			 	otpSection.querySelector(".switchToPwdLink").classList.add("hide");
 				toggleClass(otpSection)
-			 	ssoMainWrapper.querySelectorAll(".user-otp-info")[0].innerHTML=inputIdentifier
+			 	otpSection.querySelector(".switchToPwdLink").classList.add("hide");
+			 	otpSection.querySelector(".user-otp-info").innerHTML=inputIdentifier
+			 	otpSection.querySelector(".otpSubmit").innerHTML="Verify & Sign In";
+			 	otpSection.querySelector(".otpSubmit").classList.add("verifyAndSignInBtn");
+			 	otpSection.querySelector(".otpVerifyTitle").innerHTML="Enter Verification code sent to"
 			 	if(inputIdentifier.indexOf("@")>0){
 			 		getEmailLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
 			 	}else{
@@ -288,6 +315,14 @@ function userNotExistCb(){
 }
 
 function initSignUp(event){
+	if(event){
+		updateGTMDataLayer({
+			'event':'click_create_one',
+			'eventCategory':'SingUp',
+			'eventAction':'click_create_one',
+			'eventLabel':'NA'
+		})
+	}
 	hideLoginform();
 	var signUp=ssoMainWrapper.querySelectorAll("#signUp-div")[0];
 	toggleClass(signUp);
@@ -307,14 +342,10 @@ function checkUserExists(event,UserExistsCb,userNotExistCb) {
 	      	if(response.data.shareDataAllowed == null || response.data.shareDataAllowed == "0" || response.data.termsAccepted == null || response.data.termsAccepted == "0" ) {
 	        	loginWithPermissionsFlag=5;
 	      	}   
-    	}else if(response.data.statusCode == 206){
+    	}else if(response.data.statusCode == 206 || response.data.statusCode == 205){
 	      	showSection(wrapper,"hide","show")
 	      	errElement.innerHTML=errCode[response.data.statusCode]
 	      	event.target.innerHTML="Verify & Sign In"
-	    }else if(response.data.statusCode == 205){
-	      	errElement.innerHTML=errCode[response.data.statusCode]
-	      	showSection(wrapper,"hide","show");
-	      	event.target.innerHTML="Verify & Sign In";
 	    }else {
 	       userNotExistCb()
 	      return;
@@ -326,6 +357,12 @@ function checkUserExists(event,UserExistsCb,userNotExistCb) {
 
 
 function changeLoginVia(event){
+	updateGTMDataLayer({
+		'event':'click_change_for_verification',
+		'eventCategory':'SignIn',
+		'eventAction':'click_change_for_verification',
+		'eventLabel':'inputIdentifier'
+	});
 	resetAllField()
 	var element=ssoMainWrapper.querySelectorAll(".loginForm")[0]
 	showSection(element,"hide","show")	
@@ -342,6 +379,12 @@ function getforgotPassword(){
 		hideSection(el,"show","hide")
 	var result="none";
 	if(result=="none"){
+		updateGTMDataLayer({
+			'event':'click_forgot_password',
+			'eventCategory':'SignIn',
+			'eventAction':'click_forgot_password',
+			'eventLabel':inputIdentifier
+		});
 		var el=forgotPwdSection.querySelector(".direct-otp");
 		var customInput=el.querySelector(".custom-input")
 		showSection(el,"hide","show")
@@ -390,6 +433,12 @@ function forgetContinueCb(event){
 }
 
 function switchToPwdCb(event){
+	updateGTMDataLayer({
+		'event':'click_signin_with_password',
+		'eventCategory':'SignIn',
+		'eventAction':'click_signin_with_password',
+		'eventLabel':'NA'
+	})
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 	el.querySelector(".user-pwd-info").innerHTML=inputIdentifier;
 	toggleClass(el)
@@ -398,6 +447,12 @@ function switchToPwdCb(event){
 }
 
 function switchToOtpCb(event){
+	updateGTMDataLayer({
+		'event':'click_signin_with_password',
+		'eventCategory':'SignIn',
+		'eventAction':'click_signin_with_password',
+		'eventLabel':'NA'
+	});
 	if(inputIdentifier.indexOf("@")>0){
 		getEmailLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"))
 	}else{
@@ -411,7 +466,7 @@ function switchToOtpCb(event){
 }
 
 
-function signInBtnCb(){
+function signInBtnCb(event){
 	if(event.target.classList.contains("pwdSubmit")){
 		var errElement=ssoMainWrapper.querySelector(".sign-with-pwd").querySelector(".signIn-error");
 	}else{
@@ -420,6 +475,22 @@ function signInBtnCb(){
 	var input = otp || passwordEntered;
 	if(inputIdentifier.indexOf("@")>0){
 		jsso.verifyEmailLogin(inputIdentifier,input,function(response){
+			if(event.target.classList.contains("verifyAndSignInBtn")){
+		 		updateGTMDataLayer({
+					'event':'click_verify_&_signin_after_entering_OTP',
+					'eventCategory':'SignIn',
+					'eventAction':'click_verify_&_signin_after_entering_OTP',
+					'eventLabel':response.code == 200?"success":'failure'
+				})
+		 	}
+		 	else{
+		 		updateGTMDataLayer({
+						'event':'click_signin_after_entering_password',
+						'eventCategory':'SignIn',
+						'eventAction':'click_signin_after_entering_password',
+						'eventLabel':response.code == 200?"success":'failure'
+					})
+		 	}
 			 if (response.code == 200) {
 			 	errElement.innerHTML=""
 				signInSucess()
@@ -429,6 +500,21 @@ function signInBtnCb(){
 		})
 	}else{
 		jsso.verifyMobileLogin(inputIdentifier,input,function(response){
+			if(event.target.classList.contains("verifyAndSignInBtn")){
+		 		updateGTMDataLayer({
+					'event':'click_verify_&_signin_after_entering_OTP',
+					'eventCategory':'SignIn',
+					'eventAction':'click_verify_&_signin_after_entering_OTP',
+					'eventLabel':response.code == 200?"success":'failure'
+				})
+		 	}else{
+		 		updateGTMDataLayer({
+					'event':'click_signin_after_entering_otp',
+					'eventCategory':'SignIn',
+					'eventAction':'click_signin_after_entering_otp',
+					'eventLabel':response.code == 200?"success":'failure'
+				})
+		 	}
 			 if (response.code == 200) {
 			 	errElement.innerHTML=""
 				signInSucess()
@@ -557,6 +643,12 @@ function signupValidation(event){
 function signUpUser(event,firstName, lastName, gender, dob, email, mobile, password, isSendOffer,recaptcha, termsAccepted, shareDataAllowed,timespointsPolicy){
 	if(configParam.signupForm.recaptcha){
 		jsso.registerUserRecaptcha(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, recaptcha, termsAccepted, shareDataAllowed, timespointsPolicy, function(response){
+			updateGTMDataLayer({
+				'event':'click_sign_up',
+				'eventCategory':'SingUp',
+				'eventAction':'click_sign_up',
+				'eventLabel':response.code=200?"success":errCode[response.code]
+			})
 			if (response.code != 200) {
 				console.log("not 200");
 				console.log(response.code + ": " + response.message);
@@ -572,6 +664,12 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 	}
 	else if(configParam.signupForm.signupVia[0].toLowerCase()=="password"){
 		jsso.registerUser(firstName, lastName, gender, dob, email, mobile, password, isSendOffer , termsAccepted,shareDataAllowed, timespointsPolicy, function(response) {
+			updateGTMDataLayer({
+				'event':'click_sign_up',
+				'eventCategory':'SingUp',
+				'eventAction':'click_sign_up',
+				'eventLabel':response.code=200?"success":errCode[response.code]
+			})
 			if (response.code != 200) {
 				console.log("not 200");
 				console.log(response.code + ": " + response.message);
@@ -587,6 +685,12 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 
 	}else if(configParam.signupForm.signupVia[0].toLowerCase()=="otp" && !configParam.signupForm.signUpFields["Email"] ){
     	jsso.registerOnlyMobile(firstName, lastName, gender, mobile, termsAccepted, shareDataAllowed, timespointsPolicy, function(response){
+    		updateGTMDataLayer({
+				'event':'click_sign_up',
+				'eventCategory':'SingUp',
+				'eventAction':'click_sign_up',
+				'eventLabel':response.code=200?"success":errCode[response.code]
+			})
     		if (response.code != 200) {
 				console.log("not 200");
 				console.log(response.code + ": " + response.message);
@@ -682,6 +786,13 @@ function passwordValidation(pwdStrength){
 }
 
 function signInCb(){
+	updateGTMDataLayer({
+		'event':'click_signin',
+		'eventCategory':'SignIn',
+		'eventAction':'click_signin',
+		'eventLabel':ssoMainWrapper.querySelector(".password-changed").querySelector(".forgot-pwd-heading")
+	});
+	
 	var loginForm=ssoMainWrapper.querySelector(".loginForm");
 		toggleClass(loginForm);
 	var el=ssoMainWrapper.querySelector(".password-changed")
@@ -693,8 +804,20 @@ function resendOtpCb(event){
 	var customInput=event.target.parentElement;
 	if(inputIdentifier.indexOf("@")>0){
 		if(event.target.classList.contains("otpResentLink")){
+			updateGTMDataLayer({
+				'event':'click_resend_otp_signin',
+				'eventCategory':'SignIn',
+				'eventAction':'click_resend_otp_signin',
+				'eventLabel':ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".sign-in-Heading").innerHTML
+			})
 			getEmailLoginOtp(inputIdentifier,customInput)
 		}else if(event.target.classList.contains("verifyResentLink")){
+			updateGTMDataLayer({
+				'event':'click_resend_otp_signup',
+				'eventCategory':'SingUp',
+				'eventAction':'click_resend_otp_signup',
+				'eventLabel':inputIdentifier
+			})
 			resetOtpTimer(customInput)
 			var errElement=customInput.nextElementSibling
 			jsso.resendEmailSignUpOtp(inputIdentifier, registerUserSsoid, function(response) {
@@ -705,11 +828,23 @@ function resendOtpCb(event){
 				}		
 			});
 		}else if(event.target.classList.contains("forgotResentLink")){
+			updateGTMDataLayer({
+				'event':'click_resend_otp_signin',
+				'eventCategory':'SignIn',
+				'eventAction':'click_resend_otp_signin',
+				'eventLabel':ssoMainWrapper.querySelector(".forgot-password").querySelector(".forgot-pwd-heading").innerHTML
+			})
 			var errElement=ssoMainWrapper.querySelector(".direct-otp").querySelector(".signIn-error")
 			getEmailForgotPasswordOtp(customInput)
 		}
 	}else{
 		if(event.target.classList.contains("otpResentLink")){
+			updateGTMDataLayer({
+				'event':'click_resend_otp_signin',
+				'eventCategory':'SignIn',
+				'eventAction':'click_resend_otp_signin',
+				'eventLabel':ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".sign-in-Heading").innerHTML
+			})
 			getMobileLoginOtp(inputIdentifier,customInput)
 		}else if(event.target.classList.contains("verifyResentLink")){
 			resetOtpTimer(customInput)
@@ -722,6 +857,12 @@ function resendOtpCb(event){
 				}
 			});
 		}else if(event.target.classList.contains("forgotResentLink")){
+			updateGTMDataLayer({
+				'event':'click_resend_otp_signin',
+				'eventCategory':'SignIn',
+				'eventAction':'click_resend_otp_signin',
+				'eventLabel':ssoMainWrapper.querySelector(".forgot-password").querySelector(".forgot-pwd-heading").innerHTML
+			})
 			getMobileForgotPasswordOtp(customInput)		
 		}
 	}
@@ -730,12 +871,26 @@ function resendOtpCb(event){
 //social Login
 function FacebookLogin(channelData){
 	jsso.socialLogin("FACEBOOK",configParam.facebookClientId,function(response){
+		updateGTMDataLayer({
+			'event':'signin_with_facebook',
+			'eventCategory':'SignIn',
+			'eventAction':'signin_with_facebook',
+			'eventLabel':'NA'
+		})
+
 		signInSucess()
 	})
 
 }
 function GoogleplusLogin(channelData){
 	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId,function(response){
+		updateGTMDataLayer({
+			'event':'signin_with_google',
+			'eventCategory':'SignIn',
+			'eventAction':'signin_with_google',
+			'eventLabel':'NA'
+		});
+
 		signInSucess()
 	})
 }
@@ -805,6 +960,12 @@ function pwdOtpCb(event){
 	}	
 }
 function skipLinkCb(){
+	updateGTMDataLayer({
+		'event':'click_skip',
+		'eventCategory':'SignIn',
+		'eventAction':'click_skip_signin',
+		'eventLabel':inputIdentifier
+	})
 	var loginForm=ssoMainWrapper.querySelector(".loginForm");
 	var footerImg=ssoMainWrapper.querySelector(".sso-footer-img");
 	var successPage=ssoMainWrapper.querySelector(".successPage");
@@ -954,9 +1115,22 @@ function verifyMobileForgotPasswordCb(){
 function verifyEmailForgotPassword(){
 	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
 	jsso.verifyEmailForgotPassword(inputIdentifier,otp,passwordEntered,passwordEntered,function(response){
+		
 		if(response.code==200){
+			updateGTMDataLayer({
+			'event':'click_continue_after_entering_new_password',
+			'eventCategory':'SignIn',
+			'eventAction':'click_continue_after_entering_new_password',
+			'eventLabel':'Password Changed Successfully '//or dynamic error'
+		});
 			verifyEmailForgotPasswordCb()
 		}else{
+			updateGTMDataLayer({
+				'event':'click_continue_after_entering_new_password',
+				'eventCategory':'SignIn',
+				'eventAction':'click_continue_after_entering_new_password',
+				'eventLabel':errCode[response.code]
+			});
 			pwdError.innerHTML=errCode[response.code]
 		}
 	})
@@ -965,8 +1139,20 @@ function verifyMobileForgotPassword(){
 	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
 	jsso.verifyMobileForgotPassword(inputIdentifier,otp,passwordEntered,passwordEntered,function(response){
 		if(response.code==200){
+			updateGTMDataLayer({
+			'event':'click_continue_after_entering_new_password',
+			'eventCategory':'SignIn',
+			'eventAction':'click_continue_after_entering_new_password',
+			'eventLabel':'Password Changed Successfully '//or dynamic error'
+		});
 			verifyEmailForgotPasswordCb()
 		}else{
+			updateGTMDataLayer({
+				'event':'click_continue_after_entering_new_password',
+				'eventCategory':'SignIn',
+				'eventAction':'click_continue_after_entering_new_password',
+				'eventLabel':errCode[response.code]
+			});
 			pwdError.innerHTML=errCode[response.code]
 		}
 	})
@@ -993,7 +1179,15 @@ function MobileNumberRestriction(event){
 	}
 }
 
-function signInSucess(){
+function signInSucess(event){
+	if(event.target){
+		updateGTMDataLayer({
+			'event':'click_continue_registered_with_'+configParam.channelName,
+			'eventCategory':'SingUp',
+			'eventAction':'click_continue_registered',
+			'eventLabel':configParam.channelName
+		})
+	}
 	if(configParam.ru){
 		window.location.href=configParam.ru;
 	}else{
@@ -1001,18 +1195,6 @@ function signInSucess(){
 	}
 }
 	
-function verifiedMobileCb(){
-
-}
-function verifiedEmailCb(){
-
-}
-
-	
-
-
-
-
 
 
 
@@ -1120,8 +1302,9 @@ function verifiedEmailCb(){
 			var signIn=ssoMainWrapper.querySelector(".signIn");
 			var successBtn=ssoMainWrapper.querySelector(".successBtn");
 			var MobileNumber=ssoMainWrapper.querySelector(".mobilenumber");
-
+			var crossIcon=ssoMainWrapper.querySelector(".cross-icon")
 			var skipLink=ssoMainWrapper.querySelector(".skip");
+			var termsConditionLink=ssoMainWrapper.querySelector(".termsConditionLink")
 			//for futire reference
 			var forgetContinueBtn=ssoMainWrapper.querySelectorAll(".forgetContinueBtn")[0]
 			var circle=ssoMainWrapper.querySelectorAll(".circle");
@@ -1135,7 +1318,8 @@ function verifiedEmailCb(){
 			 var verifyUser=ssoMainWrapper.querySelectorAll(".verifyBtn")[0];
 
 			 var signUpfield=ssoMainWrapper.querySelectorAll(".sign-up-field");
-
+			 termsConditionLink && eventListener(termsConditionLink,"click",termsConditionLinkCb)
+			 crossIcon && eventListener(crossIcon,"click",crossIconCb)
 			skipLink && eventListener(skipLink,"click",skipLinkCb)
 			MobileNumber && eventListener(MobileNumber,"input",MobileNumberRestriction)
 			inputData && eventListener(inputData,"input",emailAndMobileValidation);

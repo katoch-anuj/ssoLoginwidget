@@ -77,7 +77,7 @@ function signinWithPassword(configParam){
                     
                 </div>
                 <div class="error signIn-error"></div>
-                ${siginbtn("Or Sign in with OTP","pwdSubmit","switchToOtpLink",configParam)}
+                ${siginbtn("Or Sign in with OTP","pwdSubmit","switchToOtpLink","Sign In",configParam)}
             </div>
         </div>`
 
@@ -89,16 +89,16 @@ function signinWithOtp(configParam){
             <div class="boldFont resetHeading sign-in-Heading">Sign in with OTP </div>
             <div class="otpFormBody">
                 ${enterotp(configParam,true,"otp")}
-                ${siginbtn("Or Sign in with Password","otpSubmit","switchToPwdLink",configParam)}
+                ${siginbtn("Or Sign in with Password","otpSubmit","switchToPwdLink","Sign In",configParam)}
             </div>
         </div>`
 }
-function siginbtn(text,btnClass,className,configParam){
+function siginbtn(linktext,btnClass,className,btnText,configParam){
     return`
         <div class="signInBtn-wrapper">
-            <button disabled class="btn signInBtn ${btnClass} continueBtn "> Continue</button>
+            <button disabled class="btn signInBtn ${btnClass} continueBtn "> ${btnText}</button>
             ${configParam.nonSocialLogin.loginWith.length>1?
-                `<div class="link toggleSignIn ${className}">${text}</div>`:""
+                `<div class="link toggleSignIn ${className}">${linktext}</div>`:""
             }   
         </div>`  
 }
@@ -144,7 +144,7 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
     return `
         <div class="dflex user-section">
             <div class="user-login-Detail">
-                <div class="medFont">${triggerPoint=="verify"?"Enter verification code sent to":"OTP has been sent to"}</div>
+                <div class="medFont otpVerifyTitle">${triggerPoint=="verify"?"Enter verification code sent to":"OTP has been sent to"}</div>
                 <div class="medFont user-otp-info"></div>
             </div>
             ${changeLink?`<div class="link  changelink medFont">Change</div>`:""}    
@@ -243,7 +243,7 @@ function signupform(configParam){
                  <div class="terms sign-up-field termsCondition ">
                     <div class=" checkTerms ${configParam.defaultSelected?"t-check":"t-uncheck"}">
                      <span>I agree to the </span>
-                     <a href="configParam.termsConditionLink" class="link">Term and conditions</a>
+                     <a href=${configParam.termsConditionLink} class="link termsConditionLink">Term and conditions</a>
                      </div>
                      <div class="error termsError"></div>
                  </div>

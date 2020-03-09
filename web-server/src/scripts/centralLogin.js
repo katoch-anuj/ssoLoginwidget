@@ -168,6 +168,9 @@ function termsConditionLinkCb(){
 		'eventLabel':'NA'
 	})
 }
+function eyeIconCb(){
+ event.target.parentElement.querySelector(".password-field").setAttribute("type","text");
+}
 function resetOtpTimer(parentElement){
 	var showLoader=parentElement.querySelector(".timerWrapper");
 	var resendLink=parentElement.querySelector(".resend-otp-link");
@@ -337,11 +340,17 @@ function checkUserExists(event,UserExistsCb,userNotExistCb) {
       	var wrapper=ssoMainWrapper.querySelector(".unverified");
   		var errElement=wrapper.querySelector(".unverified-error");
       	//var btn=ssoMainWrapper.querySelectorAll(".continueLoginBtn")[0]
+      	updateGTMDataLayer({
+			'event':inputIdentifier.indexOf("@")>0?'click_continue_email':"click_conitnue_phonenumber",
+			'eventCategory':'SignIn',
+			'eventAction':inputIdentifier.indexOf("@")>0?'click_continue_email':'click_conitnue_phonenumber',
+			'eventLabel':response.data.statusCode == 213 || response.data.statusCode == 212?"success":"falure,"+errCode[response.data.statusCode]
+      	})
     	if (response.data.statusCode == 213 || response.data.statusCode == 212) {
 	      	UserExistsCb();
-	      	if(response.data.shareDataAllowed == null || response.data.shareDataAllowed == "0" || response.data.termsAccepted == null || response.data.termsAccepted == "0" ) {
-	        	loginWithPermissionsFlag=5;
-	      	}   
+	      	// if(response.data.shareDataAllowed == null || response.data.shareDataAllowed == "0" || response.data.termsAccepted == null || response.data.termsAccepted == "0" ) {
+	       //  	loginWithPermissionsFlag=5;
+	      	// }   
     	}else if(response.data.statusCode == 206 || response.data.statusCode == 205){
 	      	showSection(wrapper,"hide","show")
 	      	errElement.innerHTML=errCode[response.data.statusCode]
@@ -480,7 +489,7 @@ function signInBtnCb(event){
 					'event':'click_verify_&_signin_after_entering_OTP',
 					'eventCategory':'SignIn',
 					'eventAction':'click_verify_&_signin_after_entering_OTP',
-					'eventLabel':response.code == 200?"success":'failure'
+					'eventLabel':response.code == 200?"success":'failure,'+errCode[response.code]
 				})
 		 	}
 		 	else{
@@ -488,7 +497,7 @@ function signInBtnCb(event){
 						'event':'click_signin_after_entering_password',
 						'eventCategory':'SignIn',
 						'eventAction':'click_signin_after_entering_password',
-						'eventLabel':response.code == 200?"success":'failure'
+						'eventLabel':response.code == 200?"success":'failure,'+errCode[response.code]
 					})
 		 	}
 			 if (response.code == 200) {
@@ -505,14 +514,14 @@ function signInBtnCb(event){
 					'event':'click_verify_&_signin_after_entering_OTP',
 					'eventCategory':'SignIn',
 					'eventAction':'click_verify_&_signin_after_entering_OTP',
-					'eventLabel':response.code == 200?"success":'failure'
+					'eventLabel':response.code == 200?"success":'failure,'+errCode[response.code]
 				})
 		 	}else{
 		 		updateGTMDataLayer({
 					'event':'click_signin_after_entering_otp',
 					'eventCategory':'SignIn',
 					'eventAction':'click_signin_after_entering_otp',
-					'eventLabel':response.code == 200?"success":'failure'
+					'eventLabel':response.code == 200?"success":'failure,'+errCode[response.code]
 				})
 		 	}
 			 if (response.code == 200) {
@@ -647,7 +656,7 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":errCode[response.code]
+				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
 			})
 			if (response.code != 200) {
 				console.log("not 200");
@@ -668,7 +677,7 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":errCode[response.code]
+				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
 			})
 			if (response.code != 200) {
 				console.log("not 200");
@@ -689,7 +698,7 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":errCode[response.code]
+				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
 			})
     		if (response.code != 200) {
 				console.log("not 200");
@@ -962,8 +971,8 @@ function pwdOtpCb(event){
 function skipLinkCb(){
 	updateGTMDataLayer({
 		'event':'click_skip',
-		'eventCategory':'SignIn',
-		'eventAction':'click_skip_signin',
+		'eventCategory':'SingUp',
+		'eventAction':'click_skip_signup',
 		'eventLabel':inputIdentifier
 	})
 	var loginForm=ssoMainWrapper.querySelector(".loginForm");
@@ -1310,6 +1319,7 @@ function signInSucess(event){
 			var circle=ssoMainWrapper.querySelectorAll(".circle");
 			var terms=ssoMainWrapper.querySelectorAll(".terms");
 
+			var eyeIcon=ssoMainWrapper.querySelectorAll(".eye-icon");
 			var facebookbtn = ssoMainWrapper.querySelectorAll("#facebook-div")[0];
 			var googlebtn = ssoMainWrapper.querySelectorAll("#google-div")[0];
 			var truecallerbtn = ssoMainWrapper.querySelectorAll("#truecaller-div")[0];
@@ -1318,6 +1328,8 @@ function signInSucess(event){
 			 var verifyUser=ssoMainWrapper.querySelectorAll(".verifyBtn")[0];
 
 			 var signUpfield=ssoMainWrapper.querySelectorAll(".sign-up-field");
+
+			 eyeIcon && multipleEvent(eyeIcon,"click",eyeIconCb)
 			 termsConditionLink && eventListener(termsConditionLink,"click",termsConditionLinkCb)
 			 crossIcon && eventListener(crossIcon,"click",crossIconCb)
 			skipLink && eventListener(skipLink,"click",skipLinkCb)

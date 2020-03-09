@@ -890,7 +890,9 @@ fieldset[disabled] a.btn {
 .btn-register {
  
 }
-.unverified{
+.unverified.show{
+    display: flex;
+    align-items: center;
     background-color: #fff2de;
     padding: 10px 10px 16px 10px;
 }
@@ -901,6 +903,20 @@ fieldset[disabled] a.btn {
 }
 .skipLink{
     text-align:center;
+}
+.notify-icon{
+    height: 20px;
+    background-image: url("./../img/alert.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 30px;
+}
+.eye-icon{
+    height: 18px;
+    background-image: url("./../img/eye.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    padding-left: 30px;
 }
 .green-tick{
     height: 20px;

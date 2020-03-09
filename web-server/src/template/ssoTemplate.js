@@ -106,8 +106,11 @@ function siginbtn(linktext,btnClass,className,btnText,configParam){
 function pwdAndConfirmPwd(signup){
     return `   
         <div class=" ${signup?"signupPwdSection sign-up-field":"nonSignupPwdSection"}">
-            <div class="form-group textinput">
-                <input id="passwordSignUp" required name="password" placeholder="Password" type="password" class="form-control password-field ${signup?"signupPwd ":"  nonSignupPwd  "}" />
+            <div class="custom-input dflex textinput">
+                <div class="input">
+                    <input id="passwordSignUp" required name="password" placeholder="Password" type="password" class=" reset-input password-field ${signup?"signupPwd ":"  nonSignupPwd  "}" />
+                </div>
+                <span class="eye-icon"></span>
                 <label for="passwordSignUp"></label>
             <div class="password-error error"></div>
             </div>

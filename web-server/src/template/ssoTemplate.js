@@ -112,8 +112,10 @@ function pwdAndConfirmPwd(signup){
                 </div>
                 <span class="eye-icon"></span>
                 <label for="passwordSignUp"></label>
-            <div class="password-error error"></div>
             </div>
+                <div class="medFont passwordInfo">Can't match last 3 passwords.</div>
+            <div class="password-error error"></div>
+            
             <div class="password-strength  hide">
                 <li class="uncheck chk1">6-14 characters</li>
                 <li class="uncheck chk2">1 Lower case character (a-z)</li>

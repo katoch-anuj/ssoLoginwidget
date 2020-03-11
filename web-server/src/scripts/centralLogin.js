@@ -930,9 +930,15 @@ function linkedinLogin(channelData,socialCallback){
 function pwdOtpCb(event){
 	otp="";
 	passwordEntered="";
+	var otpLength="";
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){
-			otp=event.target.value
+				var otpLength=event.target.value.length;
+				if(otpLength>6){
+					event.target.value=event.target.value.substring(0,otpLength-1)
+				}
+			otp=event.target.value;
+
 			enableBtn(ssoMainWrapper.querySelector(".otpSubmit"))	
 		}else if(event.target.classList.contains("pwdPrefernce")){
 			passwordEntered=event.target.value;
@@ -959,6 +965,9 @@ function pwdOtpCb(event){
 					enableBtn(btn)
 				}else{
 					disableBtn(btn)
+				}
+			if(otpLength>6){
+					event.target.value=event.target.value.substring(0,otpLength-1)
 				}
 			otp=event.target.value;
 		}
@@ -1133,7 +1142,11 @@ function verifyEmailForgotPassword(){
 			'eventLabel':'Password Changed Successfully '//or dynamic error'
 		});
 			verifyEmailForgotPasswordCb()
-		}else{
+		}else if(response.code==418){
+			pwdError.innerHTML="";
+			ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".passwordInfo").classList.add("error")
+		}
+		else{
 			updateGTMDataLayer({
 				'event':'click_continue_after_entering_new_password',
 				'eventCategory':'SignIn',
@@ -1142,6 +1155,7 @@ function verifyEmailForgotPassword(){
 			});
 			pwdError.innerHTML=errCode[response.code]
 		}
+		
 	})
 }
 function verifyMobileForgotPassword(){
@@ -1155,7 +1169,11 @@ function verifyMobileForgotPassword(){
 			'eventLabel':'Password Changed Successfully '//or dynamic error'
 		});
 			verifyEmailForgotPasswordCb()
-		}else{
+		}else if(response.code==418){
+			pwdError.innerHTML="";
+			ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".passwordInfo").classList.add("error")
+		}
+		else{
 			updateGTMDataLayer({
 				'event':'click_continue_after_entering_new_password',
 				'eventCategory':'SignIn',
@@ -1164,6 +1182,7 @@ function verifyMobileForgotPassword(){
 			});
 			pwdError.innerHTML=errCode[response.code]
 		}
+		
 	})
 }
 

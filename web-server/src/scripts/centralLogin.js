@@ -952,6 +952,10 @@ function pwdOtpCb(event){
 					if(component[0].value && component[1].value){
 						enableBtn(ssoMainWrapper.querySelector(".verifyBtn"))	
 					}
+				}else if(validP1=="optional" && validP2=="optional"){
+					if(component[0].value || component[1].value){
+						enableBtn(ssoMainWrapper.querySelector(".verifyBtn"))	
+					}
 				}else if(event.target.getAttribute("data-valid")=="required" ){
 					enableBtn(ssoMainWrapper.querySelector(".verifyBtn"))	
 				}	
@@ -986,15 +990,15 @@ function skipLinkCb(){
 	})
 	var loginForm=ssoMainWrapper.querySelector(".loginForm");
 	var footerImg=ssoMainWrapper.querySelector(".sso-footer-img");
-	var successPage=ssoMainWrapper.querySelector(".successPage");
+	var ssoSuccessPage=ssoMainWrapper.querySelector(".ssoSuccessPage");
 	var component=ssoMainWrapper.querySelector(".verify-user");
-	verifySuccessCb(component,footerImg,loginForm,successPage);
+	verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage);
 }
-function verifySuccessCb(component,footerImg,loginForm,successPage){
+function verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage){
 	hideSection(footerImg,"show","hide");
 	hideSection(loginForm,"show","hide");
 	hideSection(component,"show","hide");
-	showSection(successPage,"hide","show")
+	showSection(ssoSuccessPage,"hide","show")
 }
 function verifyfailure(){
 
@@ -1003,7 +1007,7 @@ function verifyUserCb(event){
 	disableBtn(event.target);
 	var loginForm=ssoMainWrapper.querySelector(".loginForm");
 	var footerImg=ssoMainWrapper.querySelector(".sso-footer-img");
-	var successPage=ssoMainWrapper.querySelector(".successPage");
+	var ssoSuccessPage=ssoMainWrapper.querySelector(".ssoSuccessPage");
 	var component=ssoMainWrapper.querySelector(".verify-user");
 	var verifyInput=component.querySelectorAll(".verifyInput");
 	var userOtp=component.querySelectorAll(".user-otp-info");
@@ -1045,10 +1049,19 @@ function verifyUserCb(event){
 				verifyObject["mobile"]["greentick"]=component.querySelectorAll(".green-tick")[i];
 			}
 		}
+		var subHeading=ssoMainWrapper.querySelector(".success-subHeading");
 		if(Object.keys(verifyObject).length==2){
 			Promise.all([verifyMobileSignUpPromise(verifyObject.mobile.number,registerUserSsoid,verifyObject.mobile.value),verifyEmailSignUpPromise(verifyObject.email.id,registerUserSsoid,verifyObject.email.value)]).then(function(response){
 				enableBtn(event.target)
 				//first promise
+				if(response[0].code==200 && response[1].code==200){
+					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.mobile.number+"/"+verifyObject.email.id
+				}
+				else if(response[0].code==200 && response[1].code!=200){
+					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.mobile.number
+				}else if(response[1].code==200 && response[0].code!=200){
+					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.email.id
+				}
 				if(response[0].code==200){
 					verifyObject.mobile.errElement.innerHTML=""
 					verifyObject.mobile.element.setAttribute("disabled",true)
@@ -1075,7 +1088,8 @@ function verifyUserCb(event){
 					verifyObject.email.errElement.innerHTML=errCode[response[1].code]
 				}
 				if(response[0].code==200 && response[1].code==200){
-					verifySuccessCb(component,footerImg,loginForm,successPage);
+					
+					verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage);
 				}
 			})		
 
@@ -1084,8 +1098,13 @@ function verifyUserCb(event){
 		verifyEmailSignUpPromise(verifyObject.email.id,registerUserSsoid,verifyObject.email.value).then(function(response){
 			enableBtn(event.target)
 			if(response.code==200){
+				if(subHeading.innerHTML){
+					subHeading.append("/"+verifyObject.email.id)
+				}else{
+					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.email.id
+				}
 				verifyObject.email.errElement.innerHTML=""
-				verifySuccessCb(component,footerImg,loginForm,successPage)
+				verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage)
 			}else{
 				showSection(skipLink,"hide","show")
 				verifyObject.email.errElement.innerHTML=errCode[response.code]
@@ -1097,8 +1116,13 @@ function verifyUserCb(event){
 		verifyMobileSignUpPromise(verifyObject.mobile.number,registerUserSsoid,verifyObject.email.value).then(function(response){
 			enableBtn(event.target)
 			if(response.code==200){
+				if(subHeading.innerHTML){
+					subHeading.append("/"+verifyObject.mobile.number)
+				}else{
+					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.mobile.number
+				}
 				verifyObject.mobile.errElement.innerHTML=""
-				verifySuccessCb(component,footerImg,loginForm,successPage)
+				verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage)
 			}else{
 				showSection(skipLink,"hide","show")
 				verifyObject.mobile.errElement.innerHTML=errCode[response.code]

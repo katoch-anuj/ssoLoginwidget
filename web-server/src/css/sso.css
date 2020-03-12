@@ -900,10 +900,15 @@ fieldset[disabled] a.btn {
    color: #000000;
    font-size:10px;
    margin-top: -15px;
+   margin-bottom:18px;
 }
 .consent{
     margin-top:10px;
     line-height: 1;
+}
+.success-subHeading{
+    font-size:14px;
+    color: #000000;
 }
 .skipLink{
     text-align:center;
@@ -1726,7 +1731,7 @@ a {
     margin-top:17px;
     color: #0e0523;
 }
-.successPage .successIcon{
+.ssoSuccessPage .successIcon{
     height: 61px;
     background-image: url("./../img/success.svg");
     background-repeat: no-repeat;
@@ -1735,13 +1740,14 @@ a {
     margin-bottom: 13px;
     margin-top: 45px;
 }
-.successPage{
+.ssoSuccessPage{
     text-align: center;
 }
-.successPage .success-heading{
+.ssoSuccessPage .success-heading{
     font-size:20px;
     color: #000000;
     margin-bottom:5px;
+    margin-bottom: 15px;
 }
 .password-strength .checked{
     background-image: url("./../img/checked.svg");

@@ -126,10 +126,11 @@ function pwdAndConfirmPwd(signup){
         
 }
 function successLogin(){
-    return`<div class="successPage hide">
+    return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading boldFont">Congratulation</div>
-        <div class="medFont">You are now registered with TimesPoints</div>
+        <div class="boldFont success-subHeading">You are now registered with TimesPoints and your user id is: 9582922212
+</div>
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>
         <div class="channel-image">

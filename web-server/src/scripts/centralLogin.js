@@ -44,7 +44,10 @@ function updateGTMDataLayer(obj) {
 	}
 }
 
-
+function addActive(el){
+	ssoMainWrapper.querySelector(".active") && ssoMainWrapper.querySelector(".active").classList.remove("active");
+	el.classList.add("active");
+}
 
 
 function eventListener(element,event,callback,bubble=false){
@@ -157,13 +160,13 @@ function crossIconCb(){
 		'event':'click_close_signin',
 		'eventCategory':'SignIn',
 		'eventAction':'click_close_signin',
-		'eventLabel':'{{dynamic}} Modal title'
+		'eventLabel':ssoMainWrapper.querySelector(".active").querySelector(".modalTitle").innerHTML
 	});
 	console.log({
 		'event':'click_close_signin',
 		'eventCategory':'SignIn',
 		'eventAction':'click_close_signin',
-		'eventLabel':'{{dynamic}} Modal title'
+		'eventLabel':ssoMainWrapper.querySelector(".active").querySelector(".modalTitle").innerHTML
 	})
 }
 function termsConditionLinkCb(){
@@ -295,6 +298,7 @@ function continueLoginBtnCb(event){
 					'eventLabel':inputIdentifier
 				})
 				hideLoginform();
+				addActive(otpSection)
 				toggleClass(otpSection)
 			 	otpSection.querySelector(".switchToPwdLink").classList.add("hide");
 			 	otpSection.querySelector(".user-otp-info").innerHTML=inputIdentifier
@@ -319,10 +323,12 @@ function UserExistsCb(){
 	 		var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 			ssoMainWrapper.querySelector(".user-pwd-info").innerHTML=inputIdentifier
 			toggleClass(el)
+			addActive(el)
 		
 	 }else{
 	 	var el=ssoMainWrapper.querySelectorAll(".sign-with-otp")[0];
 		toggleClass(el)
+		addActive(el)
 	 	ssoMainWrapper.querySelectorAll(".user-otp-info")[0].innerHTML=inputIdentifier
 	 	if(inputIdentifier.indexOf("@")>0){
 	 		getEmailLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
@@ -352,6 +358,7 @@ function initSignUp(event){
 	}
 	hideLoginform();
 	var signUp=ssoMainWrapper.querySelectorAll("#signUp-div")[0];
+	addActive(signUp)
 	toggleClass(signUp);
 	if(!event){
 		var el=ssoMainWrapper.querySelectorAll(".newUser-error")[0];
@@ -383,6 +390,7 @@ function checkUserExists(event,UserExistsCb,userNotExistCb) {
 	      	// }   
     	}else if(response.data.statusCode == 206 || response.data.statusCode == 205){
 	      	showSection(wrapper,"hide","show")
+	      	addActive(wrapper)
 	      	errElement.innerHTML=errCode[response.data.statusCode]
 	      	event.target.innerHTML="Verify & Sign In"
 	    }else {
@@ -419,7 +427,7 @@ function getforgotPassword(){
 	var forgotPwdSection=ssoMainWrapper.querySelector(".forgot-password");
 		showSection(forgotPwdSection,"hide","show");
 	forgotPwdSection.querySelector(".user-otp-info").innerHTML=inputIdentifier
-	
+	addActive(forgotPwdSection);
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 		hideSection(el,"show","hide")
 	var result="none";
@@ -499,7 +507,9 @@ function switchToPwdCb(event){
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 	el.querySelector(".user-pwd-info").innerHTML=inputIdentifier;
 	toggleClass(el)
+	addActive(el)
 	var el=ssoMainWrapper.querySelector(".sign-with-otp");
+	
 	toggleClass(el)
 }
 
@@ -524,6 +534,7 @@ function switchToOtpCb(event){
 	var el=ssoMainWrapper.querySelectorAll(".sign-with-pwd")[0];
 	toggleClass(el)
 	var element=ssoMainWrapper.querySelectorAll(".sign-with-otp")[0];
+	addActive(element)
 	toggleClass(element)
 	element.querySelector(".user-otp-info").innerHTML=inputIdentifier
 }
@@ -632,6 +643,7 @@ function registeruserCb(mobile,email){
 	var el=ssoMainWrapper.querySelector("#signUp-div")
 	toggleClass(el)
 	var verifyuser=ssoMainWrapper.querySelector(".verify-user")
+	addActive(verifyuser)
 	toggleClass(verifyuser)
 	var verifySection=verifyuser.querySelectorAll(".verifySection")
 	resetOtpTimer(verifySection[0].querySelector(".custom-input"));
@@ -1155,6 +1167,7 @@ function skipLinkCb(){
 	verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage);
 }
 function verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage){
+	addActive(ssoSuccessPage)
 	hideSection(footerImg,"show","hide");
 	hideSection(loginForm,"show","hide");
 	hideSection(component,"show","hide");

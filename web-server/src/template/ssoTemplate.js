@@ -61,7 +61,7 @@ function LoginType(configParam){
 function signinWithPassword(configParam){
     return `
          <div class="hide sign-with-pwd">
-            <div class="boldFont sign-in-Heading">Sign in with password </div>
+            <div class="boldFont  modalTitle sign-in-Heading">Sign in with password </div>
             <div class="pwdFormBody ">
                 <div class="dflex user-section">
                     <div class="user-login-Detail">
@@ -86,7 +86,7 @@ function signinWithPassword(configParam){
 function signinWithOtp(configParam){
     return `
         <div class="hide sign-with-otp">
-            <div class="boldFont resetHeading sign-in-Heading">Sign in with OTP </div>
+            <div class="boldFont resetHeading modalTitle sign-in-Heading">Sign in with OTP </div>
             <div class="otpFormBody">
                 ${enterotp(configParam,true,"otp")}
                 ${siginbtn("Or Sign in with Password","otpSubmit","switchToPwdLink","Sign In",configParam)}
@@ -128,7 +128,7 @@ function pwdAndConfirmPwd(signup){
 function successLogin(){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
-        <div class="success-heading boldFont">Congratulation</div>
+        <div class="success-heading modalTitle boldFont">Congratulation</div>
         <div class="boldFont success-subHeading">You are now registered with TimesPoints and your user id is: 9582922212
 </div>
         <div>Did You Know?</div>
@@ -172,7 +172,7 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
 function verifyUser(configParam){
     return`
         <div class="verify-user hide">
-            <div class="boldFont resetHeading verify-heading">Verify </div>
+            <div class="boldFont resetHeading modalTitle verify-heading">Verify </div>
             ${(configParam.signupForm.signUpFields["Email"] &&configParam.signupForm.signUpFields["MobileNumber"]) ?
            `<div class=" hide verifySection" >${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
             <div class="mt25 hide verifySection "> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"enter OTP(optional)"}`)}</div>`
@@ -188,7 +188,7 @@ function verifyUser(configParam){
 
 
 function passwordChangedsuccess(){
-    return `<div class="password-changed hide">
+    return `<div class="password-changed modalTitle hide">
         <div class="boldFont forgot-pwd-heading">Password Changed Successfully</div>
         <div>Your new password will be effective for TimesPoints and all other Times network sites.</div>
         <button   class="boldFont btn signIn  continueBtn">Sign In</button>
@@ -198,7 +198,7 @@ function passwordChangedsuccess(){
 function forgotPassword(configParam){
     return `
         <div class="forgot-password hide">
-            <div class="boldFont forgot-pwd-heading">Forgot Password</div>
+            <div class="boldFont modalTitle forgot-pwd-heading">Forgot Password</div>
                 <div class="slectOtpGenPt hide">
                     <div>
                         <div class="txt medFont">We will send you a reset OTP on your registered E-mail ID or Mobile Number</div>
@@ -225,7 +225,7 @@ function signupform(configParam){
         <div id="signUp-div" class="mediumPanel hide clearfix" >
             <form class="tlogins sign-in-form ">
                 <fieldset>
-                    <div class="sign-up-wrapper help">Sign up</div>
+                    <div class="sign-up-wrapper help modalTitle">Sign up</div>
                     <div class="newUser-error hide">
                         <div class="error  medFont">You are not register with TimesPoints.</div>
                         <div id="emailReg-error" class="error"> Please sign up</div>
@@ -285,15 +285,12 @@ export function createHTMLTemplate(configParam){
                         <a href="#" class="logobrand">
                         <img id="channelLogo" src=${configParam.channelLogo}></a>
                         ${successLogin()}
-                        <div class="loginForm show">
+                        <div class="loginForm active show">
                             <div class=""> 
                                 <p>${configParam.subTitle}</p>
                             </div>
-                            <div class="boldFont sign-in-text">Sign In</div>
-                            <div class="mediumPanel  show clearfix">
-                                <button id="loggedInUser" type="button" class="btn btn-google" style="display: none;">
-                                    <span style="text-align:center; width:100%; padding:0px;" id="loggedInUserName">Continue ol as</span>
-                                </button>
+                            <div class="boldFont modalTitle sign-in-text">Sign In</div>
+                            <div class="mediumPanel  clearfix">
                                 ${LoginType(configParam)}  
                             </div>
                             <div class="initSignup medFont">

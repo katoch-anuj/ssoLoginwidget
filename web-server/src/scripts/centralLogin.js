@@ -831,7 +831,7 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 function registerUser(event){
 	disableBtn(event.target);
 	if(signupValidation()){
-		
+		enableBtn(event.target)
 		var signInform=ssoMainWrapper.querySelector(".sign-in-form");
 		var email = signInform.querySelector(".email") ? signInform.querySelector(".email").value : "",
 			mobile = signInform.querySelector(".mobilenumber") ? signInform.querySelector(".mobilenumber").value :"",
@@ -1295,7 +1295,11 @@ function verifyUserCb(event){
 
 		//when only  email field is to be validated	
 	}else if(verifyObject["email"]){
-		updateGTMDataLayer({
+		
+
+		verifyEmailSignUpPromise(verifyObject.email.id,registerUserSsoid,verifyObject.email.value).then(function(response){
+			enableBtn(event.target)
+			updateGTMDataLayer({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
@@ -1309,9 +1313,6 @@ function verifyUserCb(event){
 			'eventLabel':{"email":(response[1].code==200)?"success":"failure,"+errCode[response[1].code]
 			}
 		})
-
-		verifyEmailSignUpPromise(verifyObject.email.id,registerUserSsoid,verifyObject.email.value).then(function(response){
-			enableBtn(event.target)
 			if(response.code==200){
 				if(subHeading.innerHTML){
 					subHeading.append("/"+verifyObject.email.id)
@@ -1328,20 +1329,21 @@ function verifyUserCb(event){
 		})
 		//when only  mobile field is to be validated	
 	}else if(verifyObject["mobile"]){
-		updateGTMDataLayer({
+		
+		verifyMobileSignUpPromise(verifyObject.mobile.number,registerUserSsoid,verifyObject.email.value).then(function(response){
+			enableBtn(event.target)
+			updateGTMDataLayer({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
-			'eventLabel':{"mobile":(response[0].code==200)?"success":"failure,"+errCode[response[0].code]			}
+			'eventLabel':{"mobile":(response[0].code==200)?"success":"failure,"+errCode[response[0].code]}
 		})
 		console.log({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
-			'eventLabel':{"mobile":(response[0].code==200)?"success":"failure,"+errCode[response[0].code]			}
+			'eventLabel':{"mobile":(response[0].code==200)?"success":"failure,"+errCode[response[0].code]}
 		})
-		verifyMobileSignUpPromise(verifyObject.mobile.number,registerUserSsoid,verifyObject.email.value).then(function(response){
-			enableBtn(event.target)
 			if(response.code==200){
 				if(subHeading.innerHTML){
 					subHeading.append("/"+verifyObject.mobile.number)

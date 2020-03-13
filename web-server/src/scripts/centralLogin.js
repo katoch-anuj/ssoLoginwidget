@@ -1486,7 +1486,7 @@ function MobileNumberRestriction(event){
 }
 
 function signInSucess(event){
-	if(event.target){
+	if(event && event.target){
 		updateGTMDataLayer({
 			'event':'click_continue_registered_with_'+configParam.channelName,
 			'eventCategory':'SingUp',

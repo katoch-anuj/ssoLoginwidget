@@ -157,7 +157,7 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
         </div>
         <div class="custom-input dflex">
             <div class="input">
-            <input data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="number" placeholder="${placeholder?placeholder:"Enter OTP"}"/></div>
+            <input data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text" placeholder="${placeholder?placeholder:"Enter OTP"}"/></div>
             <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
            <div class="timerWrapper show">
               <div class="pie spinner" style="animation: rota ${configParam.resendOtpTimer+"s"} linear infinite"></div>

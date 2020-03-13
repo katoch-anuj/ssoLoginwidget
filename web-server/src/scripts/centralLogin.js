@@ -1078,11 +1078,15 @@ function pwdOtpCb(event){
 	otp="";
 	passwordEntered="";
 	var otpLength="";
-	var otpLength=event.target.value.length;
+	
+	var onlynumeric=new RegExp(/^[0-9]*$/);
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){
-				if(otpLength>6){
-					event.target.value=event.target.value.substring(0,otpLength-1)
+			if(!onlynumeric.test(event.target.value)){
+				event.target.value=event.target.value.substring(0,event.target.value.length-1)
+			}
+				if(event.target.value.length>6 ){
+					event.target.value=event.target.value.substring(0,event.target.value.length-1)
 				}
 			otp=event.target.value;
 
@@ -1117,8 +1121,11 @@ function pwdOtpCb(event){
 				}else{
 					disableBtn(btn)
 				}
-			if(otpLength>6){
-					event.target.value=event.target.value.substring(0,otpLength-1)
+				if(!onlynumeric.test(event.target.value)){
+					event.target.value=event.target.value.substring(0,event.target.value.length-1)
+				}
+			if(event.target.value.length>6){
+					event.target.value=event.target.value.substring(0,event.target.value.length-1)
 				}
 			otp=event.target.value;
 		}

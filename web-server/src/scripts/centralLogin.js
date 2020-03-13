@@ -1304,14 +1304,14 @@ function verifyUserCb(event){
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
-			'eventLabel':{"email":(response[1].code==200)?"success":"failure,"+errCode[response[1].code]
+			'eventLabel':{"email":(response.code==200)?"success":"failure,"+errCode[response.code]
 			}
 		})
 		console.log({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
-			'eventLabel':{"email":(response[1].code==200)?"success":"failure,"+errCode[response[1].code]
+			'eventLabel':{"email":(response.code==200)?"success":"failure,"+errCode[response.code]
 			}
 		})
 			if(response.code==200){
@@ -1337,13 +1337,13 @@ function verifyUserCb(event){
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
-			'eventLabel':{"mobile":(response[0].code==200)?"success":"failure,"+errCode[response[0].code]}
+			'eventLabel':{"mobile":(response.code==200)?"success":"failure,"+errCode[response.code]}
 		})
 		console.log({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
 			'eventAction':'click_verify_signup',
-			'eventLabel':{"mobile":(response[0].code==200)?"success":"failure,"+errCode[response[0].code]}
+			'eventLabel':{"mobile":(response.code==200)?"success":"failure,"+errCode[response.code]}
 		})
 			if(response.code==200){
 				if(subHeading.innerHTML){

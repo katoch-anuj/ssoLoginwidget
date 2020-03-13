@@ -184,7 +184,11 @@ function termsConditionLinkCb(){
 	})
 }
 function eyeIconCb(){
- event.target.parentElement.querySelector(".password-field").setAttribute("type","text");
+	if(event.target.parentElement.querySelector(".password-field").getAttribute("type")=="password"){
+ 		event.target.parentElement.querySelector(".password-field").setAttribute("type","text");
+	}else{
+		event.target.parentElement.querySelector(".password-field").setAttribute("type","password");
+	}
 }
 function resetOtpTimer(parentElement){
 	var showLoader=parentElement.querySelector(".timerWrapper");
@@ -925,6 +929,7 @@ function signInCb(){
 
 function resendOtpCb(event){
 	var customInput=event.target.parentElement;
+	customInput.querySelector(".pwd-otp").value="";
 	if(inputIdentifier.indexOf("@")>0){
 		if(event.target.classList.contains("otpResentLink")){
 			updateGTMDataLayer({
@@ -1108,6 +1113,12 @@ function pwdOtpCb(event){
 			enableBtn(ssoMainWrapper.querySelector(".pwdSubmit"))
 		}else if(event.target.classList.contains("verifyInput")){
 			var component=ssoMainWrapper.querySelector(".verify-user").querySelectorAll(".verifyInput");
+			if(!onlynumeric.test(event.target.value)){
+				event.target.value=event.target.value.substring(0,event.target.value.length-1)
+			}
+				if(event.target.value.length>6 ){
+					event.target.value=event.target.value.substring(0,event.target.value.length-1)
+				}
 			if(component.length==2){
 				var validP1=component[0].getAttribute("data-valid"),
 					validP2=component[1].getAttribute("data-valid")

@@ -1078,9 +1078,9 @@ function pwdOtpCb(event){
 	otp="";
 	passwordEntered="";
 	var otpLength="";
+	var otpLength=event.target.value.length;
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){
-				var otpLength=event.target.value.length;
 				if(otpLength>6){
 					event.target.value=event.target.value.substring(0,otpLength-1)
 				}

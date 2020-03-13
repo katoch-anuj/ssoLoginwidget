@@ -113,7 +113,7 @@ function pwdAndConfirmPwd(signup){
                 <span class="eye-icon"></span>
                 <label for="passwordSignUp"></label>
             </div>
-               ${!signup ?`<div class="medFont passwordInfo">Can't match last 3 passwords.</div>`:""}  
+               ${!signup ?`<div class="info-icon"><div class="medFont passwordInfo">Can't match last 3 passwords.</div></div>`:""}  
             <div class="password-error error"></div>
             
             <div class="password-strength  hide">

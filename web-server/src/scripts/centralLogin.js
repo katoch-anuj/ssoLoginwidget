@@ -263,7 +263,7 @@ function continueLoginBtnCb(event){
 		var wrap=ssoMainWrapper.querySelector(".unverified");
 		hideSection(wrap,"show","hide");
 		 var otpSection=ssoMainWrapper.querySelector(".sign-with-otp");
-		 otpSection.querySelector(".switchToPwdLink").classList.remove("hide");
+		 otpSection.querySelector(".switchToPwdLink") && otpSection.querySelector(".switchToPwdLink").classList.remove("hide");
 
 		if(event.target.innerText.toLowerCase()=="continue"){
 				otpSection.querySelector(".otpSubmit").innerHTML=" Sign In";

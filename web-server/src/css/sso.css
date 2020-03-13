@@ -561,7 +561,7 @@ input[type="checkbox"]:focus {
   color: #555;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #ccc;
+  border: solid 1px #6d7278;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
@@ -1680,7 +1680,7 @@ a {
     font-size:10px;
 }
 .ssoLoginWidget .otpText{
-    color: #3587e7;
+    color: #000000;
     font-size:14px;
 }
 .signInBtn-wrapper .toggleSignIn{

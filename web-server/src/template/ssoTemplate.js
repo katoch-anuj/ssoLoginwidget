@@ -113,7 +113,7 @@ function pwdAndConfirmPwd(signup){
                 <span class="eye-icon"></span>
                 <label for="passwordSignUp"></label>
             </div>
-                <div class="medFont passwordInfo">Can't match last 3 passwords.</div>
+               ${!signup ?`<div class="medFont passwordInfo">Can't match last 3 passwords.</div>`:""}  
             <div class="password-error error"></div>
             
             <div class="password-strength  hide">
@@ -151,13 +151,13 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
         <div class="dflex user-section">
             <div class="user-login-Detail">
                 <div class="medFont otpVerifyTitle">${triggerPoint=="verify"?"Enter verification code sent to":"OTP has been sent to"}</div>
-                <div class="medFont user-otp-info"></div>
+                <div class="boldFont user-otp-info"></div>
             </div>
             ${changeLink?`<div class="link  changelink medFont">Change</div>`:""}    
         </div>
         <div class="custom-input dflex">
             <div class="input">
-            <input data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="password" placeholder="${placeholder?placeholder:"Enter OTP"}"/></div>
+            <input data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="number" placeholder="${placeholder?placeholder:"Enter OTP"}"/></div>
             <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
            <div class="timerWrapper show">
               <div class="pie spinner" style="animation: rota ${configParam.resendOtpTimer+"s"} linear infinite"></div>

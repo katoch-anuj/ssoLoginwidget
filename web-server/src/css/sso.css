@@ -379,6 +379,10 @@ body {
 .pull-left {
   float: left !important;
 }
+div:focus,
+button:focus {
+    outline:0;
+}
 input,
 button,
 select,
@@ -814,15 +818,7 @@ fieldset[disabled] .checkbox label {
   margin-bottom: 20px !important;
     font-family: 'Roboto-Bold', Helvetica, Arial, sans-serif;
 }
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
+
 .btn:hover,
 .btn:focus,
 .btn.focus {

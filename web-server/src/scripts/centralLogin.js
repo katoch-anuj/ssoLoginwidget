@@ -930,6 +930,7 @@ function signInCb(){
 function resendOtpCb(event){
 	var customInput=event.target.parentElement;
 	customInput.querySelector(".pwd-otp").value="";
+	var errElement=customInput.nextElementSibling
 	if(inputIdentifier.indexOf("@")>0){
 		if(event.target.classList.contains("otpResentLink")){
 			updateGTMDataLayer({
@@ -959,7 +960,7 @@ function resendOtpCb(event){
 				'eventLabel':inputIdentifier
 			})
 			resetOtpTimer(customInput)
-			var errElement=customInput.nextElementSibling
+			
 			jsso.resendEmailSignUpOtp(inputIdentifier, registerUserSsoid, function(response) {
 				if(response.code==200){
 					errElement.innerHTML=""
@@ -980,7 +981,7 @@ function resendOtpCb(event){
 				'eventAction':'click_resend_otp_signin',
 				'eventLabel':ssoMainWrapper.querySelector(".forgot-password").querySelector(".forgot-pwd-heading").innerHTML
 			})
-			var errElement=ssoMainWrapper.querySelector(".direct-otp").querySelector(".signIn-error")
+			//var errElement=ssoMainWrapper.querySelector(".direct-otp").querySelector(".signIn-error")
 			getEmailForgotPasswordOtp(customInput)
 		}
 	}else{

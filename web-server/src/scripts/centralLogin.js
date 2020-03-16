@@ -1215,7 +1215,7 @@ function verifyUserCb(event){
 	}
 	// if(verifyInput.length==2){
 		for(var i=0;i<verifyInput.length;i++){
-			if(userOtp[i].innerHTML.indexOf("@")>0 && verifyInput[i].value){
+			if(userOtp[i].innerHTML.indexOf("@")>0 && verifyInput[i].value && !verifyInput[i].getAttribute("disabled")){
 				verifyObject["email"]={};
 				verifyObject["email"]["id"]=userOtp[i].innerHTML;
 				verifyObject["email"]["value"]=verifyInput[i].value;
@@ -1225,7 +1225,7 @@ function verifyUserCb(event){
 				verifyObject["email"]["greentick"]=component.querySelectorAll(".green-tick")[i];
 
 
-			}else if(verifyInput[i].value){
+			}else if(verifyInput[i].value && !verifyInput[i].getAttribute("disabled")){
 				verifyObject["mobile"]={}
 				verifyObject["mobile"]["number"]=userOtp[i].innerHTML;
 				verifyObject["mobile"]["value"]=verifyInput[i].value;

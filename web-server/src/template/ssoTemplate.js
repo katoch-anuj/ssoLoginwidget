@@ -20,26 +20,28 @@ function LoginType(configParam){
         
             ${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia.length==2?
                     `<div class="non-social-section">
-                        <div class="emailAndMobile">
+                        <div class="emailAndMobile posRelative">
                             ${configParam.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
-                            ` <input id="emailAndMobile" class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" placeholder="enter email or Mobile No" maxlength="100">`:
+                            ` <input id="emailAndMobile" required class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" maxlength="100"><label class="floating-label">Enter email or Mobile No</label>`:
 
-                            `<input id="emailAndMobile" class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" placeholder="enter mobile no or email"  maxlength="100">`
+                            `<input id="emailAndMobile" class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" maxlength="100"><label class="floating-label">Enter mobile no or email</label>`
                         }
                         </div>
                     </div>
                     `:
                     `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
                         `<div class="non-social-section">
-                            <div class="emailOnly">
-                                <input id="emailOnly" class="input-data boldFont" autocomplete="off" type="text" name="emailOnly" placeholder="enter email " maxlength="100">
+                            <div class="emailOnly posRelative">
+                                <input id="emailOnly" required class="input-data boldFont" autocomplete="off" type="text" name="emailOnly"  maxlength="100">
+                                <label class="floating-label">Enter email</label>
                             </div>
                         </div>
                         `:
                         `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="mobile"?
                             `<div class="non-social-section">
-                                <div class="mobileOnly">
-                                    <input id="mobileOnly" class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly" placeholder="enter  Mobile No " maxlength="10">
+                                <div class="mobileOnly posRelative">
+                                    <input id="mobileOnly" required class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly"  maxlength="10">
+                                    <label class="floating-label">Enter Mobile No</label>
                                 </div>
                             </div>
                             `:""
@@ -70,9 +72,11 @@ function signinWithPassword(configParam){
                     <div class="link  changelink medFont">Change</div>
                 </div>
 
-                <div class="custom-input dflex">
-                    <div class="input">
-                    <input class="reset-input pwdPrefernce pwd-otp boldFont otpText" type="password" placeholder="Enter Password"/></div>
+                <div class="custom-input posRelative dflex">
+                    <div class="input ">
+                        <input required class="reset-input required pwdPrefernce pwd-otp boldFont otpText" type="password" />
+                        <label class="floating-label">Enter Password</label>
+                    </div>
                     <span class="link forget-password-link  medFont">Forgot Password</span>
                     
                 </div>
@@ -106,9 +110,10 @@ function siginbtn(linktext,btnClass,className,btnText,configParam){
 function pwdAndConfirmPwd(signup){
     return `   
         <div class=" ${signup?"signupPwdSection sign-up-field":"nonSignupPwdSection"}">
-            <div class="custom-input dflex textinput">
-                <div class="input">
-                    <input id="passwordSignUp" required name="password" placeholder="Password" type="password" class=" reset-input password-field ${signup?"signupPwd ":"  nonSignupPwd  "}" />
+            <div class="custom-input posRelative dflex textinput">
+                <div class="input ">
+                    <input required id="passwordSignUp" required name="password"  type="password" class=" reset-input password-field ${signup?"signupPwd ":"  nonSignupPwd  "}" />
+                    <label class="floating-label">Password</label>
                 </div>
                 <span class="eye-icon"></span>
                 <label for="passwordSignUp"></label>
@@ -129,8 +134,7 @@ function successLogin(){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading modalTitle boldFont">Congratulation</div>
-        <div class="boldFont success-subHeading">
-</div>
+        <div class="boldFont success-subHeading"></div>
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>
         <div class="channel-image">
@@ -155,9 +159,11 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
             </div>
             ${changeLink?`<div class="link  changelink medFont">Change</div>`:""}    
         </div>
-        <div class="custom-input dflex">
-            <div class="input">
-            <input data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text" placeholder="${placeholder?placeholder:"Enter OTP"}"/></div>
+        <div class="custom-input posRelative dflex">
+            <div class="input ">
+                <input required data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
+                <label class="floating-label">${placeholder?placeholder:"Enter OTP"}</label>
+            </div>
             <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
            <div class="timerWrapper show">
               <div class="pie spinner" style="animation: rota ${configParam.resendOtpTimer+"s"} linear infinite"></div>
@@ -231,9 +237,9 @@ function signupform(configParam){
                         <div id="emailReg-error" class="error"> Please sign up</div>
                     </div>
                         ${Object.keys(configParam.signupForm.signUpFields).map((signup)=>
-                        `<div class="form-group sign-up-field textinput">
-                        <input type="text" name=${signup.toLowerCase()} id=${signup} ${configParam.signupForm.signUpFields[signup].required?"required":""} placeholder="${configParam.signupForm.signUpFields[signup].placeholder}" class="form-control  ${signup.toLowerCase()}" />
-                        <label for=${signup}></label>
+                        `<div class="form-group posRelative sign-up-field textinput">
+                            <input required type="text" name=${signup.toLowerCase()} id=${signup} ${configParam.signupForm.signUpFields[signup].required?"required":""} class="form-control  ${signup.toLowerCase()}" />
+                            <label class="floating-label" for=${signup}>${configParam.signupForm.signUpFields[signup].placeholder}</label>
                             <div class="error  ${signup.toLowerCase()}-error"></div>
                         </div>`
                         ).join("")}      

@@ -574,10 +574,7 @@ input[type="checkbox"]:focus {
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .form-control:focus {
-  border-color: #66afe9;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
-          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 .form-control::-moz-placeholder {
   color: #999;
@@ -1064,7 +1061,30 @@ fieldset[disabled] .btn-danger.focus {
     height: 13px;
     margin-top: 20px;
 }
+.posRelative{
+    position:relative;
+}
+input:focus ~ .floating-label,input:not(:focus):valid ~ .floating-label
+{
+  top: -6px;
+ font-size: 11px;
+  opacity: 1;
+  background-color: #fff;
+}
 
+.inputText {
+  font-size: 14px;
+  width: 200px;
+  height: 35px;
+}
+
+.floating-label {
+  position: absolute;
+  pointer-events: none;
+  left: 14px;
+  top: 14px;
+  transition: 0.2s ease all;
+}
 .sprite {
     background: url(../img/tsprite.png) no-repeat;
 }
@@ -1181,22 +1201,9 @@ fieldset[disabled] .btn-danger.focus {
 
 
 
-.textinput input.filled ~ label,
-.textinput input:focus ~ label {
-  font-size: 0.6em;
-  position: absolute;
-    color: #0095da;
-    top: -10px
-}
 
-.textinput input.filled ~ label {
-  color: #adadad;
-}
 
-.textinput input[type="text"].filled,
-.textinput input[type="email"].filled:valid {
-  background: #fff;
-}
+
 
 
 input[type="submit"] {
@@ -1593,7 +1600,7 @@ a {
   
 }*/
 .non-social-section input{
-    padding:17px 16px;
+    padding:15px 16px;
     width: 100%;
     line-height: normal;
     border: 0;
@@ -1665,7 +1672,7 @@ a {
 }
 .ssoLoginWidget .custom-input{
     align-items: center;
-    padding: 17px 13px;
+    padding: 12px 13px;
     border-radius: 5px;
     border: solid 1px #6d7278;
     background-color: #ffffff;

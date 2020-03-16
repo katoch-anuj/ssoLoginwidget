@@ -516,6 +516,7 @@ function switchToPwdCb(event){
 	})
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 	el.querySelector(".user-pwd-info").innerHTML=inputIdentifier;
+	el.querySelector(".pwd-otp").value="";
 	toggleClass(el)
 	addActive(el)
 	var el=ssoMainWrapper.querySelector(".sign-with-otp");
@@ -545,6 +546,7 @@ function switchToOtpCb(event){
 	toggleClass(el)
 	var element=ssoMainWrapper.querySelectorAll(".sign-with-otp")[0];
 	addActive(element)
+	element.querySelector(".pwd-otp").value="";
 	toggleClass(element)
 	element.querySelector(".user-otp-info").innerHTML=inputIdentifier
 }

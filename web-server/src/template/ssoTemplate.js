@@ -181,7 +181,7 @@ function verifyUser(configParam){
             <div class="boldFont resetHeading modalTitle verify-heading">Verify </div>
             ${(configParam.signupForm.signUpFields["Email"] &&configParam.signupForm.signUpFields["MobileNumber"]) ?
            `<div class=" hide verifySection" >${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
-            <div class="mt25 hide verifySection "> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"enter OTP(optional)"}`)}</div>`
+            <div class="mt25 hide verifySection "> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"Enter OTP(optional)"}`)}</div>`
             :`<div class="hide verifySection">${enterotp(configParam,false,"verify","required")}</div>`
         }   
         <button disabled class="btn verifyBtn  continueBtn "> Verify</button> 

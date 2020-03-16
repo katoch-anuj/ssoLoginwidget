@@ -364,8 +364,14 @@ function initSignUp(event){
 	var signUp=ssoMainWrapper.querySelectorAll("#signUp-div")[0];
 	addActive(signUp)
 	toggleClass(signUp);
+	if(inputIdentifier.indexOf("@")>0){
+		signUp.querySelector(".email").value=inputIdentifier
+	}
+	else{
+		signUp.querySelector(".mobilenumber").value=inputIdentifier
+	}
 	if(!event){
-		var el=ssoMainWrapper.querySelectorAll(".newUser-error")[0];
+		var el=signUp.querySelectorAll(".newUser-error")[0];
 		toggleClass(el)
 	}
 }
@@ -1552,7 +1558,7 @@ function signInSucess(event){
 				signupForm:{
 					signUpFields:{
 						"Email":{
-							placeholder:"enter email",
+							placeholder:"Enter email",
 							required:true
 						},
 						"MobileNumber":{

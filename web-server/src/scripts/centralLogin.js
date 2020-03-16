@@ -750,13 +750,13 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
+				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			console.log({
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
+				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			if (response.code != 200) {
 				console.log("not 200");
@@ -777,13 +777,13 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
+				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			console.log({
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
+				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			if (response.code != 200) {
 				console.log("not 200");
@@ -804,13 +804,13 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
+				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			console.log({
 				'event':'click_sign_up',
 				'eventCategory':'SingUp',
 				'eventAction':'click_sign_up',
-				'eventLabel':response.code=200?"success":"failure,"+errCode[response.code]
+				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
     		if (response.code != 200) {
 				console.log("not 200");

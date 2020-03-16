@@ -129,7 +129,7 @@ function successLogin(){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading modalTitle boldFont">Congratulation</div>
-        <div class="boldFont success-subHeading">You are now registered with TimesPoints and your user id is: 9582922212
+        <div class="boldFont success-subHeading">
 </div>
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>

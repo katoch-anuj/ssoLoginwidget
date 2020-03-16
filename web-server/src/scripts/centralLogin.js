@@ -1094,7 +1094,7 @@ function linkedinLogin(channelData,socialCallback){
 
 function pwdOtpCb(event){
 	otp="";
-	passwordEntered="";
+	
 	var otpLength="";
 	
 	var onlynumeric=new RegExp(/^[0-9]*$/);
@@ -1110,6 +1110,7 @@ function pwdOtpCb(event){
 
 			enableBtn(ssoMainWrapper.querySelector(".otpSubmit"))	
 		}else if(event.target.classList.contains("pwdPrefernce")){
+			passwordEntered="";
 			passwordEntered=event.target.value;
 			enableBtn(ssoMainWrapper.querySelector(".pwdSubmit"))
 		}else if(event.target.classList.contains("verifyInput")){

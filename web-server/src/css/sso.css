@@ -1064,7 +1064,7 @@ fieldset[disabled] .btn-danger.focus {
 .posRelative{
     position:relative;
 }
-input:focus ~ .floating-label,input:not(:focus):valid ~ .floating-label
+input:focus ~ .floating-label,input:not(:focus):valid ~ .floating-label,input[type="text"]:disabled ~.floating-label
 {
   top: -6px;
  font-size: 11px;

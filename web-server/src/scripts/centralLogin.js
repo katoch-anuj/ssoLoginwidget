@@ -1346,7 +1346,7 @@ function verifyUserCb(event){
 		//when only  mobile field is to be validated	
 	}else if(verifyObject["mobile"]){
 		
-		verifyMobileSignUpPromise(verifyObject.mobile.number,registerUserSsoid,verifyObject.email.value).then(function(response){
+		verifyMobileSignUpPromise(verifyObject.mobile.number,registerUserSsoid,verifyObject.mobile.value).then(function(response){
 			enableBtn(event.target)
 			updateGTMDataLayer({
 			'event':'click_verify_signup',

@@ -699,7 +699,8 @@ function removeErrorSignupform(event){
 
 function signupValidation(event){
 	var el = ssoMainWrapper.querySelectorAll(".sign-up-field");
-
+	var validMobile=true;
+	var validEmail=true;
 	var valid=true
 	for(var i=0;i<el.length;i++){
 		var inputField=el[i].querySelector("input");
@@ -708,11 +709,11 @@ function signupValidation(event){
 			if(inputField.hasAttribute("required")){
 				if(inputField.getAttribute("name")=="email" ){
 					var errElement=el[i].querySelector(".email-error")
-					valid=emailValidation(errElement,"",value)
+					 validEmail=emailValidation(errElement,"",value)
 				}
 				if(inputField.getAttribute("name")=="mobilenumber"){
 					var errElement=el[i].querySelector(".mobilenumber-error")
-					valid=mobileValidation(errElement,"",value)
+					 validMobile=mobileValidation(errElement,"",value)
 					
 				}
 				if(inputField.getAttribute("name")=="firstname" && !value){
@@ -744,6 +745,11 @@ function signupValidation(event){
 		}else{
 			var errElement=el[i].querySelector(".error").innerHTML="";
 		}
+	}
+	if(validEmail && validMobile){
+		valid=true
+	}else{
+		valid=false
 	}
 	return valid;
 }
@@ -1569,7 +1575,7 @@ function signInSucess(event){
 						},
 					},
 					signupVia:["Password"],
-					MandatoryVerifyVia:["email"]
+					MandatoryVerifyVia:["emailorMobile"]
 				},
 				termsConditionLink:"",
 				privacyPolicyLink:"",

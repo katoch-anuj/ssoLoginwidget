@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack ./src/scripts/centralLogin.js  --output ./dist/centralLogin.bundle.js --mode development",
     "start:dev": "webpack-dev-server --port 9008 --hot",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "build:stg":"webpack --config webpack.stg.js",
+    "build":"webpack --config webpack.prod.js"
   },
   "author": "",
   "license": "ISC",

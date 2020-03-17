@@ -5,7 +5,7 @@ export class JssoCrosswalk {
 	constructor(channel, platform, callback) {
     		this.channel = channel;
     		this.platform = platform;
-    		this.ssoBaseUrl = 'https://jssodev.indiatimes.com/sso/crossapp/identity/web/';
+    		this.ssoBaseUrl = 'https://jssostg.indiatimes.com/sso/crossapp/identity/web/';
     		this.socialappBaseUrl = 'https://devsocialappsintegrator.indiatimes.com/socialsite/crossapp/web/';
     		this.sdkVersion = '0.5.6';
     		this.csrfToken = this.getCookie("jsso_crosswalk_csrfToken_" + this.channel);

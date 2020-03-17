@@ -706,7 +706,7 @@ function signupValidation(event){
 		var inputField=el[i].querySelector("input");
 		if(inputField){
 			var value=inputField.value;
-			if(inputField.hasAttribute("required")){
+			if(inputField.getAttribute("data-required")=="required"){
 				if(inputField.getAttribute("name")=="email" ){
 					var errElement=el[i].querySelector(".email-error")
 					 validEmail=emailValidation(errElement,"",value)

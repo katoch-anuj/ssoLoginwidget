@@ -238,7 +238,7 @@ function signupform(configParam){
                     </div>
                         ${Object.keys(configParam.signupForm.signUpFields).map((signup)=>
                         `<div class="form-group posRelative sign-up-field textinput">
-                            <input required type="text" name=${signup.toLowerCase()} id=${signup} ${configParam.signupForm.signUpFields[signup].required?"required":""} class="form-control  ${signup.toLowerCase()}" />
+                            <input required type="text" name=${signup.toLowerCase()} id=${signup} data-required=${configParam.signupForm.signUpFields[signup].required?"required":"optional"} class="form-control  ${signup.toLowerCase()}" />
                             <label class="floating-label" for=${signup}>${configParam.signupForm.signUpFields[signup].placeholder}</label>
                             <div class="error  ${signup.toLowerCase()}-error"></div>
                         </div>`

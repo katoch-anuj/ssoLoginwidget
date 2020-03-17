@@ -1285,7 +1285,7 @@ function verifyUserCb(event){
 					hideSection(verifyObject.mobile.resendLink,"show","hide")
 					delete(verifyObject.mobile);
 				}else{
-					if(!configParam.signupForm.MandatoryVerifyVia.length==2 && configParam.signupForm.MandatoryVerifyVia[0]=="email" ){
+					if(!(configParam.signupForm.MandatoryVerifyVia.length==2)&& configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email" ){
 						showSection(skipLink,"hide","show")
 					}
 					verifyObject.mobile.errElement.innerHTML=errCode[response[0].code]
@@ -1298,7 +1298,7 @@ function verifyUserCb(event){
 					hideSection(verifyObject.email.resendLink,"show","hide")
 					delete(verifyObject.email)
 				}else{
-					if(!configParam.signupForm.MandatoryVerifyVia.length==2 && configParam.signupForm.MandatoryVerifyVia[0]=="mobile"){
+					if(!(configParam.signupForm.MandatoryVerifyVia.length==2) && configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile"){
 						showSection(skipLink,"hide","show")
 					}
 					verifyObject.email.errElement.innerHTML=errCode[response[1].code]

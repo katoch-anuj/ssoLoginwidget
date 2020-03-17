@@ -1338,7 +1338,9 @@ function verifyUserCb(event){
 				verifyObject.email.errElement.innerHTML=""
 				verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage)
 			}else{
-				showSection(skipLink,"hide","show")
+				// if(!configParam.signupForm.MandatoryVerifyVia.length==2 && configParam.signupForm.MandatoryVerifyVia=="mobile"){
+				// 	showSection(skipLink,"hide","show")
+				// }
 				verifyObject.email.errElement.innerHTML=errCode[response.code]
 			}
 
@@ -1369,7 +1371,7 @@ function verifyUserCb(event){
 				verifyObject.mobile.errElement.innerHTML=""
 				verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage)
 			}else{
-				showSection(skipLink,"hide","show")
+				//showSection(skipLink,"hide","show")
 				verifyObject.mobile.errElement.innerHTML=errCode[response.code]
 			}
 		})

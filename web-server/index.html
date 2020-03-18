@@ -13,9 +13,9 @@
 
 </body>
 <script type="text/javascript"> 
-	(function(w,s,el){
+	(function(w,s,el){debugger
 		var sc = document.createElement("script");
-		w[el]= w[el] || function(){
+		w[el]= w[el] || function(){debugger
 			w[el]=w[el] || {};
 			w[el].ev=w[el].ev || [];
 			w[el].ev.push(arguments)
@@ -35,77 +35,77 @@
 		// emailMobileOTP:false,
 		// emailMobileNoOTP:true
 	 // }
-	 var nonSocialLogin={
-	 		loginVia:["email","mobile"],
-	 		loginWith:["otp","Password"]
-	 }
-	var x={
-		channelName:"timespoints",
-		element:"ssoLogin",
-		resendOtpTimer:2,
-		channelLogo:"./src/img/tp-logo.svg",
-		// desktopViewWidth:
-		// mobileViewWidth:
-		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
-		//title:"",
-		//subTitle:"Login to <strong class='bold'>The Navbharat Times </strong> with your Times account",
-		ru:"",
-		//companyName:"Times Points",
-		nonSocialLogin:nonSocialLogin,
-		socialLogin:[
-			{
-				type:"Facebook",
-				label:"",
-				logoUrl:"",
-				clientId:"142646599275144244138135726610"
-			},
-			{
-				type:"Google",
-				logoUrl:"",
-				label:"",
-				clientId:"64176527217.apps.googleusercontent.com"
-			}
+// 	 var nonSocialLogin={
+// 	 		loginVia:["email","mobile"],
+// 	 		loginWith:["otp","Password"]
+// 	 }
+// 	var x={
+// 		channelName:"timespoints",
+// 		element:"ssoLogin",
+// 		resendOtpTimer:2,
+// 		channelLogo:"./src/img/tp-logo.svg",
+// 		// desktopViewWidth:
+// 		// mobileViewWidth:
+// 		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
+// 		//title:"",
+// 		//subTitle:"Login to <strong class='bold'>The Navbharat Times </strong> with your Times account",
+// 		ru:"",
+// 		//companyName:"Times Points",
+// 		nonSocialLogin:nonSocialLogin,
+// 		socialLogin:[
+// 			{
+// 				type:"Facebook",
+// 				label:"",
+// 				logoUrl:"",
+// 				clientId:"142646599275144244138135726610"
+// 			},
+// 			{
+// 				type:"Google",
+// 				logoUrl:"",
+// 				label:"",
+// 				clientId:"64176527217.apps.googleusercontent.com"
+// 			}
 
-		],
-		signInCallback:function(){alert("you are successfully logged in")},
-		signupForm:{
-			defaultFirstName:"Guest",
-			signUpFields:{
-				"Email":{
-					placeholder:"enter email",
-					required:true
-				},
-				"MobileNumber":{
-					placeholder:"enter mobile number",
-					required:true
-				},
-				"firstName":{
-					placeholder:"enter first name",
-					required:true
-				}
-			},
-			// recaptcha:{
-			// 	required:true
-			// },
-			signupVia:["Password"],
-			// MandatoryVerifyVia:["email","mobile"]
-			MandatoryVerifyVia:["email"]
+// 		],
+// 		signInCallback:function(){alert("you are successfully logged in")},
+// 		signupForm:{
+// 			defaultFirstName:"Guest",
+// 			signUpFields:{
+// 				"Email":{
+// 					placeholder:"enter email",
+// 					required:true
+// 				},
+// 				"MobileNumber":{
+// 					placeholder:"enter mobile number",
+// 					required:true
+// 				},
+// 				"firstName":{
+// 					placeholder:"enter first name",
+// 					required:true
+// 				}
+// 			},
+// 			// recaptcha:{
+// 			// 	required:true
+// 			// },
+// 			signupVia:["Password"],
+// 			// MandatoryVerifyVia:["email","mobile"]
+// 			MandatoryVerifyVia:["email"]
 			
-		},
-		termsConditionLink:"https://www.google.com/",
-		privacyPolicyLink:"",
-		defaultSelected:true
+// 		},
+// 		termsConditionLink:"https://www.google.com/",
+// 		privacyPolicyLink:"",
+// 		defaultSelected:true
 
 
-		// email_password:true,
-		// email_otp: true,
-		// mobile_password:true,
-		// mobile_otp:true
-	};
-// 	setTimeout(function(){
-// sso("init",x)
-// 	},100)
-ssoWidget("init",x);
+// 		// email_password:true,
+// 		// email_otp: true,
+// 		// mobile_password:true,
+// 		// mobile_otp:true
+// 	};
+// // 	setTimeout(function(){
+// // sso("init",x)
+// // 	},100)
+// ssoWidget("init",x);
 // sso("print",x);
 
 

@@ -1700,9 +1700,9 @@ function signInSucess(event){
 				ssoMethods[funct](param)
 			}
 		}
-		// window.sso=function(funct,ssoConfig){
-		// 	ssoMethods[funct](ssoConfig);
-		// }
+		window.ssoWidget=function(funct,ssoConfig){
+			ssoMethods[funct](ssoConfig);
+		}
 
 	})()	
 },0)

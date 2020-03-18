@@ -9,7 +9,7 @@ module.exports = {
     
   	output: {
   		path: path.join(__dirname, "./dist/"),
-  		publicPath: '/dist/',
+  		publicPath: '/test/',
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },

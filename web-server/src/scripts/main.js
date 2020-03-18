@@ -79,6 +79,13 @@ asyncRequest('GET', versionapi.apiEndPoint + "/config/nocache/wversion", functio
         s.async = false;
         document.getElementsByTagName('head')[0].appendChild(s);
     });
+    onloadCSS(stylesheet, function () {
+        var s = document.createElement('script');
+        s.src = "https://www.google.com/recaptcha/api.js";
+        s.type = "text/javascript";
+        s.async = false;
+        document.getElementsByTagName('head')[0].appendChild(s);
+    });
 });
 
 

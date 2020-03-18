@@ -1,15 +1,15 @@
 var path = require('path');
 
 module.exports = {
-	mode: "development",
+	mode: "production",
   	entry: {
       centralLogin:"./src/scripts/centralLogin.js",
       main:"./src/scripts/main.js",
     },
     
   	output: {
-  		path: path.join(__dirname, "./dist/"),
-  		publicPath: '/dist/',
+  		path: path.join(__dirname, "./distprod/"),
+  		publicPath: '/distprod/',
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },

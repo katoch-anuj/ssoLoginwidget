@@ -53,14 +53,7 @@ function addActive(el){
 function eventListener(element,event,callback,bubble=false){
 	element.addEventListener(event,callback,bubble)
 }
-function addCss(href){
-    var link  = document.createElement('link');
-    link.rel  = 'stylesheet';
-    link.type = 'text/css';
-    link.href = href;
-    document.getElementsByTagName('head')[0].appendChild(link);
-}
-addCss("./src/css/sso.css")
+
 function disableResentLink(event){
 
 }	
@@ -1700,7 +1693,7 @@ function signInSucess(event){
 		}
 
 		var methodList=window.ssoWidget.ev;
-		if(methodList.length){
+		if(methodList && methodList.length){
 			for(var i=0;i<methodList.length;i++){
 				var funct=methodList[i][0];
 				var param=methodList[i][1];

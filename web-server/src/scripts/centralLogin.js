@@ -66,7 +66,7 @@ function disableResentLink(event){
 }	
 
 function checkIfUserLoggedIn() {
-	jsso.getUserProfile(function(response) {
+	jsso.getValidLoggedInUser(function(response) {
 		if (response.code == 200) {
 			renderTemplate(configParam);
 			bindEventListeners();

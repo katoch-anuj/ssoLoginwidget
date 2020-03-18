@@ -7,8 +7,7 @@
     "start": "webpack ./src/scripts/centralLogin.js  --output ./dist/centralLogin.bundle.js --mode development",
     "start:dev": "webpack-dev-server --port 9008 --hot",
     "build": "webpack --config webpack.config.js",
-    "build:stg":"webpack --config webpack.stg.js",
-    "build":"webpack --config webpack.prod.js"
+    "build:stg": "webpack --config webpack.stg.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +15,8 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "fg-loadcss": "^2.1.0"
   }
 }

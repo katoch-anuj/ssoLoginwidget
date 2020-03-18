@@ -1,3 +1,4 @@
+ 
  import {createHTMLTemplate} from "../template/ssoTemplate.js";
  // import {JssoCrosswalk} from "./jsso_crosswalk_0.3.1.js";
  import {JssoCrosswalk} from "./jsso_crosswalk_0.5.63.js";
@@ -43,6 +44,15 @@ function updateGTMDataLayer(obj) {
 		},1000)
 	}
 }
+    
+function addCss(href){
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = href;
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+addCss("./src/css/sso.css")
 
 function addActive(el){
 	ssoMainWrapper.querySelector(".active") && ssoMainWrapper.querySelector(".active").classList.remove("active");
@@ -272,41 +282,41 @@ function emailAndMobileValidation(event){
 function continueLoginBtnCb(event){
 
 	if( inputIdentifier.indexOf("@")<0 ||  emailValidation(ssoMainWrapper.querySelector(".inputError"),"",inputIdentifier)){
-		var wrap=ssoMainWrapper.querySelector(".unverified");
-		hideSection(wrap,"show","hide");
-		 var otpSection=ssoMainWrapper.querySelector(".sign-with-otp");
-		 otpSection.querySelector(".switchToPwdLink") && otpSection.querySelector(".switchToPwdLink").classList.remove("hide");
+		//var wrap=ssoMainWrapper.querySelector(".unverified");
+		//hideSection(wrap,"show","hide");
+		 //var otpSection=ssoMainWrapper.querySelector(".sign-with-otp");
+		 //otpSection.querySelector(".switchToPwdLink") && otpSection.querySelector(".switchToPwdLink").classList.remove("hide");
 
 		if(event.target.innerText.toLowerCase()=="continue"){
-				otpSection.querySelector(".otpSubmit").innerHTML=" Sign In";
-			 	otpSection.querySelector(".otpVerifyTitle").innerHTML="OTP has been sent to"
+				//otpSection.querySelector(".otpSubmit").innerHTML=" Sign In";
+			 	//otpSection.querySelector(".otpVerifyTitle").innerHTML="OTP has been sent to"
 				checkUserExists(event,UserExistsCb,userNotExistCb);
 			}else{
-				updateGTMDataLayer({
-					'event':'click_verify_&_signin',
-					'eventCategory':'SignIn',
-					'eventAction':'click_verify_&_signin',
-					'eventLabel':inputIdentifier
-				});
-				console.log({
-					'event':'click_verify_&_signin',
-					'eventCategory':'SignIn',
-					'eventAction':'click_verify_&_signin',
-					'eventLabel':inputIdentifier
-				})
-				hideLoginform();
-				addActive(otpSection)
-				toggleClass(otpSection)
-			 	otpSection.querySelector(".switchToPwdLink").classList.add("hide");
-			 	otpSection.querySelector(".user-otp-info").innerHTML=inputIdentifier
-			 	otpSection.querySelector(".otpSubmit").innerHTML="Verify & Sign In";
-			 	otpSection.querySelector(".otpSubmit").classList.add("verifyAndSignInBtn");
-			 	otpSection.querySelector(".otpVerifyTitle").innerHTML="Enter Verification code sent to"
-			 	if(inputIdentifier.indexOf("@")>0){
-			 		getEmailLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
-			 	}else{
-			 		getMobileLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
-				}
+				// updateGTMDataLayer({
+				// 	'event':'click_verify_&_signin',
+				// 	'eventCategory':'SignIn',
+				// 	'eventAction':'click_verify_&_signin',
+				// 	'eventLabel':inputIdentifier
+				// });
+				// console.log({
+				// 	'event':'click_verify_&_signin',
+				// 	'eventCategory':'SignIn',
+				// 	'eventAction':'click_verify_&_signin',
+				// 	'eventLabel':inputIdentifier
+				// })
+				// hideLoginform();
+				// addActive(otpSection)
+				// toggleClass(otpSection)
+			 // 	otpSection.querySelector(".switchToPwdLink").classList.add("hide");
+			 // 	otpSection.querySelector(".user-otp-info").innerHTML=inputIdentifier
+			 // 	otpSection.querySelector(".otpSubmit").innerHTML="Verify & Sign In";
+			 // 	otpSection.querySelector(".otpSubmit").classList.add("verifyAndSignInBtn");
+			 // 	otpSection.querySelector(".otpVerifyTitle").innerHTML="Enter Verification code sent to"
+			 // 	if(inputIdentifier.indexOf("@")>0){
+			 // 		getEmailLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
+			 // 	}else{
+			 // 		getMobileLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
+				// }
 			}	
 	}else{
 		disableBtn(event.target)
@@ -391,12 +401,14 @@ function checkUserExists(event,UserExistsCb,userNotExistCb) {
 	      	// if(response.data.shareDataAllowed == null || response.data.shareDataAllowed == "0" || response.data.termsAccepted == null || response.data.termsAccepted == "0" ) {
 	       //  	loginWithPermissionsFlag=5;
 	      	// }   
-    	}else if(response.data.statusCode == 206 || response.data.statusCode == 205){
-	      	showSection(wrapper,"hide","show")
-	      	addActive(wrapper)
-	      	errElement.innerHTML=errCode[response.data.statusCode]
-	      	event.target.innerHTML="Verify & Sign In"
-	    }else {
+    	}
+    	// else if(response.data.statusCode == 206 || response.data.statusCode == 205){
+	    //   	showSection(wrapper,"hide","show")
+	    //   	addActive(wrapper)
+	    //   	errElement.innerHTML=errCode[response.data.statusCode]
+	    //   	event.target.innerHTML="Verify & Sign In"
+	    // }
+	    else {
 	       userNotExistCb()
 	      return;
 	    }

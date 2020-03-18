@@ -1,5 +1,5 @@
 var path = require('path');
-
+// window.env="https://image.timespoints.iimg.in/static/public/js/";
 module.exports = {
 	mode: "development",
   	entry: {
@@ -9,7 +9,7 @@ module.exports = {
     
   	output: {
   		path: path.join(__dirname, "./dist/"),
-  		publicPath: '/test/',
+  		publicPath: '/dist/',
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },

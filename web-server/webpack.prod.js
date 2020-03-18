@@ -9,7 +9,7 @@ module.exports = {
     
   	output: {
   		path: path.join(__dirname, "./distprod/"),
-  		publicPath: '/distprod/',
+  		publicPath: 'https://image.timespoints.iimg.in/static/public/js/',
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },

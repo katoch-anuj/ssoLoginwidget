@@ -1,2 +1,135 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="./dist/",n(n.s=1)}([function(e,t,n){(function(e){/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-!function(e){"use strict";t.loadCSS=function(t,n,r,o){var i,a=e.document,s=a.createElement("link");if(n)i=n;else{var c=(a.body||a.getElementsByTagName("head")[0]).childNodes;i=c[c.length-1]}var u=a.styleSheets;if(o)for(var d in o)o.hasOwnProperty(d)&&s.setAttribute(d,o[d]);s.rel="stylesheet",s.href=t,s.media="only x",function e(t){if(a.body)return t();setTimeout((function(){e(t)}))}((function(){i.parentNode.insertBefore(s,n?i:i.nextSibling)}));var l=function(e){for(var t=s.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout((function(){l(e)}))};function f(){s.addEventListener&&s.removeEventListener("load",f),s.media=r||"all"}return s.addEventListener&&s.addEventListener("load",f),s.onloadcssdefined=l,l(f),s}}(void 0!==e?e:this)}).call(this,n(2))},function(e,t,n){"use strict";n.r(t);var r=n(0);function o(e,t){var n;function r(){!n&&t&&(n=!0,t.call(e))}e.addEventListener&&e.addEventListener("load",r),e.attachEvent&&e.attachEvent("onload",r),"isApplicationInstalled"in navigator&&"onloadcssdefined"in e&&e.onloadcssdefined(r)}var i="//test-img.timespoints.com/static/sso1";!function(e,t,n,r,o,i){var a;try{a=new XMLHttpRequest}catch(e){for(var s=["MSXML2.XMLHTTP.3.0","MSXML2.XMLHTTP","Microsoft.XMLHTTP"],c=0,u=s.length;c<u;++c)try{a=new ActiveXObject(s[c]);break}catch(e){}}if(a.open(e,t,!0),o&&a.setRequestHeader("Content-Type",o),i){var d=Object.keys(i);for(c=0;c<d.length;c++)a.setRequestHeader(d[c],i[d[c]])}(function(e,t){var n=window.setInterval((function(){e&&4==e.readyState&&(window.clearInterval(n),t&&t(e))}),50)})(a,n),a.send(r||null)}("GET","https://test.timespoints.com/tpapi/config/nocache/wversion",(function(e){if(window.__tpvar=1,e.status>=200&&e.status<400){var t=e.responseText&&"string"==typeof e.responseText?JSON.parse(e.responseText):e.responseText;window.__tpvar=t.version}var n=Object(r.loadCSS)(i+"/src/css/sso.css?v="+window.__tpvar);o(n,(function(){var e=document.createElement("script");e.src=i+"/dist/centralLogin.bundle.js?v="+window.__tpvar,e.type="text/javascript",e.async=!1,document.getElementsByTagName("head")[0].appendChild(e)})),o(n,(function(){var e=document.createElement("script");e.src="https://www.google.com/recaptcha/api.js",e.type="text/javascript",e.async=!1,document.getElementsByTagName("head")[0].appendChild(e)}))}))},function(e,t){var n;n=function(){return this}();try{n=n||new Function("return this")()}catch(e){"object"==typeof window&&(n=window)}e.exports=n}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/scripts/main.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/fg-loadcss/src/loadCSS.js":
+/*!************************************************!*\
+  !*** ./node_modules/fg-loadcss/src/loadCSS.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/* WEBPACK VAR INJECTION */(function(global) {/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */\n(function(w){\n\t\"use strict\";\n\t/* exported loadCSS */\n\tvar loadCSS = function( href, before, media, attributes ){\n\t\t// Arguments explained:\n\t\t// `href` [REQUIRED] is the URL for your CSS file.\n\t\t// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before\n\t\t// By default, loadCSS attempts to inject the link after the last stylesheet or script in the DOM. However, you might desire a more specific location in your document.\n\t\t// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'\n\t\t// `attributes` [OPTIONAL] is the Object of attribute name/attribute value pairs to set on the stylesheet's DOM Element.\n\t\tvar doc = w.document;\n\t\tvar ss = doc.createElement( \"link\" );\n\t\tvar ref;\n\t\tif( before ){\n\t\t\tref = before;\n\t\t}\n\t\telse {\n\t\t\tvar refs = ( doc.body || doc.getElementsByTagName( \"head\" )[ 0 ] ).childNodes;\n\t\t\tref = refs[ refs.length - 1];\n\t\t}\n\n\t\tvar sheets = doc.styleSheets;\n\t\t// Set any of the provided attributes to the stylesheet DOM Element.\n\t\tif( attributes ){\n\t\t\tfor( var attributeName in attributes ){\n\t\t\t\tif( attributes.hasOwnProperty( attributeName ) ){\n\t\t\t\t\tss.setAttribute( attributeName, attributes[attributeName] );\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tss.rel = \"stylesheet\";\n\t\tss.href = href;\n\t\t// temporarily set media to something inapplicable to ensure it'll fetch without blocking render\n\t\tss.media = \"only x\";\n\n\t\t// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.\n\t\tfunction ready( cb ){\n\t\t\tif( doc.body ){\n\t\t\t\treturn cb();\n\t\t\t}\n\t\t\tsetTimeout(function(){\n\t\t\t\tready( cb );\n\t\t\t});\n\t\t}\n\t\t// Inject link\n\t\t\t// Note: the ternary preserves the existing behavior of \"before\" argument, but we could choose to change the argument to \"after\" in a later release and standardize on ref.nextSibling for all refs\n\t\t\t// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/\n\t\tready( function(){\n\t\t\tref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );\n\t\t});\n\t\t// A method (exposed on return object for external use) that mimics onload by polling document.styleSheets until it includes the new sheet.\n\t\tvar onloadcssdefined = function( cb ){\n\t\t\tvar resolvedHref = ss.href;\n\t\t\tvar i = sheets.length;\n\t\t\twhile( i-- ){\n\t\t\t\tif( sheets[ i ].href === resolvedHref ){\n\t\t\t\t\treturn cb();\n\t\t\t\t}\n\t\t\t}\n\t\t\tsetTimeout(function() {\n\t\t\t\tonloadcssdefined( cb );\n\t\t\t});\n\t\t};\n\n\t\tfunction loadCB(){\n\t\t\tif( ss.addEventListener ){\n\t\t\t\tss.removeEventListener( \"load\", loadCB );\n\t\t\t}\n\t\t\tss.media = media || \"all\";\n\t\t}\n\n\t\t// once loaded, set link's media back to `all` so that the stylesheet applies once it loads\n\t\tif( ss.addEventListener ){\n\t\t\tss.addEventListener( \"load\", loadCB);\n\t\t}\n\t\tss.onloadcssdefined = onloadcssdefined;\n\t\tonloadcssdefined( loadCB );\n\t\treturn ss;\n\t};\n\t// commonjs\n\tif( true ){\n\t\texports.loadCSS = loadCSS;\n\t}\n\telse {}\n}( typeof global !== \"undefined\" ? global : this ));\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./node_modules/fg-loadcss/src/loadCSS.js?");
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || new Function(\"return this\")();\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///(webpack)/buildin/global.js?");
+
+/***/ }),
+
+/***/ "./src/scripts/config.js":
+/*!*******************************!*\
+  !*** ./src/scripts/config.js ***!
+  \*******************************/
+/*! exports provided: config */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"config\", function() { return config; });\nconst config = {\n    dev: {\n        staticPath: '//localhost:9008/',\n        apiEndPoint: '//localhost/tpapi',\n    },\n\n    qa: {\n        staticPath: '/public/',\n        apiEndPoint: '//qa.timespoints.com/tpapi',\n    },\n    test: {\n        staticPath: '//test-img.timespoints.com/static/sso1',\n        apiEndPoint: '//test.timespoints.com/tpapi/'\n    },\n    production: {\n        staticPath: '//image.timespoints.iimg.in/sso1',\n        apiEndPoint: '//tpapi.timespoints.com'\n    }\n}\n\n\n//# sourceURL=webpack:///./src/scripts/config.js?");
+
+/***/ }),
+
+/***/ "./src/scripts/main.js":
+/*!*****************************!*\
+  !*** ./src/scripts/main.js ***!
+  \*****************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var fg_loadcss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fg-loadcss */ \"./node_modules/fg-loadcss/src/loadCSS.js\");\n/* harmony import */ var fg_loadcss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fg_loadcss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config */ \"./src/scripts/config.js\");\n\n\n\nvar assestPath=_config__WEBPACK_IMPORTED_MODULE_1__[\"config\"][\"test\"];\nfunction asyncRequest(methodType, uri, callback, postData, contentType, requestHeaders) {\n    function handleReadyState(o, callback) {\n        var poll = window.setInterval(function () {\n            if (o && o.readyState == 4) {\n                window.clearInterval(poll);\n                if (callback) {\n                    callback(o);\n                }\n            }\n        }, 50);\n    }\n    var http;\n    try {\n        http = new XMLHttpRequest;\n    } catch (e) {\n        var msxml = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'];\n        for (var i = 0, len = msxml.length; i < len; ++i) {\n            try {\n                http = new ActiveXObject(msxml[i]);\n                break;\n            } catch (e) { }\n        }\n    }\n\n    http.open(methodType, uri, true);\n\n    if (contentType) {\n        http.setRequestHeader(\"Content-Type\", contentType);\n    }\n\n    if (requestHeaders) {\n        var headerData = Object.keys(requestHeaders);\n        for (var i = 0; i < headerData.length; i++) {\n            http.setRequestHeader(headerData[i], requestHeaders[headerData[i]]);\n        }\n    }\n\n    handleReadyState(http, callback);\n    http.send(postData || null);\n    return http;\n}\nfunction onloadCSS(ss, callback) {\n    var called;\n    function newcb() {\n        if (!called && callback) {\n            called = true;\n            callback.call(ss);\n        }\n    }\n    if (ss.addEventListener) {\n        ss.addEventListener(\"load\", newcb);\n    }\n    if (ss.attachEvent) {\n        ss.attachEvent(\"onload\", newcb);\n    }\n\n    if (\"isApplicationInstalled\" in navigator && \"onloadcssdefined\" in ss) {\n        ss.onloadcssdefined(newcb);\n    }\n}\n\nif(true){\n   var versionapi={\"apiEndPoint\":\"https://test.timespoints.com/tpapi\"} \n}else{ var versionapi; }\n\n\nasyncRequest('GET', versionapi.apiEndPoint + \"/config/nocache/wversion\", function (res) {\n    window.__tpvar=1;\n    if (res.status >= 200 && res.status < 400) {\n        var data = res.responseText && typeof res.responseText == 'string' ? JSON.parse(res.responseText) : res.responseText;\n        window.__tpvar = data.version;\n    }\n    var stylesheet = Object(fg_loadcss__WEBPACK_IMPORTED_MODULE_0__[\"loadCSS\"])(assestPath.staticPath + '/src/css/sso.css?v=' + window.__tpvar);\n    onloadCSS(stylesheet, function () {\n        var s = document.createElement('script');\n        s.src = assestPath.staticPath + '/dist/centralLogin.bundle.js?v=' + window.__tpvar;\n        s.type = \"text/javascript\";\n        s.async = false;\n        document.getElementsByTagName('head')[0].appendChild(s);\n    });\n    onloadCSS(stylesheet, function () {\n        var s = document.createElement('script');\n        s.src = \"https://www.google.com/recaptcha/api.js\";\n        s.type = \"text/javascript\";\n        s.async = false;\n        document.getElementsByTagName('head')[0].appendChild(s);\n    });\n});\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/scripts/main.js?");
+
+/***/ })
+
+/******/ });

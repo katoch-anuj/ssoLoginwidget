@@ -1,6 +1,7 @@
 import { loadCSS } from 'fg-loadcss';
 
-
+import {config} from "./config";
+var assestPath=config[process.env.NODE_ENV];
 function asyncRequest(methodType, uri, callback, postData, contentType, requestHeaders) {
     function handleReadyState(o, callback) {
         var poll = window.setInterval(function () {
@@ -62,9 +63,12 @@ function onloadCSS(ss, callback) {
     }
 }
 
-//var constants={"staticPath":"//image.timespoints.iimg.in/static/ssoLoginWidget","apiEndPoint":"//tpapi.timespoints.com"}
-var constants={"staticPath":"//test-img.timespoints.com/static/sso1","apiEndPoint":"//test-img.timespoints.com/static/sso1"}
-var versionapi={"apiEndPoint":"https://test.timespoints.com/tpapi"}
+if(process.env.NODE_ENV=="test"){
+   var versionapi={"apiEndPoint":"https://test.timespoints.com/tpapi"} 
+}else{
+    var versionapi={"apiEndPoint":"//tpapi.timespoints.com"}
+}
+
 
 asyncRequest('GET', versionapi.apiEndPoint + "/config/nocache/wversion", function (res) {
     window.__tpvar=1;
@@ -72,10 +76,10 @@ asyncRequest('GET', versionapi.apiEndPoint + "/config/nocache/wversion", functio
         var data = res.responseText && typeof res.responseText == 'string' ? JSON.parse(res.responseText) : res.responseText;
         window.__tpvar = data.version;
     }
-    var stylesheet = loadCSS(constants.staticPath + '/src/css/sso.css?v=' + window.__tpvar);
+    var stylesheet = loadCSS(assestPath.staticPath + '/src/css/sso.css?v=' + window.__tpvar);
     onloadCSS(stylesheet, function () {
         var s = document.createElement('script');
-        s.src = constants.staticPath + '/dist/centralLogin.bundle.js?v=' + window.__tpvar;
+        s.src = assestPath.staticPath + '/dist/centralLogin.bundle.js?v=' + window.__tpvar;
         s.type = "text/javascript";
         s.async = false;
         document.getElementsByTagName('head')[0].appendChild(s);

@@ -2,10 +2,12 @@
  import {createHTMLTemplate} from "../template/ssoTemplate.js";
  // import {JssoCrosswalk} from "./jsso_crosswalk_0.3.1.js";
  import {JssoCrosswalk} from "./jsso_crosswalk_0.5.63.js";
- import {errCode} from "./errorCode.js"
- 
-alert(process.env.NODE_ENV);
-debugger
+ import {errCode} from "./errorCode.js";
+ import {config} from "./config";
+ //const webpackVariables = require('webpackVariables');
+
+var assestPath=config[process.env.NODE_ENV];
+
 setTimeout(function(){
 	(function(){
 			var channelData = "",
@@ -46,14 +48,14 @@ function updateGTMDataLayer(obj) {
 	}
 }
     
-function addCss(href){
-    var link  = document.createElement('link');
-    link.rel  = 'stylesheet';
-    link.type = 'text/css';
-    link.href = href;
-    document.getElementsByTagName('head')[0].appendChild(link);
-}
-addCss("./src/css/sso.css")
+// function addCss(href){
+//     var link  = document.createElement('link');
+//     link.rel  = 'stylesheet';
+//     link.type = 'text/css';
+//     link.href = href;
+//     document.getElementsByTagName('head')[0].appendChild(link);
+// }
+// addCss("./src/css/sso.css")
 
 function addActive(el){
 	ssoMainWrapper.querySelector(".active") && ssoMainWrapper.querySelector(".active").classList.remove("active");
@@ -260,10 +262,11 @@ function emailAndMobileValidation(event){
 	var	name=event.target.name;
 	var err=ssoMainWrapper.querySelector(".inputError")
 	err.innerHTML="";
+	var onlynumeric=new RegExp(/^[0-9]*$/);
 	if(name=="emailAndMobile" ){
 		if(inputIdentifier.indexOf("@")>0){
 			enableBtn(btn);
-		}else if(inputIdentifier.length==10 && mobileValidation(err,"",inputIdentifier)){
+		}else if(onlynumeric.test(inputIdentifier) && inputIdentifier.length==10 && mobileValidation(err,"",inputIdentifier)){
 			enableBtn(btn);
 		}else{
 			disableBtn(btn)
@@ -1128,10 +1131,14 @@ function linkedinLogin(channelData,socialCallback){
 function pwdOtpCb(event){
 	otp="";
 	var otpLength="";
-	
+	var errElement=ssoMainWrapper.querySelectorAll(".signIn-error");
+	for(var i=0;i<errElement.length;i++){
+		errElement[i].innerHTML=""
+	}
 	var onlynumeric=new RegExp(/^[0-9]*$/);
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){
+
 			if(!onlynumeric.test(event.target.value)){
 				event.target.value=event.target.value.substring(0,event.target.value.length-1)
 			}
@@ -1550,19 +1557,19 @@ function signInSucess(event){
 			var mq = window.matchMedia("screen and (max-width: 680px)");
 			var tempSocialLogin={
 				"Google":{
-					"logoUrl":"./src/img/google.png",
+					"logoUrl":assestPath.staticPath+"/src/img/google.png",
 					"label":"with Google"
 				},
 				"Facebook":{
-					"logoUrl":"./src/img/fb.png",
+					"logoUrl":assestPath.staticPath+"/src/img/fb.png",
 					"label":"with facebook"
 				},
 				"TrueCaller":{
-					"logoUrl":"./src/img/truecaller.png",
+					"logoUrl":assestPath.staticPath+"/src/img/truecaller.png",
 					"label":"with Truecaller"
 				},
 				"Twitter":{
-					"logoUrl":"./src/img/twitter.png",
+					"logoUrl":assestPath.staticPath+"/src/img/twitter.png",
 					"label":"with Twitter"
 				}
 
@@ -1621,6 +1628,7 @@ function signInSucess(event){
 					ssoObj["socialLogin"]=[]
 				}
 			configParam={...defaultConfig,...ssoObj};
+			configParam.staticPath=assestPath.staticPath;
 				channelName = ssoObj.channelName && ssoObj.channelName.toLowerCase() ;
 				ru = ssoObj.ru;
 				socialCallback=ssoObj.socialCallback;

@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 // window.env="https://image.timespoints.iimg.in/static/public/js/";
 module.exports = {
 	mode: "development",
@@ -13,6 +14,12 @@ module.exports = {
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },
+    plugins:[
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: process.env.NODE_ENV,
+      })
+
+    ],
 
   devServer: {
   	//host: "jssostg.indiatimes.com/",
@@ -21,5 +28,5 @@ module.exports = {
     //compress: true,
     port: 9008,
   },
+  
 }
-console.log("process.env.NODE_ENV  : " + process.env.NODE_ENV);

@@ -130,7 +130,7 @@ function pwdAndConfirmPwd(signup){
       </div>`
         
 }
-function successLogin(){
+function successLogin(configParam){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading modalTitle boldFont">Congratulation</div>
@@ -138,13 +138,13 @@ function successLogin(){
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>
         <div class="channel-image">
-            <img class="" src="./src/img/toi.png"></img>
-            <img class="" src="./src/img/nbt.png"></img>
-            <img class="" src="./src/img/et.png"></img>
-            <img class="" src="./src/img/mt.png"></img>
-            <img class="" src="./src/img/gaana.png"></img>
-            <img class="" src="./src/img/indiatimes.png"></img>
-            <img class="" src="./src/img/st.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/toi.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/nbt.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/et.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/mt.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/gaana.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/indiatimes.png"></img>
+            <img class="" src="${configParam.staticPath}/src/img/st.png"></img>
         </div>
         <button   class="boldFont btn successBtn  continueBtn">Continue</button>
     </div>`
@@ -286,11 +286,11 @@ export function createHTMLTemplate(configParam){
         <div class="ssoContainer"  id="nonLoggedInUser">
             <div class="row">
                 <div class="ssoMainWrapper clearfix">
-                    <img class="cross-icon" src="./src/img/close-icon.png"/>
+                    <img class="cross-icon" src="${configParam.staticPath}/src/img/close-icon.png"/>
                     <div class="ssoLeftSection">
                         <a href="#" class="logobrand">
                         <img id="channelLogo" src=${configParam.channelLogo}></a>
-                        ${successLogin()}
+                        ${successLogin(configParam)}
                         <div class="loginForm active show">
                             <div class=""> 
                                 <p>${configParam.subTitle}</p>
@@ -310,12 +310,12 @@ export function createHTMLTemplate(configParam){
                         ${forgotPassword(configParam)}
                         ${signupform(configParam)}
                         ${passwordChangedsuccess()}
-                        <img src="./src/img/timeslogin.png" class="timesLoginLogo"></img>
+                        <img src="${configParam.staticPath}/src/img/timeslogin.png" class="timesLoginLogo"></img>
                     </div>
 
                     <div class="sso-footer-img">
-                        ${configParam.isMobileView ?`<img src="./src/img/group-mob.png"></img>`
-                            :`<img src="./src/img/bg-img.png"></img>`
+                        ${configParam.isMobileView ?`<img src="${configParam.staticPath}/src/img/group-mob.png"></img>`
+                            :`<img src="${configParam.staticPath}/src/img/bg-img.png"></img>`
                         }
                     </div>
                 </div>

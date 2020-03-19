@@ -1,5 +1,5 @@
 var path = require('path');
-
+var webpack = require('webpack');
 module.exports = {
 	mode: "production",
   	entry: {
@@ -13,7 +13,12 @@ module.exports = {
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },
+plugins:[
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: process.env.NODE_ENV,
+      })
 
+    ],
   devServer: {
   	//host: "jssostg.indiatimes.com/",
   	host: '127.0.0.1',
@@ -22,4 +27,3 @@ module.exports = {
     port: 9008,
   }
 }
-console.log("process.env.NODE_ENV  : " + process.env.NODE_ENV);

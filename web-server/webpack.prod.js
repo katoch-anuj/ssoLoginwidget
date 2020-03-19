@@ -8,8 +8,8 @@ module.exports = {
     },
     
   	output: {
-  		path: path.join(__dirname, "./distprod/"),
-  		publicPath: 'https://image.timespoints.iimg.in/static/public/js/',
+  		path: path.join(__dirname, "./dist/"),
+  		publicPath: './dist/',
       // filename: "./centralLogin.bundle.js"//path relative to this file
       filename: "[name].bundle.js"//path relative to this file
     },
@@ -22,3 +22,4 @@ module.exports = {
     port: 9008,
   }
 }
+console.log("process.env.NODE_ENV  : " + process.env.NODE_ENV);

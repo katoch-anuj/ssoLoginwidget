@@ -20,5 +20,6 @@ module.exports = {
     //contentBase: path.join(__dirname, 'dist'),
     //compress: true,
     port: 9008,
-  }
+  },
 }
+console.log("process.env.NODE_ENV  : " + process.env.NODE_ENV);

@@ -4,7 +4,8 @@
  import {JssoCrosswalk} from "./jsso_crosswalk_0.5.63.js";
  import {errCode} from "./errorCode.js"
  
-
+alert(process.env.NODE_ENV);
+debugger
 setTimeout(function(){
 	(function(){
 			var channelData = "",
@@ -949,8 +950,9 @@ function signInCb(){
 function resendOtpCb(event){
 	var customInput=event.target.parentElement;
 	customInput.querySelector(".pwd-otp").value="";
+	var val=customInput.previousElementSibling.querySelector(".user-otp-info").innerHTML
 	var errElement=customInput.nextElementSibling
-	if(inputIdentifier.indexOf("@")>0){
+	if(val.indexOf("@")>0){
 		if(event.target.classList.contains("otpResentLink")){
 			updateGTMDataLayer({
 				'event':'click_resend_otp_signin',
@@ -964,23 +966,23 @@ function resendOtpCb(event){
 				'eventAction':'click_resend_otp_signin',
 				'eventLabel':ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".sign-in-Heading").innerHTML
 			})
-			getEmailLoginOtp(inputIdentifier,customInput)
+			getEmailLoginOtp(val,customInput)
 		}else if(event.target.classList.contains("verifyResentLink")){
 			updateGTMDataLayer({
 				'event':'click_resend_otp_signup',
 				'eventCategory':'SingUp',
 				'eventAction':'click_resend_otp_signup',
-				'eventLabel':inputIdentifier
+				'eventLabel':val
 			})
 			console.log({
 				'event':'click_resend_otp_signup',
 				'eventCategory':'SingUp',
 				'eventAction':'click_resend_otp_signup',
-				'eventLabel':inputIdentifier
+				'eventLabel':val
 			})
 			resetOtpTimer(customInput)
 			
-			jsso.resendEmailSignUpOtp(inputIdentifier, registerUserSsoid, function(response) {
+			jsso.resendEmailSignUpOtp(val, registerUserSsoid, function(response) {
 				if(response.code==200){
 					errElement.innerHTML=""
 				}else{
@@ -1006,6 +1008,18 @@ function resendOtpCb(event){
 	}else{
 		if(event.target.classList.contains("otpResentLink")){
 			updateGTMDataLayer({
+				'event':'click_resend_otp_signup',
+				'eventCategory':'SingUp',
+				'eventAction':'click_resend_otp_signup',
+				'eventLabel':val
+			})
+			console.log({
+				'event':'click_resend_otp_signup',
+				'eventCategory':'SingUp',
+				'eventAction':'click_resend_otp_signup',
+				'eventLabel':val
+			})
+			updateGTMDataLayer({
 				'event':'click_resend_otp_signin',
 				'eventCategory':'SignIn',
 				'eventAction':'click_resend_otp_signin',
@@ -1017,11 +1031,11 @@ function resendOtpCb(event){
 				'eventAction':'click_resend_otp_signin',
 				'eventLabel':ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".sign-in-Heading").innerHTML
 			})
-			getMobileLoginOtp(inputIdentifier,customInput)
+			getMobileLoginOtp(val,customInput)
 		}else if(event.target.classList.contains("verifyResentLink")){
 			resetOtpTimer(customInput)
 			// var errElement=ssoMainWrapper.querySelector(".verify-user").querySelector(".signIn-error")
-			jsso.resendMobileSignUpOtp(inputIdentifier, registerUserSsoid, function(response) {
+			jsso.resendMobileSignUpOtp(val, registerUserSsoid, function(response) {
 			 	if(response.code==200){
 			 		errElement.innerHTML=""
 				}else{
@@ -1113,7 +1127,6 @@ function linkedinLogin(channelData,socialCallback){
 
 function pwdOtpCb(event){
 	otp="";
-	
 	var otpLength="";
 	
 	var onlynumeric=new RegExp(/^[0-9]*$/);
@@ -1289,10 +1302,10 @@ function verifyUserCb(event){
 					showSection(verifyObject.mobile.greentick,"hide","show")
 					hideSection(verifyObject.mobile.resendLink,"show","hide")
 					delete(verifyObject.mobile);
-				}else{
-					if(!(configParam.signupForm.MandatoryVerifyVia.length==2)&& configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email" ){
+					if(!(configParam.signupForm.MandatoryVerifyVia.length==2)&& configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile" ){
 						showSection(skipLink,"hide","show")
 					}
+				}else{
 					verifyObject.mobile.errElement.innerHTML=errCode[response[0].code]
 				}
 				//second promise
@@ -1302,10 +1315,10 @@ function verifyUserCb(event){
 					showSection(verifyObject.email.greentick,"hide","show")
 					hideSection(verifyObject.email.resendLink,"show","hide")
 					delete(verifyObject.email)
-				}else{
-					if(!(configParam.signupForm.MandatoryVerifyVia.length==2) && configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile"){
+					if(!(configParam.signupForm.MandatoryVerifyVia.length==2) && configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email"){
 						showSection(skipLink,"hide","show")
 					}
+				}else{
 					verifyObject.email.errElement.innerHTML=errCode[response[1].code]
 				}
 				if(response[0].code==200 && response[1].code==200){

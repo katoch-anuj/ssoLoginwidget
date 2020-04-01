@@ -12,6 +12,7 @@
 
 
 </body>
+<!-- <script type="text/javascript" src="https://jssocdnstg.indiatimes.com/crosswalk/jsso_crosswalk_0.5.81.js"></script> -->
 <script type="text/javascript"> 
 	(function(w,s,el){
 		var sc = document.createElement("script");
@@ -43,7 +44,10 @@
 		channelName:"timespoints",
 		element:"ssoLogin",
 		resendOtpTimer:2,
-		channelLogo:"./src/img/tp-logo.svg",
+		channelLogo:"//test-img.timespoints.com/static/sso1/src/img/tp-logo.svg",
+		closeIcon:true,
+		showSuccessScreen:false,
+		closeCallBack:function(){alert("modal closed")},
 		// desktopViewWidth:
 		// mobileViewWidth:
 		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
@@ -77,19 +81,19 @@
 				},
 				"MobileNumber":{
 					placeholder:"enter mobile number",
-					required:true
+					required:false
 				},
 				"firstName":{
 					placeholder:"enter first name",
 					required:true
 				}
 			},
-			// recaptcha:{
-			// 	required:true
-			// },
+			recaptcha:{
+				required:true
+			},
 			signupVia:["Password"],
 			// MandatoryVerifyVia:["email","mobile"]
-			MandatoryVerifyVia:["email"]
+			MandatoryVerifyVia:["emailormobile"]
 			
 		},
 		termsConditionLink:"https://www.google.com/",

@@ -1,14 +1,12 @@
  
  import {createHTMLTemplate} from "../template/ssoTemplate.js";
- // import {JssoCrosswalk} from "./jsso_crosswalk_0.3.1.js";
- import {JssoCrosswalk} from "./jsso_crosswalk_0.5.63.js";
  import {errCode} from "./errorCode.js";
  import {config} from "./config";
  //const webpackVariables = require('webpackVariables');
 
 var assestPath=config[process.env.NODE_ENV];
 
-setTimeout(function(){
+
 	(function(){
 			var channelData = "",
 			ssoMainWrapper = "",
@@ -110,6 +108,10 @@ function resetAllField(){
 	emptyAllInput(el);
 	var el= ssoMainWrapper.querySelectorAll(".pwd-otp");	
 	emptyAllInput(el);
+	var error=ssoMainWrapper.querySelectorAll(".signIn-error");
+	for(var i=0;i<error.length;i++){
+		error[i].innerHTML=""
+	}
 	var el=ssoMainWrapper.querySelectorAll(".nonSignupPwdSection")[0].querySelectorAll(".checked");
 	for(var i=0;i<el.length;i++){
 		hideSection(el[i],"checked","uncheck")
@@ -162,14 +164,15 @@ function hideLoginform(){
 	toggleClass(el)
 }
 function crossIconCb(){
+	configParam.closeCallBack();
 	updateGTMDataLayer({
-		'event':'click_close_signin',
+		'event':ssoMainWrapper.querySelector(".active").querySelector(".modalTitle").innerHTML.toLowerCase()=="sign up"?'click_close_sgnup':'click_close_signin',
 		'eventCategory':'SignIn',
 		'eventAction':'click_close_signin',
 		'eventLabel':ssoMainWrapper.querySelector(".active").querySelector(".modalTitle").innerHTML
 	});
 	console.log({
-		'event':'click_close_signin',
+		'event':ssoMainWrapper.querySelector(".active").querySelector(".modalTitle").innerHTML.toLowerCase()=="sign up"?'click_close_sgnup':'click_close_signin',
 		'eventCategory':'SignIn',
 		'eventAction':'click_close_signin',
 		'eventLabel':ssoMainWrapper.querySelector(".active").querySelector(".modalTitle").innerHTML
@@ -230,10 +233,13 @@ function getEmailLoginOtp(identifier,parentElement){
 		}
 	});
 }
-
+function addCountryCode(){
+	return "+91-"
+}
 //validation
 function mobileValidation(errElement,errMsg,value){
-	var valid=jsso.isValidMobile(value);
+	var mobile=addCountryCode()+value
+	var valid=jsso.isValidMobile(mobile);
 	if(valid){
 		errElement.innerHTML="";
 		return true
@@ -267,6 +273,7 @@ function emailAndMobileValidation(event){
 		if(inputIdentifier.indexOf("@")>0){
 			enableBtn(btn);
 		}else if(onlynumeric.test(inputIdentifier) && inputIdentifier.length==10 && mobileValidation(err,"",inputIdentifier)){
+			inputIdentifier=addCountryCode()+inputIdentifier;
 			enableBtn(btn);
 		}else{
 			disableBtn(btn)
@@ -276,6 +283,7 @@ function emailAndMobileValidation(event){
 		enableBtn(btn)
 	}
 	else if(name=="mobileOnly" && inputIdentifier.length>=10 && mobileValidation(err,"",inputIdentifier) ){
+			inputIdentifier=addCountryCode()+inputIdentifier;
 			enableBtn(btn);
 		}else{
 				disableBtn(btn)
@@ -524,12 +532,13 @@ function switchToPwdCb(event){
 		'eventLabel':'NA'
 	})
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
+	el.querySelector(".signIn-error").innerHTML="";
 	el.querySelector(".user-pwd-info").innerHTML=inputIdentifier;
 	el.querySelector(".pwd-otp").value="";
 	toggleClass(el)
 	addActive(el)
 	var el=ssoMainWrapper.querySelector(".sign-with-otp");
-	
+	el.querySelector(".signIn-error").innerHTML="";
 	toggleClass(el)
 }
 
@@ -552,8 +561,10 @@ function switchToOtpCb(event){
 		getMobileLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"))
 	}
 	var el=ssoMainWrapper.querySelectorAll(".sign-with-pwd")[0];
+	el.querySelector(".signIn-error").innerHTML="";
 	toggleClass(el)
 	var element=ssoMainWrapper.querySelectorAll(".sign-with-otp")[0];
+	element.querySelector(".signIn-error").innerHTML="";
 	addActive(element)
 	element.querySelector(".pwd-otp").value="";
 	toggleClass(element)
@@ -725,6 +736,11 @@ function signupValidation(event){
 					 validMobile=mobileValidation(errElement,"",value)
 					
 				}
+				if(validEmail && validMobile){
+					valid=true
+				}else{
+					valid=false
+				}
 				if(inputField.getAttribute("name")=="firstname" && !value){
 					var errElement=el[i].querySelector(".firstname-error");
 						errElement.innerHTML="Please enter the first name";
@@ -755,11 +771,7 @@ function signupValidation(event){
 			var errElement=el[i].querySelector(".error").innerHTML="";
 		}
 	}
-	if(validEmail && validMobile){
-		valid=true
-	}else{
-		valid=false
-	}
+	
 	return valid;
 }
 
@@ -869,6 +881,12 @@ function registerUser(event){
 			isSendOffer = false;
 			userEmailInfo=email;
 			userMobileInfo=mobile;
+			if(mobile.indexOf("+")>=0){
+				mobile=mobile;
+			}else{
+				mobile=addCountryCode()+mobile;
+			}
+			
 			signUpUser(event,firstName, lastName, gender, dob, email, mobile, password, isSendOffer,recaptcha, termsAccepted, shareDataAllowed,policy)	
 	}else{
 		enableBtn(event.target)
@@ -1062,47 +1080,43 @@ function resendOtpCb(event){
 		}
 	}
 }
-
+window.JssoLoginCompleteCallback=function(response){
+	if(response.code==200){
+			signInSucess()
+		}
+}
 //social Login
 function FacebookLogin(channelData){
-	jsso.socialLogin("FACEBOOK",configParam.facebookClientId,function(response){
-		updateGTMDataLayer({
-			'event':'signin_with_facebook',
-			'eventCategory':'SignIn',
-			'eventAction':'signin_with_facebook',
-			'eventLabel':'NA'
-		})
-		console.log({
-			'event':'signin_with_facebook',
-			'eventCategory':'SignIn',
-			'eventAction':'signin_with_facebook',
-			'eventLabel':'NA'
-		})
-		if(response.code==200){
-			signInSucess()
-		}
+	jsso.socialLogin("FACEBOOK",configParam.facebookClientId)
+	updateGTMDataLayer({
+		'event':'signin_with_facebook',
+		'eventCategory':'SignIn',
+		'eventAction':'signin_with_facebook',
+		'eventLabel':'NA'
 	})
-
+	console.log({
+		'event':'signin_with_facebook',
+		'eventCategory':'SignIn',
+		'eventAction':'signin_with_facebook',
+		'eventLabel':'NA'
+	})
+			
 }
 function GoogleplusLogin(channelData){
-	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId,function(response){
-		updateGTMDataLayer({
-			'event':'signin_with_google',
-			'eventCategory':'SignIn',
-			'eventAction':'signin_with_google',
-			'eventLabel':'NA'
-		});
-		console.log({
-			'event':'signin_with_google',
-			'eventCategory':'SignIn',
-			'eventAction':'signin_with_google',
-			'eventLabel':'NA'
-		});
-		if(response.code==200){
-			signInSucess()
-
-		}
-	})
+	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId)
+	updateGTMDataLayer({
+		'event':'signin_with_google',
+		'eventCategory':'SignIn',
+		'eventAction':'signin_with_google',
+		'eventLabel':'NA'
+	});
+	console.log({
+		'event':'signin_with_google',
+		'eventCategory':'SignIn',
+		'eventAction':'signin_with_google',
+		'eventLabel':'NA'
+	});
+	
 }
 // function truecallerLogin(socialCallback){
 // 	var el=ssoMainWrapper.querySelector(".truecaller")
@@ -1131,10 +1145,9 @@ function linkedinLogin(channelData,socialCallback){
 function pwdOtpCb(event){
 	otp="";
 	var otpLength="";
-	var errElement=ssoMainWrapper.querySelectorAll(".signIn-error");
-	for(var i=0;i<errElement.length;i++){
-		errElement[i].innerHTML=""
-	}
+	var errElement=event.target.parentElement.parentElement.nextElementSibling;
+		errElement.innerHTML=""
+	
 	var onlynumeric=new RegExp(/^[0-9]*$/);
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){
@@ -1219,11 +1232,17 @@ function skipLinkCb(){
 	verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage);
 }
 function verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage){
-	addActive(ssoSuccessPage)
-	hideSection(footerImg,"show","hide");
-	hideSection(loginForm,"show","hide");
-	hideSection(component,"show","hide");
-	showSection(ssoSuccessPage,"hide","show")
+	if(configParam.showSuccessScreen){
+		showSection(ssoSuccessPage,"hide","show")
+		addActive(ssoSuccessPage);
+		hideSection(footerImg,"show","hide");
+		hideSection(loginForm,"show","hide");
+		hideSection(component,"show","hide");
+
+	}else{
+		signInSucess()
+		
+	}
 }
 function verifyfailure(){
 
@@ -1309,7 +1328,7 @@ function verifyUserCb(event){
 					showSection(verifyObject.mobile.greentick,"hide","show")
 					hideSection(verifyObject.mobile.resendLink,"show","hide")
 					delete(verifyObject.mobile);
-					if(!(configParam.signupForm.MandatoryVerifyVia.length==2)&& configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile" ){
+					if(!(configParam.signupForm.MandatoryVerifyVia.length==2)&& (configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile")||(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile")){
 						showSection(skipLink,"hide","show")
 					}
 				}else{
@@ -1322,7 +1341,7 @@ function verifyUserCb(event){
 					showSection(verifyObject.email.greentick,"hide","show")
 					hideSection(verifyObject.email.resendLink,"show","hide")
 					delete(verifyObject.email)
-					if(!(configParam.signupForm.MandatoryVerifyVia.length==2) && configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email"){
+					if(!(configParam.signupForm.MandatoryVerifyVia.length==2) && (configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email")||(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile")){
 						showSection(skipLink,"hide","show")
 					}
 				}else{
@@ -1579,6 +1598,7 @@ function signInSucess(event){
 				resendOtpTimer:10,
 				isMobileView: mq.matches,
 				channelName:"timespoints",
+				showSuccessScreen:true,
 				// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
 				channelLogo:"",
 				title:"",
@@ -1632,11 +1652,17 @@ function signInSucess(event){
 				channelName = ssoObj.channelName && ssoObj.channelName.toLowerCase() ;
 				ru = ssoObj.ru;
 				socialCallback=ssoObj.socialCallback;
-				
-			jsso = new JssoCrosswalk(channelName,"WEB");
+				var jsointerval=setInterval(function(){
+					if(window.JssoCrosswalkWidget){
+						jsso = new JssoCrosswalk(channelName,"WEB");
+						checkIfUserLoggedIn()	
+						clearInterval(jsointerval);
+					}	
+				},1000)
+			
 			//if configuration like clientId will be maintained by sso
 			//getChannelData();
-			checkIfUserLoggedIn()	
+			
 		}
 		function bindEventListeners(){
 			ssoMainWrapper=document.getElementsByClassName("ssoMainWrapper")[0];
@@ -1738,7 +1764,6 @@ function signInSucess(event){
 		}
 
 	})()	
-},0)
 
 
 

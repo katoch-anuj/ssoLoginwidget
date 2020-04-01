@@ -63,14 +63,9 @@ function onloadCSS(ss, callback) {
     }
 }
 
-if(process.env.NODE_ENV=="test"){
-   var versionapi={"apiEndPoint":"https://test.timespoints.com/tpapi"} 
-}else{
-    var versionapi={"apiEndPoint":"//tpapi.timespoints.com"}
-}
 
 
-asyncRequest('GET', versionapi.apiEndPoint + "/config/nocache/wversion", function (res) {
+asyncRequest('GET', assestPath.versionapi + "/config/nocache/wversion", function (res) {
     window.__tpvar=1;
     if (res.status >= 200 && res.status < 400) {
         var data = res.responseText && typeof res.responseText == 'string' ? JSON.parse(res.responseText) : res.responseText;
@@ -84,6 +79,18 @@ asyncRequest('GET', versionapi.apiEndPoint + "/config/nocache/wversion", functio
         s.async = false;
         document.getElementsByTagName('head')[0].appendChild(s);
     });
+    if(!window.JssoCrosswalk){
+        onloadCSS(stylesheet, function () {
+            var s = document.createElement('script');
+            s.src = assestPath.jssoUrl;
+            s.onload=function(){
+                window.JssoCrosswalkWidget=JssoCrosswalk;
+            }
+            s.type = "text/javascript";
+            s.async = false;
+            document.getElementsByTagName('head')[0].appendChild(s);
+        });   
+    }
     onloadCSS(stylesheet, function () {
         var s = document.createElement('script');
         s.src = "https://www.google.com/recaptcha/api.js";

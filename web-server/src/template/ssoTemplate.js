@@ -5,7 +5,7 @@ function LoginType(configParam){
         ${configParam.socialLogin.map((config)=>`
                     <button id="${config.type.toLowerCase()}-div" type="button" class="btn socialBtn mr20 btn-${config.type.toLowerCase()}" >
                     <div class="social-imageWrapper  ${configParam.socialLogin.length<=2?"border-right":"text-center"}"><img class="social-image ico-${config.type.toLowerCase()}" src=${config.logoUrl?config.logoUrl:"ok"} alt=${config.type} ></img></div>
-                    ${configParam.socialLogin.length<=2 ?`<div class="social-text">${config.label}</div>`:""}
+                    ${configParam.socialLogin.length<=2 ?`<div class="social-text medFont">${config.label}</div>`:""}
                     </button>
              `).join("")} 
         </div>
@@ -112,7 +112,7 @@ function pwdAndConfirmPwd(signup){
         <div class=" ${signup?"signupPwdSection sign-up-field":"nonSignupPwdSection"}">
             <div class="custom-input posRelative dflex textinput">
                 <div class="input ">
-                    <input required id="passwordSignUp" required name="password"  type="password" class=" reset-input password-field ${signup?"signupPwd ":"  nonSignupPwd  "}" />
+                    <input required id="passwordSignUp" data-required="required"  required name="password"  type="password" class=" reset-input password-field ${signup?"signupPwd ":"  nonSignupPwd  "}" />
                     <label class="floating-label">Password</label>
                 </div>
                 <span class="eye-icon"></span>
@@ -133,7 +133,7 @@ function pwdAndConfirmPwd(signup){
 function successLogin(configParam){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
-        <div class="success-heading modalTitle boldFont">Congratulation</div>
+        <div class="success-heading modalTitle boldFont">Congratulations</div>
         <div class="boldFont success-subHeading"></div>
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>
@@ -233,8 +233,8 @@ function signupform(configParam){
                 <fieldset>
                     <div class="sign-up-wrapper help modalTitle">Sign up</div>
                     <div class="newUser-error hide">
-                        <div class="error  medFont">You are not register with TimesPoints.</div>
-                        <div id="emailReg-error" class="error"> Please sign up</div>
+                        <div class="error  medFont">You are not registered with TimesPoints.</div>
+                        <div id="emailReg-error medFont" class="error"> Please sign up</div>
                     </div>
                         ${Object.keys(configParam.signupForm.signUpFields).map((signup)=>
                         `<div class="form-group posRelative sign-up-field textinput">
@@ -248,7 +248,7 @@ function signupform(configParam){
                         }
                         ${configParam.signupForm.recaptcha ?
                             `<div class="form-group">
-                            <div class="g-recaptcha" ${configParam.signupForm.recaptcha.required==true?"required":""}  data-sitekey="6LfzjVEUAAAAAFrGrUQnzmaty9snHSijupcBFIrv"></div>
+                            <div class="g-recaptcha" ${configParam.signupForm.recaptcha.required==true?"required":""}  data-sitekey="6LcXeh0TAAAAAJ9zwxUJbkkBgBpb6YN7NhrTemfJ"></div>
                             </div>`:""
                         }
                  
@@ -286,7 +286,9 @@ export function createHTMLTemplate(configParam){
         <div class="ssoContainer"  id="nonLoggedInUser">
             <div class="row">
                 <div class="ssoMainWrapper clearfix">
-                    <img class="cross-icon" src="${configParam.staticPath}/src/img/close-icon.png"/>
+                ${configParam.closeIcon?
+                    `<img class="cross-icon" src="${configParam.staticPath}/src/img/close-icon.png"/>`:""
+                }
                     <div class="ssoLeftSection">
                         <a href="#" class="logobrand">
                         <img id="channelLogo" src=${configParam.channelLogo}></a>

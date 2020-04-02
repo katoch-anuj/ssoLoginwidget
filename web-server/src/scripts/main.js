@@ -91,13 +91,18 @@ asyncRequest('GET', assestPath.versionapi + "/config/nocache/wversion", function
             document.getElementsByTagName('head')[0].appendChild(s);
         });   
     }
-    onloadCSS(stylesheet, function () {
-        var s = document.createElement('script');
-        s.src = "https://www.google.com/recaptcha/api.js";
-        s.type = "text/javascript";
-        s.async = false;
-        document.getElementsByTagName('head')[0].appendChild(s);
-    });
+    var recaptchaInterval=setInterval(function(){
+        var element=document.getElementsByClassName("g-recaptcha")[0]
+        if(element){
+            var s = document.createElement('script');
+            s.src = "https://www.google.com/recaptcha/api.js";
+            s.type = "text/javascript";
+            s.async = false;
+            document.getElementsByTagName('head')[0].appendChild(s);
+            clearInterval(recaptchaInterval);
+        }
+    },1000)
+    
 });
 
 

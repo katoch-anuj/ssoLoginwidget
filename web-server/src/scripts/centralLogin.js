@@ -883,7 +883,7 @@ function registerUser(event){
 			userMobileInfo=mobile;
 			if(mobile.indexOf("+")>=0){
 				mobile=mobile;
-			}else{
+			}else if(mobile){
 				mobile=addCountryCode()+mobile;
 			}
 			

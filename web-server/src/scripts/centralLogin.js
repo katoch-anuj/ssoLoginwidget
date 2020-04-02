@@ -897,6 +897,10 @@ function registerUser(event){
 
 function checkPassword(event){
 	passwordEntered=event.target.value;
+	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
+		pwdError.innerHTML="";
+		ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".passwordInfo").classList.remove("error");
+	
 	var btn="";
 	if(event.target.classList.contains("signupPwd")){
 		var pwd=ssoMainWrapper.querySelector(".signupPwdSection");
@@ -1146,8 +1150,10 @@ function pwdOtpCb(event){
 	otp="";
 	var otpLength="";
 	var errElement=event.target.parentElement.parentElement.nextElementSibling;
-		errElement.innerHTML=""
-	
+		errElement.innerHTML="";
+	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
+		pwdError.innerHTML="";
+	ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".passwordInfo").classList.remove("error");
 	var onlynumeric=new RegExp(/^[0-9]*$/);
 	if(event.target.value){
 		if(event.target.classList.contains("otpInput")){

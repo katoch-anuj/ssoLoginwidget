@@ -1321,12 +1321,12 @@ function verifyUserCb(event){
 						}
 					})
 				if(response[0].code==200 && response[1].code==200){
-					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.mobile.number+"/"+verifyObject.email.id
+					subHeading.innerHTML=verifyObject.mobile.number+"/"+verifyObject.email.id
 				}
 				else if(response[0].code==200 && response[1].code!=200){
-					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.mobile.number
+					subHeading.innerHTML=verifyObject.mobile.number
 				}else if(response[1].code==200 && response[0].code!=200){
-					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.email.id
+					subHeading.innerHTML=verifyObject.email.id
 				}
 				if(response[0].code==200){
 					verifyObject.mobile.errElement.innerHTML=""
@@ -1383,7 +1383,7 @@ function verifyUserCb(event){
 				if(subHeading.innerHTML){
 					subHeading.append("/"+verifyObject.email.id)
 				}else{
-					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.email.id
+					subHeading.innerHTML=verifyObject.email.id
 				}
 				verifyObject.email.errElement.innerHTML=""
 				verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage)
@@ -1416,7 +1416,7 @@ function verifyUserCb(event){
 				if(subHeading.innerHTML){
 					subHeading.append("/"+verifyObject.mobile.number)
 				}else{
-					subHeading.innerHTML="You are now registered with TimesPoints and your user id is:"+verifyObject.mobile.number
+					subHeading.innerHTML=verifyObject.mobile.number
 				}
 				verifyObject.mobile.errElement.innerHTML=""
 				verifySuccessCb(component,footerImg,loginForm,ssoSuccessPage)

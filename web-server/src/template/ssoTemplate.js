@@ -134,6 +134,7 @@ function successLogin(configParam){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading modalTitle boldFont">Congratulations</div>
+        <div class="boldFont fontBlack">You are now registered with TimesPoints and your user id is:</div>
         <div class="boldFont success-subHeading"></div>
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>

@@ -478,7 +478,9 @@ fieldset[disabled] input[type="checkbox"] {
   width: 200px;
   height: 35px;
 }
-
+.ssoLoginWidget .fontBlack{
+  color: #000000;
+}
 .ssoLoginWidget .floating-label {
   position: absolute;
   pointer-events: none;

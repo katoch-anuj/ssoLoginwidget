@@ -238,7 +238,12 @@ function addCountryCode(){
 }
 //validation
 function mobileValidation(errElement,errMsg,value){
-	var mobile=addCountryCode()+value
+	var mobile=value;
+	if(value.indexOf("+")>=0){
+		 mobile=mobile;
+	}else if(value){
+		 mobile=addCountryCode()+mobile;
+	}
 	var valid=jsso.isValidMobile(mobile);
 	if(valid){
 		errElement.innerHTML="";
@@ -726,7 +731,7 @@ function signupValidation(event){
 		var inputField=el[i].querySelector("input");
 		if(inputField){
 			var value=inputField.value;
-			if(inputField.getAttribute("data-required")=="required"){
+			if(inputField.getAttribute("data-required")=="required" || value){
 				if(inputField.getAttribute("name")=="email" ){
 					var errElement=el[i].querySelector(".email-error")
 					 validEmail=emailValidation(errElement,"",value)
@@ -741,17 +746,18 @@ function signupValidation(event){
 				}else{
 					valid=false
 				}
-				if(inputField.getAttribute("name")=="firstname" && !value){
+			}
+				else if(inputField.getAttribute("name")=="firstname" && !value){
 					var errElement=el[i].querySelector(".firstname-error");
 						errElement.innerHTML="Please enter the first name";
 						valid=false
 				}
-				if(inputField.getAttribute("name")=="lastname" && !value){
+				else if(inputField.getAttribute("name")=="lastname" && !value){
 					var errElement=el[i].querySelector(".lastname-error");
 						errElement.innerHTML="Please enter the last name";
 						valid=false;
 				}
-				if(inputField.getAttribute("name")=="password"){
+				else if(inputField.getAttribute("name")=="password"){
 					var errElement=el[i].querySelector(".password-error");
 					if(el[i].querySelector(".password-strength").querySelector(".uncheck") ){
 					errElement.innerHTML="Please enter  valid password";
@@ -759,8 +765,7 @@ function signupValidation(event){
 					}else{
 						errElement.innerHTML=""
 					}	
-				}	
-			}
+				}		
 			
 		}
 		else if(el[i].querySelector(".checkTerms").classList.contains("t-uncheck")){

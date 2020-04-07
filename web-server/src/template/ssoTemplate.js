@@ -3,7 +3,7 @@ function LoginType(configParam){
     <div>
         <div class="socialLogin dflex ">
         ${configParam.socialLogin.map((config)=>`
-                    <button id="${config.type.toLowerCase()}-div" type="button" class="btn socialBtn mr20 btn-${config.type.toLowerCase()}" >
+                    <button id="${config.type.toLowerCase()}-div" type="button" class="btn socialBtn mr18 btn-${config.type.toLowerCase()}" >
                     <div class="social-imageWrapper  ${configParam.socialLogin.length<=2?"border-right":"text-center"}"><img class="social-image ico-${config.type.toLowerCase()}" src=${config.logoUrl?config.logoUrl:"ok"} alt=${config.type} ></img></div>
                     ${configParam.socialLogin.length<=2 ?`<div class="social-text medFont">${config.label}</div>`:""}
                     </button>
@@ -22,9 +22,9 @@ function LoginType(configParam){
                     `<div class="non-social-section">
                         <div class="emailAndMobile posRelative">
                             ${configParam.nonSocialLogin.loginVia[0].toLowerCase()=="email"?
-                            ` <input id="emailAndMobile" required class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" maxlength="100"><label class="floating-label">Enter email or Mobile No</label>`:
+                            ` <input id="emailAndMobile" required class="input-data boldFont focusActive" autocomplete="off" type="text" name="emailAndMobile" maxlength="100"><label class="floating-label">Enter Email or Mobile No</label>`:
 
-                            `<input id="emailAndMobile" class="input-data boldFont" autocomplete="off" type="text" name="emailAndMobile" maxlength="100"><label class="floating-label">Enter mobile no or email</label>`
+                            `<input id="emailAndMobile" class="input-data boldFont focusActive" autocomplete="off" type="text" name="emailAndMobile" maxlength="100"><label class="floating-label">Enter Mobile No or Email</label>`
                         }
                         </div>
                     </div>
@@ -40,7 +40,7 @@ function LoginType(configParam){
                         `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="mobile"?
                             `<div class="non-social-section">
                                 <div class="mobileOnly posRelative">
-                                    <input id="mobileOnly" required class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly"  maxlength="10">
+                                    <input inputmode="number" id="mobileOnly" required class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly"  maxlength="10">
                                     <label class="floating-label">Enter Mobile No</label>
                                 </div>
                             </div>
@@ -100,9 +100,9 @@ function signinWithOtp(configParam){
 function siginbtn(linktext,btnClass,className,btnText,configParam){
     return`
         <div class="signInBtn-wrapper">
-            <button disabled class="btn signInBtn ${btnClass} continueBtn "> ${btnText}</button>
+            <button disabled class="btn signInBtn  ${btnClass} continueBtn "> ${btnText}</button>
             ${configParam.nonSocialLogin.loginWith.length>1?
-                `<div class="link toggleSignIn ${className}">${linktext}</div>`:""
+                `<div class="link boldFont toggleSignIn ${className}">${linktext}</div>`:""
             }   
         </div>`  
 }
@@ -116,7 +116,6 @@ function pwdAndConfirmPwd(signup){
                     <label class="floating-label">Password</label>
                 </div>
                 <span class="eye-icon"></span>
-                <label for="passwordSignUp"></label>
             </div>
                ${!signup ?`<div class="info-icon"><div class="medFont passwordInfo">Can't match last 3 passwords.</div></div>`:""}  
             <div class="password-error error"></div>
@@ -162,7 +161,7 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
         </div>
         <div class="custom-input posRelative dflex">
             <div class="input ">
-                <input required data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
+                <input inputmode="number" required data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
                 <label class="floating-label">${placeholder?placeholder:"Enter OTP"}</label>
             </div>
             <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
@@ -232,7 +231,7 @@ function signupform(configParam){
         <div id="signUp-div" class="mediumPanel hide clearfix" >
             <form class="tlogins sign-in-form ">
                 <fieldset>
-                    <div class="sign-up-wrapper help modalTitle">Sign up</div>
+                    <div class="sign-up-wrapper boldFont modalTitle">Sign up</div>
                     <div class="newUser-error hide">
                         <div class="error  medFont">You are not registered with TimesPoints.</div>
                         <div id="emailReg-error medFont" class="error"> Please sign up</div>
@@ -254,7 +253,7 @@ function signupform(configParam){
                         }
                  
                  <div class="terms sign-up-field termsCondition ">
-                    <div class=" checkTerms ${configParam.defaultSelected?"t-check":"t-uncheck"}">
+                    <div class=" checkTerms medFont ${configParam.defaultSelected?"t-check":"t-uncheck"}">
                      <span>I agree to the </span>
                      <a href=${configParam.termsConditionLink} class="link termsConditionLink">Term and conditions</a>
                      </div>
@@ -262,15 +261,15 @@ function signupform(configParam){
                  </div>
                  <div>
                  <div class="consent sign-up-field terms ">
-                    <div class=" checkTerms ${configParam.defaultSelected?"t-check":"t-uncheck"}">
-                         <span>I consnet to allow my data to be 
+                    <div class=" checkTerms medFont ${configParam.defaultSelected?"t-check":"t-uncheck"}">
+                         <span>I consent to allow my data to be 
                          <span>used to personalised ads </span>
                      </div>
                      <div class="error termsError"></div>
                  </div>
                  <div class="signup-error error"></div>
                   <div class="form-group">
-                    <button type="button" id="registerbtn"   class="btn btn-register sign-up continueBtn">Sign In</button>
+                    <button type="button" id="registerbtn"   class="btn btn-register sign-up continueBtn">Sign Up</button>
                   </div>
                   
                 </fieldset>

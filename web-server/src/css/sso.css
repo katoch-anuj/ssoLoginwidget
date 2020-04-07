@@ -345,8 +345,8 @@ fieldset[disabled] input[type="checkbox"] {
 .ssoLoginWidget .mr10{
     margin-right:10px;
 }
-.ssoLoginWidget .mr20{
-    margin-right:20px;
+.ssoLoginWidget .mr18{
+    margin-right:18px;
 }
 .ssoLoginWidget .unverified.show{
     display: flex;
@@ -416,6 +416,7 @@ fieldset[disabled] input[type="checkbox"] {
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
+    height:18px;
 }
 
 .ssoLoginWidget .t-check{
@@ -423,6 +424,7 @@ fieldset[disabled] input[type="checkbox"] {
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
+    height:18px;
 }
 .ssoLoginWidget .nonSignupPwdSection{
         margin-top:10px;
@@ -451,7 +453,6 @@ fieldset[disabled] input[type="checkbox"] {
 
 .ssoLoginWidget .ssoMainWrapper {
     background: #fff;
-    border: 1px solid #e2e5e8;
     margin-bottom: 15px;
 
 }
@@ -482,6 +483,7 @@ fieldset[disabled] input[type="checkbox"] {
   color: #000000;
 }
 .ssoLoginWidget .floating-label {
+  padding:0 5px;
   position: absolute;
   pointer-events: none;
   left: 14px;
@@ -559,7 +561,6 @@ input[type="number"] {
     display:flex;
     border-radius: 10px;
     align-items:center;
-    justify-content: center;
 }
 .ssoLoginWidget .socialBtn:last-child{
     margin-right:0;
@@ -814,7 +815,7 @@ input[type="number"] {
     margin:50px 0 26px 0;
 }
 .ssoLoginWidget .signupError{
-    color:red;
+    color:#d61616;
 }
 .ssoLoginWidget .cross-icon{
     cursor:pointer;
@@ -823,10 +824,13 @@ input[type="number"] {
     color: #d61616;
     font-size: 12px;
 }
+
 .ssoLoginWidget .confirmPwd{
     margin-top:46px;
 }
 .ssoLoginWidget .separator{
+    margin-top: 20px;
+    margin-bottom: 26px;
     text-align: center;
     display:flex;
     align-items: center;
@@ -852,7 +856,7 @@ input[type="number"] {
 }
 .ssoLoginWidget .social-imageWrapper{
     display: inline-block;
-    padding: 5px;
+    padding: 5px 10px;
     
 }
 #facebook-div .border-right{
@@ -863,6 +867,12 @@ input[type="number"] {
 }
 .ssoLoginWidget .mt25{
     margin-top:25px;
+}
+.ssoLoginWidget .ssoContainer .error-Border{
+  border:1px solid #d61616;
+}
+.ssoLoginWidget .ssoContainer .errorLabel{
+  color: #d61616;
 }
 
 /*timer start*/
@@ -912,6 +922,9 @@ input[type="number"] {
   /*animation: opa 5s steps(1, end) infinite reverse;*/
   border-left: none;
 }
+.ssoLoginWidget .checkTerms{
+  color:#000;
+}
 
 .ssoLoginWidget .timerWrapper .mask {
   width: 50%;
@@ -945,8 +958,11 @@ input[type="number"] {
     .ssoLoginWidget{
         width:100%;
     }
+    .ssoLoginWidget .checkTerms{
+      font-size:11px;
+    }
     .ssoLoginWidget .sign-up-wrapper{
-        font-size: 14px;
+        font-size: 16px;
         margin:42px 0 31px 0;
     }
     .ssoLoginWidget .error{

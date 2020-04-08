@@ -874,6 +874,12 @@ input[type="number"] {
 .ssoLoginWidget .ssoContainer .errorLabel{
   color: #d61616;
 }
+.ssoLoginWidget.resetSuccess{
+  width:500px;
+}
+.ssoLoginWidget .ssoLeftSection.resetSuccess{
+  width:100%;
+}
 
 /*timer start*/
 .ssoLoginWidget .timerWrapper {
@@ -924,6 +930,7 @@ input[type="number"] {
 }
 .ssoLoginWidget .checkTerms{
   color:#000;
+  font-size:11px;
 }
 
 .ssoLoginWidget .timerWrapper .mask {

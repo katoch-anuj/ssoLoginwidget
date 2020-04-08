@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     
-    "start:dev": "export NODE_ENV=dev && webpack-dev-server --port 9008 --hot",
+    "start:dev": "export NODE_ENV=dev && webpack-dev-server --port 9008 --hot ",
     "build:prod": "export NODE_ENV=production && webpack --mode production --config webpack.prod.js",
     "build:stg": "export NODE_ENV=test &&  webpack --mode development --config webpack.config.js"
   },

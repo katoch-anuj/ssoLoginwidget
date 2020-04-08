@@ -40,7 +40,7 @@ function LoginType(configParam){
                         `${configParam.nonSocialLogin && configParam.nonSocialLogin.loginVia[0].toLowerCase()=="mobile"?
                             `<div class="non-social-section">
                                 <div class="mobileOnly posRelative">
-                                    <input inputmode="number" id="mobileOnly" required class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly"  maxlength="10">
+                                    <input inputmode="tel" id="mobileOnly" required class="input-data boldFont" autocomplete="off" type="number" name="mobileOnly"  maxlength="10">
                                     <label class="floating-label">Enter Mobile No</label>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@ function successLogin(configParam){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading modalTitle boldFont">Congratulations</div>
-        <div class="boldFont fontBlack">You are now registered with TimesPoints and your user id is:</div>
+        <div class="boldFont fontBlack">You are now registered with ${configParam.channelName} and your user id is:</div>
         <div class="boldFont success-subHeading"></div>
         <div>Did You Know?</div>
         <div>Your account is valid across all Times Internet properties</div>
@@ -161,7 +161,7 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
         </div>
         <div class="custom-input posRelative dflex">
             <div class="input ">
-                <input inputmode="number" required data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
+                <input inputmode="numeric" required data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
                 <label class="floating-label">${placeholder?placeholder:"Enter OTP"}</label>
             </div>
             <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
@@ -180,9 +180,9 @@ function verifyUser(configParam){
         <div class="verify-user hide">
             <div class="boldFont resetHeading modalTitle verify-heading">Verify </div>
             ${(configParam.signupForm.signUpFields["Email"] &&configParam.signupForm.signUpFields["MobileNumber"]) ?
-           `<div class=" hide verifySection" >${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
-            <div class="mt25 hide verifySection "> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"Enter OTP(optional)"}`)}</div>`
-            :`<div class="hide verifySection">${enterotp(configParam,false,"verify","required")}</div>`
+           `<div class=" show verifySection1 sectionToVerify" >${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
+            <div class=" hide verifySection2 sectionToVerify"> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"Enter OTP(optional)"}`)}</div>`
+            :`<div class="show verifySection1 sectionToVerify">${enterotp(configParam,false,"verify","required")}</div>`
         }   
         <button disabled class="btn verifyBtn  continueBtn "> Verify</button> 
         <div class="skipLink hide">
@@ -315,7 +315,7 @@ export function createHTMLTemplate(configParam){
                         <img src="${configParam.staticPath}/src/img/timeslogin.png" class="timesLoginLogo"></img>
                     </div>
 
-                    <div class="sso-footer-img">
+                    <div class="show sso-footer-img">
                         ${configParam.isMobileView ?`<img src="${configParam.staticPath}/src/img/group-mob.png"></img>`
                             :`<img src="${configParam.staticPath}/src/img/bg-img.png"></img>`
                         }

@@ -11,7 +11,7 @@ module.exports = {
   		path: path.join(__dirname, "./dist/"),
   		publicPath: './dist/',
       // filename: "./centralLogin.bundle.js"//path relative to this file
-      filename: "[name].bundle.js"//path relative to this file
+      filename: "[name].bundle.min.js"//path relative to this file
     },
 plugins:[
       new webpack.EnvironmentPlugin({

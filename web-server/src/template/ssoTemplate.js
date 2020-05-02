@@ -77,7 +77,7 @@ function signinWithPassword(configParam){
                         <input required class="reset-input required pwdPrefernce pwd-otp boldFont otpText" type="password" />
                         <label class="floating-label">Enter Password</label>
                     </div>
-                    <span class="link forget-password-link  medFont">Forgot Password</span>
+                    <span class="link forget-password-link  medFont">Forgot Password?</span>
                     
                 </div>
                 <div class="error signIn-error"></div>
@@ -133,10 +133,9 @@ function successLogin(configParam){
     return`<div class="ssoSuccessPage hide">
         <div class="successIcon"></div>
         <div class="success-heading modalTitle boldFont">Congratulations</div>
-        <div class="boldFont fontBlack">You are now registered with ${configParam.channelName} and your user id is:</div>
+        <div class="boldFont fontBlack">You are now registered with ${configParam.displayChannel} and your user id is:</div>
         <div class="boldFont success-subHeading"></div>
-        <div>Did You Know?</div>
-        <div>Your account is valid across all Times Internet properties</div>
+        <div>Your account is valid across all Times Internet network</div>
         <div class="channel-image">
             <img class="" src="${configParam.staticPath}/src/img/toi.png"></img>
             <img class="" src="${configParam.staticPath}/src/img/nbt.png"></img>
@@ -150,7 +149,7 @@ function successLogin(configParam){
     </div>`
 }
 
-function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
+function enterotp(configParam,changeLink,triggerPoint){
     return `
         <div class="dflex user-section">
             <div class="user-login-Detail">
@@ -161,8 +160,8 @@ function enterotp(configParam,changeLink,triggerPoint,validation,placeholder){
         </div>
         <div class="custom-input posRelative dflex">
             <div class="input ">
-                <input inputmode="numeric" required data-valid="${validation?validation:""}" class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
-                <label class="floating-label">${placeholder?placeholder:"Enter OTP"}</label>
+                <input inputmode="numeric" required  class="reset-input ${triggerPoint+"Input"}  pwd-otp boldFont otpText" type="text"/>
+                <label class="floating-label">Enter OTP</label>
             </div>
             <span class="link hide  ${triggerPoint+"ResentLink"} resend-otp-link medFont">Resend OTP</span>
            <div class="timerWrapper show">
@@ -179,15 +178,12 @@ function verifyUser(configParam){
     return`
         <div class="verify-user hide">
             <div class="boldFont resetHeading modalTitle verify-heading">Verify </div>
-            ${(configParam.signupForm.signUpFields["Email"] &&configParam.signupForm.signUpFields["MobileNumber"]) ?
-           `<div class=" show verifySection1 sectionToVerify" >${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"optional":"required"}`,"Enter OTP")}</div>
-            <div class=" hide verifySection2 sectionToVerify"> ${enterotp(configParam,false,"verify",`${configParam.signupForm.MandatoryVerifyVia.length==2 ?"required":"optional"}`,`${configParam.signupForm.MandatoryVerifyVia.length==2 ||configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"?"Enter OTP ":"Enter OTP(optional)"}`)}</div>`
-            :`<div class="show verifySection1 sectionToVerify">${enterotp(configParam,false,"verify","required")}</div>`
+            ${(configParam.signupForm.MandatoryVerifyVia.length==2)?
+                `<div class="show verifySection1 sectionToVerify" >${enterotp(configParam,false,"verify")}</div>
+            <div class=" hide verifySection2 sectionToVerify"> ${enterotp(configParam,false,"verify")}</div>`
+            :`<div class="show verifySection1 sectionToVerify">${enterotp(configParam,false,"verify")}</div>`
         }   
         <button disabled class="btn verifyBtn  continueBtn "> Verify</button> 
-        <div class="skipLink hide">
-            <span class="link skip">Skip</span>
-        </div>
         </div>`
 }
 
@@ -234,11 +230,11 @@ function signupform(configParam){
                     <div class="sign-up-wrapper boldFont modalTitle">Sign up</div>
                     <div class="newUser-error hide">
                         <div class="error  medFont">You are not registered with TimesPoints.</div>
-                        <div id="emailReg-error medFont" class="error"> Please sign up</div>
+                        <div id="emailReg-error medFont" class="error"> Please sign up.</div>
                     </div>
                         ${Object.keys(configParam.signupForm.signUpFields).map((signup)=>
                         `<div class="form-group posRelative sign-up-field textinput">
-                            <input required type="text" name=${signup.toLowerCase()} id=${signup} data-required=${configParam.signupForm.signUpFields[signup].required?"required":"optional"} class="form-control  ${signup.toLowerCase()}" />
+                            <input required  type=${signup.toLowerCase()=="mobilenumber"?"tel":"text"} name=${signup.toLowerCase()} id=${signup} data-required=${configParam.signupForm.signUpFields[signup].required?"required":"optional"} class="form-control  ${signup.toLowerCase()}" />
                             <label class="floating-label" for=${signup}>${configParam.signupForm.signUpFields[signup].required?"*":""}${configParam.signupForm.signUpFields[signup].placeholder}</label>
                             <div class="error  ${signup.toLowerCase()}-error"></div>
                         </div>`
@@ -248,14 +244,14 @@ function signupform(configParam){
                         }
                         ${configParam.signupForm.recaptcha ?
                             `<div class="form-group">
-                            <div class="g-recaptcha" ${configParam.signupForm.recaptcha.required==true?"required":""}  data-sitekey="6LcXeh0TAAAAAJ9zwxUJbkkBgBpb6YN7NhrTemfJ"></div>
+                            <div class="g-recaptcha" ${configParam.signupForm.recaptcha.required==true?"required":""}  data-sitekey="6LcXeh0TAAAAAO1DsEX1iEF8n8-E_hQB67bIpxIw"></div>
                             </div>`:""
                         }
                  
                  <div class="terms sign-up-field termsCondition ">
                     <div class=" checkTerms medFont ${configParam.defaultSelected?"t-check":"t-uncheck"}">
                      <span>I agree to the </span>
-                     <a href=${configParam.termsConditionLink} class="link termsConditionLink">Term and conditions</a>
+                     <a href=${configParam.termsConditionLink} target="_blank" class="link termsConditionLink">Terms and Conditions</a>
                      </div>
                      <div class="error termsError"></div>
                  </div>
@@ -290,29 +286,31 @@ export function createHTMLTemplate(configParam){
                     `<img class="cross-icon" src="${configParam.staticPath}/src/img/close-icon.png"/>`:""
                 }
                     <div class="ssoLeftSection">
-                        <a href="#" class="logobrand">
-                        <img id="channelLogo" src=${configParam.channelLogo}></a>
-                        ${successLogin(configParam)}
-                        <div class="loginForm active show">
-                            <div class=""> 
-                                <p>${configParam.subTitle}</p>
+                        <div class="minht">
+                            <a href="#" class="logobrand">
+                            <img id="channelLogo" src=${configParam.channelLogo}></a>
+                            ${successLogin(configParam)}
+                            <div class="loginForm active show">
+                                <div class=""> 
+                                    <p>${configParam.subTitle}</p>
+                                </div>
+                                <div class="boldFont modalTitle sign-in-text">Sign In with</div>
+                                <div class="mediumPanel  clearfix">
+                                    ${LoginType(configParam)}  
+                                </div>
+                                <div class="initSignup medFont">
+                                    <span>Don’t have an account?</span>
+                                    <span id="signUpLink" class="link sign-up-link"> Create one.</span>
+                                </div>
                             </div>
-                            <div class="boldFont modalTitle sign-in-text">Sign In</div>
-                            <div class="mediumPanel  clearfix">
-                                ${LoginType(configParam)}  
-                            </div>
-                            <div class="initSignup medFont">
-                                <span>Don’t have any account?</span>
-                                <span id="signUpLink" class="link sign-up-link"> Create one.</span>
-                            </div>
+                            ${signinWithOtp(configParam)}
+                            ${signinWithPassword(configParam)} 
+                            ${verifyUser(configParam)}
+                            ${forgotPassword(configParam)}
+                            ${signupform(configParam)}
+                            ${passwordChangedsuccess()}
                         </div>
-                        ${signinWithOtp(configParam)}
-                        ${signinWithPassword(configParam)} 
-                        ${verifyUser(configParam)}
-                        ${forgotPassword(configParam)}
-                        ${signupform(configParam)}
-                        ${passwordChangedsuccess()}
-                        <img src="${configParam.staticPath}/src/img/timeslogin.png" class="timesLoginLogo"></img>
+                            <div class="footer-logo"><img src="${configParam.staticPath}/src/img/timeslogin.png" class="timesLoginLogo"></img></div>
                     </div>
 
                     <div class="show sso-footer-img">

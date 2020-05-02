@@ -71,10 +71,10 @@ asyncRequest('GET', assestPath.versionapi + "/config/nocache/wversion", function
         var data = res.responseText && typeof res.responseText == 'string' ? JSON.parse(res.responseText) : res.responseText;
         window.__tpvar = data.version;
     }
-    var stylesheet = loadCSS(assestPath.staticPath + '/src/css/sso.css?v=' + window.__tpvar);
+    var stylesheet = loadCSS(assestPath.staticPath + '/dist/sso.min.css?v=' + window.__tpvar);
     onloadCSS(stylesheet, function () {
         var s = document.createElement('script');
-        s.src = assestPath.staticPath + '/dist/centralLogin.bundle.js?v=' + window.__tpvar;
+        s.src = assestPath.staticPath + '/dist/centralLogin.bundle.min.js?v=' + window.__tpvar;
         s.type = "text/javascript";
         s.async = false;
         document.getElementsByTagName('head')[0].appendChild(s);
@@ -90,6 +90,8 @@ asyncRequest('GET', assestPath.versionapi + "/config/nocache/wversion", function
             s.async = false;
             document.getElementsByTagName('head')[0].appendChild(s);
         });   
+    }else{
+        window.JssoCrosswalkWidget=window.JssoCrosswalk;
     }
     var recaptchaInterval=setInterval(function(){
         var element=document.getElementsByClassName("g-recaptcha")[0]

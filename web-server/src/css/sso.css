@@ -20,48 +20,48 @@ body {
 }
 @font-face {
     font-family: 'Roboto-Light';
-    src: url('../fonts/Roboto-Light.eot');
-    src: url('../fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Light.woff2') format('woff2'),
-        url('../fonts/Roboto-Light.woff') format('woff'),
-        url('../fonts/Roboto-Light.ttf') format('truetype'),
-        url('../fonts/Roboto-Light.svg#Roboto-Light') format('svg');
+    src: url('../src/fonts/Roboto-Light.eot');
+    src: url('../src/fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+        url('../src/fonts/Roboto-Light.woff2') format('woff2'),
+        url('../src/fonts/Roboto-Light.woff') format('woff'),
+        url('../src/fonts/Roboto-Light.ttf') format('truetype'),
+        url('../src/fonts/Roboto-Light.svg#Roboto-Light') format('svg');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roboto-Regular';
-    src: url('../fonts/Roboto-Regular.eot');
-    src: url('../fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Regular.woff2') format('woff2'),
-        url('../fonts/Roboto-Regular.woff') format('woff'),
-        url('../fonts/Roboto-Regular.ttf') format('truetype'),
-        url('../fonts/Roboto-Regular.svg#Roboto-Regular') format('svg');
+    src: url('../src/fonts/Roboto-Regular.eot');
+    src: url('../src/fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../src/fonts/Roboto-Regular.woff2') format('woff2'),
+        url('../src/fonts/Roboto-Regular.woff') format('woff'),
+        url('../src/fonts/Roboto-Regular.ttf') format('truetype'),
+        url('../src/fonts/Roboto-Regular.svg#Roboto-Regular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roboto-Medium';
-    src: url('../fonts/Roboto-Medium.eot');
-    src: url('../fonts/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Medium.woff2') format('woff2'),
-        url('../fonts/Roboto-Medium.woff') format('woff'),
-        url('../fonts/Roboto-Medium.ttf') format('truetype'),
-        url('../fonts/Roboto-Medium.svg#Roboto-Medium') format('svg');
+    src: url('../src/fonts/Roboto-Medium.eot');
+    src: url('../src/fonts/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../src/fonts/Roboto-Medium.woff2') format('woff2'),
+        url('../src/fonts/Roboto-Medium.woff') format('woff'),
+        url('../src/fonts/Roboto-Medium.ttf') format('truetype'),
+        url('../src/fonts/Roboto-Medium.svg#Roboto-Medium') format('svg');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Roboto-Bold';
-    src: url('../fonts/Roboto-Bold.eot');
-    src: url('../fonts/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/Roboto-Bold.woff2') format('woff2'),
-        url('../fonts/Roboto-Bold.woff') format('woff'),
-        url('../fonts/Roboto-Bold.ttf') format('truetype'),
-        url('../fonts/Roboto-Bold.svg#Roboto-Bold') format('svg');
+    src: url('../src/fonts/Roboto-Bold.eot');
+    src: url('../src/fonts/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../src/fonts/Roboto-Bold.woff2') format('woff2'),
+        url('../src/fonts/Roboto-Bold.woff') format('woff'),
+        url('../src/fonts/Roboto-Bold.ttf') format('truetype'),
+        url('../src/fonts/Roboto-Bold.svg#Roboto-Bold') format('svg');
     font-weight: bold;
     font-style: normal;
 }
@@ -158,8 +158,6 @@ body {
  font-family: 'Roboto-Regular', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #7d8081;
-  background:#fff url(../img/texture.jpg) repeat;
 }
 .clearfix:before,
 .clearfix:after,
@@ -366,9 +364,12 @@ fieldset[disabled] input[type="checkbox"] {
 .ssoLoginWidget .newUser-error{
     margin-bottom:15px;
 }
+.ssoLoginWidget .newUser-error .error{
+    margin-top:0px;
+}
 .ssoLoginWidget .info-icon{
     height: 12px;
-    background-image: url("./../img/info.svg");
+    background-image: url("./../src/img/info.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 15px;   
@@ -380,6 +381,7 @@ fieldset[disabled] input[type="checkbox"] {
 .ssoLoginWidget .success-subHeading{
     font-size:14px;
     color: #000000;
+    margin-bottom: 30px;
 }
 .ssoLoginWidget fieldset {
     padding: 0;
@@ -391,28 +393,28 @@ fieldset[disabled] input[type="checkbox"] {
 }
 .ssoLoginWidget .notify-icon{
     height: 20px;
-    background-image: url("./../img/alert.svg");
+    background-image: url("./../src/img/alert.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
 }
 .ssoLoginWidget .eye-icon{
     height: 18px;
-    background-image: url("./../img/eye.svg");
+    background-image: url("./../src/img/eye.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
 }
 .ssoLoginWidget .green-tick{
     height: 20px;
-    background-image: url("./../img/green-tick.svg");
+    background-image: url("./../src/img/green-tick.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
 }
 
 .ssoLoginWidget .t-uncheck{
-    background-image: url("./../img/terms-unchecked.svg");
+    background-image: url("./../src/img/terms-unchecked.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
@@ -420,7 +422,7 @@ fieldset[disabled] input[type="checkbox"] {
 }
 
 .ssoLoginWidget .t-check{
-    background-image: url("./../img/terms-checked.svg");
+    background-image: url("./../src/img/terms-checked.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 30px;
@@ -429,7 +431,11 @@ fieldset[disabled] input[type="checkbox"] {
 .ssoLoginWidget .nonSignupPwdSection{
         margin-top:10px;
 }
+.ssoLoginWidget .signupPwdSection .password-error{
+  margin-bottom:10px;
+  margin-top:-10px;
 
+}
 .ssoLoginWidget .btn-truecaller{
     background-color: #008fed;
 }
@@ -489,6 +495,7 @@ fieldset[disabled] input[type="checkbox"] {
   left: 14px;
   top: 14px;
   transition: 0.2s ease all;
+  color: #7e8da6;
 }
 
 
@@ -551,7 +558,7 @@ input[type="number"] {
 }
 .ssoLoginWidget .socialLogin .social-text{
   text-align:left;
-    font-size:11px;
+    font-size:12px;
     color:#fff;
     margin-left:10px;
     white-space: normal;
@@ -739,14 +746,14 @@ input[type="number"] {
     width:100%;
     margin:auto;
     display:flex;
-    min-height: 540px;
+    min-height: 580px;
 }
 .ssoLoginWidget .password-strength {
     list-style: none;
     margin:10px 0;
 }
 .ssoLoginWidget .password-strength .uncheck{
-    background-image: url("./../img/uncheck.svg");
+    background-image: url("./../src/img/uncheck.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 20px;
@@ -761,7 +768,7 @@ input[type="number"] {
 }
 .ssoLoginWidget .ssoSuccessPage .successIcon{
     height: 61px;
-    background-image: url("./../img/success.svg");
+    background-image: url("./../src/img/success.svg");
     background-repeat: no-repeat;
     background-position: center;
     padding-left: 20px;
@@ -778,19 +785,19 @@ input[type="number"] {
     margin-bottom: 15px;
 }
 .ssoLoginWidget .password-strength .checked{
-    background-image: url("./../img/checked.svg");
+    background-image: url("./../src/img/checked.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 20px;
 }
 .ssoLoginWidget .forgot-password .radio-uncheck{
-    background-image: url("./../img/radio-unselect.svg");
+    background-image: url("./../src/img/radio-unselect.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 20px;
 }
 .ssoLoginWidget .forgot-password .radio-check{
-    background-image: url("./../img/radio-select.svg");
+    background-image: url("./../src/img/radio-select.svg");
     background-repeat: no-repeat;
     background-position-y: center;
     padding-left: 20px;
@@ -823,6 +830,7 @@ input[type="number"] {
 .ssoLoginWidget .error{
     color: #d61616;
     font-size: 12px;
+    margin-top:10px;
 }
 
 .ssoLoginWidget .confirmPwd{
@@ -879,6 +887,14 @@ input[type="number"] {
 }
 .ssoLoginWidget .ssoLeftSection.resetSuccess{
   width:100%;
+}
+
+.ssoLoginWidget .minht{
+  min-height:470px;
+}
+.ssoLoginWidget .footer-logo{
+    display: flex;
+    justify-content: center;
 }
 
 /*timer start*/
@@ -962,6 +978,12 @@ input[type="number"] {
 /*timer end*/
 
 @media screen and (max-width: 680px){
+  .ssoLoginWidget .footer-logo img{
+    position: static;
+  }
+  .ssoLoginWidget .minht{
+      min-height:0;
+    }
     .ssoLoginWidget{
         width:100%;
     }

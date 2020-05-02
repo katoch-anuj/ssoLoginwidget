@@ -255,7 +255,7 @@ function addCountryCode(){
 //validation
 function mobileValidation(errElement,errMsg,value){
 	var mobile=value;
-	if(value.indexOf("+")>=0){
+	if(value.indexOf("+")>-1){
 		 mobile=mobile;
 	}else if(value){
 		 mobile=addCountryCode()+mobile;
@@ -370,9 +370,15 @@ function continueLoginBtnCb(event){
 //login
 function UserExistsCb(){
 	hideLoginform();
+	var displayInput="";
+	if(inputIdentifier.indexOf("@")<0 && inputIdentifier.indexOf("+")>-1){
+		displayInput=inputIdentifier.split("-")[1]
+	}else{
+		displayInput=inputIdentifier;
+	}
  	if(configParam.nonSocialLogin.loginWith[0].toLowerCase()=="password"){
 	 		var el=ssoMainWrapper.querySelector(".sign-with-pwd");
-			ssoMainWrapper.querySelector(".user-pwd-info").innerHTML=inputIdentifier
+			ssoMainWrapper.querySelector(".user-pwd-info").innerHTML=displayInput
 			toggleClass(el)
 			addActive(el)
 		
@@ -380,7 +386,7 @@ function UserExistsCb(){
 	 	var el=ssoMainWrapper.querySelectorAll(".sign-with-otp")[0];
 		toggleClass(el)
 		addActive(el)
-	 	ssoMainWrapper.querySelectorAll(".user-otp-info")[0].innerHTML=inputIdentifier
+	 	ssoMainWrapper.querySelectorAll(".user-otp-info")[0].innerHTML=displayInput
 	 	if(inputIdentifier.indexOf("@")>0){
 	 		getEmailLoginOtp(inputIdentifier,ssoMainWrapper.querySelector(".sign-with-otp").querySelector(".custom-input"));
 	 	}else{
@@ -411,13 +417,18 @@ function initSignUp(event){
 	var signUp=ssoMainWrapper.querySelectorAll("#signUp-div")[0];
 	addActive(signUp)
 	toggleClass(signUp);
-	if(inputIdentifier.indexOf("@")>0){
-		signUp.querySelector(".email").value=inputIdentifier
-	}
-	else{
-		signUp.querySelector(".mobilenumber").value=inputIdentifier
-	}
 	if(!event){
+		if(inputIdentifier.indexOf("@")>0){
+			signUp.querySelector(".email").value=inputIdentifier
+		}
+		else{
+			if(inputIdentifier.indexOf("+")>-1){
+				var mob=inputIdentifier.split("-")[1]
+			}else{
+				var mob=inputIdentifier
+			}
+			signUp.querySelector(".mobilenumber").value=mob
+		}
 		var el=signUp.querySelectorAll(".newUser-error")[0];
 		toggleClass(el)
 	}
@@ -490,9 +501,15 @@ function changeLoginVia(event){
 
 function getforgotPassword(){
 	//api hit to get data of user
+	var displayInput="";
 	var forgotPwdSection=ssoMainWrapper.querySelector(".forgot-password");
 		showSection(forgotPwdSection,"hide","show");
-	forgotPwdSection.querySelector(".user-otp-info").innerHTML=inputIdentifier
+	if(inputIdentifier.indexOf("@")<0 && inputIdentifier.indexOf("+")>-1){
+		displayInput=inputIdentifier.split("-")[1]
+	}else{
+		displayInput=inputIdentifier;
+	}
+	forgotPwdSection.querySelector(".user-otp-info").innerHTML=displayInput
 	addActive(forgotPwdSection);
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 		hideSection(el,"show","hide")
@@ -559,6 +576,12 @@ function forgetContinueCb(event){
 
 function switchToPwdCb(event){
 	customRemoveErrorHighLight(event.target.closest(".active").querySelector(".custom-input"));
+	var displayInput="";
+	if(inputIdentifier.indexOf("@")<0 && inputIdentifier.indexOf("+")>-1){
+		displayInput=inputIdentifier.split("-")[1]
+	}else{
+		displayInput=inputIdentifier;
+	}
 	updateGTMDataLayer({
 		'event':'click_signin_with_password',
 		'eventCategory':'SignIn',
@@ -573,7 +596,7 @@ function switchToPwdCb(event){
 	})
 	var el=ssoMainWrapper.querySelector(".sign-with-pwd");
 	el.querySelector(".signIn-error").innerHTML="";
-	el.querySelector(".user-pwd-info").innerHTML=inputIdentifier;
+	el.querySelector(".user-pwd-info").innerHTML=displayInput;
 	el.querySelector(".pwd-otp").value="";
 	toggleClass(el)
 	addActive(el)
@@ -585,6 +608,13 @@ function switchToPwdCb(event){
 
 function switchToOtpCb(event){
 	customRemoveErrorHighLight(event.target.closest(".active").querySelector(".custom-input"));
+	var displayInput="";
+	if(inputIdentifier.indexOf("@")<0 && inputIdentifier.indexOf("+")>-1){
+		displayInput=inputIdentifier.split("-")[1]
+	}else{
+		displayInput=inputIdentifier;
+	}
+
 	updateGTMDataLayer({
 		'event':'click_signin_with_password',
 		'eventCategory':'SignIn',
@@ -610,11 +640,12 @@ function switchToOtpCb(event){
 	addActive(element)
 	element.querySelector(".pwd-otp").value="";
 	toggleClass(element)
-	element.querySelector(".user-otp-info").innerHTML=inputIdentifier
+	element.querySelector(".user-otp-info").innerHTML=displayInput;
 }
 
 
 function signInBtnCb(event){
+	disableBtn(event.target)
 	if(event.target.classList.contains("pwdSubmit")){
 		var errElement=ssoMainWrapper.querySelector(".sign-with-pwd").querySelector(".signIn-error");
 	}else{
@@ -623,6 +654,7 @@ function signInBtnCb(event){
 	var input = otp || passwordEntered;
 	if(inputIdentifier.indexOf("@")>0){
 		jsso.verifyEmailLogin(inputIdentifier,input,function(response){
+			
 			if(event.target.classList.contains("verifyAndSignInBtn")){
 		 		updateGTMDataLayer({
 					'event':'click_verify_&_signin_after_entering_OTP',
@@ -656,12 +688,14 @@ function signInBtnCb(event){
 			 	customRemoveErrorHighLight(event.target.closest(".active").querySelector(".custom-input"))
 				signInSucess()
 			}else{
+				enableBtn(event.target);
 				errElement.innerHTML=errCode[response.code]
 				customAddErrorHighLight(event.target.closest(".active").querySelector(".custom-input"))
 			}
 		})
 	}else{
 		jsso.verifyMobileLogin(inputIdentifier,input,function(response){
+			
 			if(event.target.classList.contains("verifyAndSignInBtn")){
 		 		updateGTMDataLayer({
 					'event':'click_verify_&_signin_after_entering_OTP',
@@ -694,6 +728,7 @@ function signInBtnCb(event){
 			 	customRemoveErrorHighLight(event.target.closest(".active").querySelector(".custom-input"))
 				signInSucess()
 			}else{
+				enableBtn(event.target);
 				errElement.innerHTML=errCode[response.code]
 				customAddErrorHighLight(event.target.closest(".active").querySelector(".custom-input"))
 			}
@@ -724,55 +759,60 @@ function registeruserCb(mobile,email){
 	addActive(verifyuser)
 	toggleClass(verifyuser)
 	var verifySection1=verifyuser.querySelector(".verifySection1")
-	var verifySection2=verifyuser.querySelector(".verifySection2")
-	var skipLink=ssoMainWrapper.querySelector(".skipLink");
+	
+	//var skipLink=ssoMainWrapper.querySelector(".skipLink");
 	resetOtpTimer(verifySection1.querySelector(".custom-input"));
 	if(configParam.signupForm.MandatoryVerifyVia.length==2){
+		var verifySection2=verifyuser.querySelector(".verifySection2")
 		verifySection1.querySelector(".user-otp-info").innerHTML=mobile;
 		if(verifySection2){
 		 verifySection2.querySelector(".user-otp-info").innerHTML=email;
 		}
 	}else if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email"){
 			verifySection1.querySelector(".user-otp-info").innerHTML=email;
-			if(verifySection2){
-			 verifySection2.querySelector(".user-otp-info").innerHTML=mobile || "";
-			}
+			// if(verifySection2){
+			//  verifySection2.querySelector(".user-otp-info").innerHTML=mobile || "";
+			// }
 	}else if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile"){
 			verifySection1.querySelector(".user-otp-info").innerHTML=mobile;
-			if(verifySection2){
-			 verifySection2.querySelector(".user-otp-info").innerHTML=email || "";
-			}
+			// if(verifySection2){
+			//  verifySection2.querySelector(".user-otp-info").innerHTML=email || "";
+			// }
 	}else if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"){
-		if(email && mobile){
-			showSection(skipLink,"hide","show")
-		}
+		
 		if(mobile){
 			verifySection1.querySelector(".user-otp-info").innerHTML=mobile;
 
-			if(verifySection2){
-			 verifySection2.querySelector(".user-otp-info").innerHTML=email || "";	
-			}
-		}else{
-			verifySection1.querySelector(".user-otp-info").innerHTML=email;
-
-			if(verifySection2){
-			 verifySection2.querySelector(".user-otp-info").innerHTML=mobile || "";	
-			}
+			// if(verifySection2){
+			//  verifySection2.querySelector(".user-otp-info").innerHTML=email || "";	
+			// }
 		}
+		else if(email ){
+			//showSection(skipLink,"hide","show")
+			verifySection1.querySelector(".user-otp-info").innerHTML=email;
+		}
+		// else{
+		// 	verifySection1.querySelector(".user-otp-info").innerHTML=email;
+
+		// 	if(verifySection2){
+		// 	 verifySection2.querySelector(".user-otp-info").innerHTML=mobile || "";	
+		// 	}
+		// }
 	}
 }
 function removeErrorSignupform(event){
 	event.currentTarget.querySelector(".error").innerHTML="";
 	if(event.target.getAttribute("name")=="password"){
 		removeErrorHightLight(ssoMainWrapper.querySelector(".signupPwdSection").querySelector(".custom-input"));
-
 	}
+	removeErrorHightLight(event.target);
 }
 
 function signupValidation(event){
 	var el = ssoMainWrapper.querySelectorAll(".sign-up-field");
 	var validMobile=true;
-	var validEmail=true;
+	var validEmail=true;;
+	var validEmailorMob=true
 	var valid=true
 	for(var i=0;i<el.length;i++){
 		var inputField=el[i].querySelector("input");
@@ -838,14 +878,51 @@ function signupValidation(event){
 			var errElement=el[i].querySelector(".error").innerHTML="";
 		}
 	}
+	if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"){
+		var emailInputField=ssoMainWrapper.querySelector("#Email");
+		var mobileInputField=ssoMainWrapper.querySelector("#MobileNumber")
+		var email=emailInputField && emailInputField.value;
+		var mobile=mobileInputField && mobileInputField.value;
+		var mobilenumberError=ssoMainWrapper.querySelector(".mobilenumber-error");
+		var emailError=ssoMainWrapper.querySelector(".email-error");
+		if(email || mobile){
+			validEmailorMob=true;
+			emailInputField && removeErrorHightLight(mobileInputField)
+			emailInputField && removeErrorHightLight(emailInputField)
+		}else{
+			validEmailorMob=false;
+			emailInputField && addErrorHighLight(mobileInputField)
+			mobilenumberError?mobilenumberError.innerHTML="Please enter the mobile number":"";
+			emailError?emailError.innerHTML="Please enter the email":"";
+			emailInputField && addErrorHighLight(emailInputField)
+		}
+	}
 	
-	return valid;
+	return (valid && validEmailorMob);
 }
 
 
 
+function registerApiChecks(responseCode){
+	var emailElement=ssoMainWrapper.querySelector("#Email");
+	var mobileElement=ssoMainWrapper.querySelector("#MobileNumber");
+	var mobilenumberError=ssoMainWrapper.querySelector(".mobilenumber-error");
+	var emailError=ssoMainWrapper.querySelector(".email-error");
+	if(responseCode==402){
+		mobileElement && addErrorHighLight(mobileElement)
+		mobilenumberError ? mobilenumberError.innerHTML=errCode[responseCode]:"";
+	}else if(responseCode==403){
+		emailElement && addErrorHighLight(emailElement);
+		emailError ? emailError.innerHTML=errCode[responseCode]:"";
+	}else{
+		ssoMainWrapper.querySelector(".signup-error").innerHTML=errCode[responseCode];
+	}
+}
+
 
 function signUpUser(event,firstName, lastName, gender, dob, email, mobile, password, isSendOffer,recaptcha, termsAccepted, shareDataAllowed,timespointsPolicy){
+	var displayMobile=mobile.split("-")[1];
+	
 	if(configParam.signupForm.recaptcha){
 		jsso.registerUserRecaptcha(firstName, lastName, gender, dob, email, mobile, password, isSendOffer, recaptcha, termsAccepted, shareDataAllowed, timespointsPolicy, function(response){
 			updateGTMDataLayer({
@@ -861,15 +938,13 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			if (response.code != 200) {
-				console.log("not 200");
-				console.log(response.code + ": " + response.message);
-				ssoMainWrapper.querySelector(".signup-error").innerHTML=errCode[response.code];
+				registerApiChecks(response.code);
 				return;
 			}
 	      	else{
 	      		enableBtn(event.target);
 	      		registerUserSsoid = response.data.ssoid;
-	      		registeruserCb( mobile,email)
+	      		registeruserCb( displayMobile,email)
 	      	}
 		})
 	}
@@ -888,15 +963,13 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
 			if (response.code != 200) {
-				console.log("not 200");
-				console.log(response.code + ": " + response.message);
-				ssoMainWrapper.querySelector(".signup-error").innerHTML=errCode[response.code];
+				registerApiChecks(response.code);
 				return;
 			}
 	      	else{
 	      		enableBtn(event.target);
 	      		registerUserSsoid = response.data.ssoid;
-	      		registeruserCb(mobile,email)
+	      		registeruserCb(displayMobile,email)
 	      	}
 	    });
 
@@ -915,15 +988,13 @@ function signUpUser(event,firstName, lastName, gender, dob, email, mobile, passw
 				'eventLabel':response.code==200?"success":"failure,"+errCode[response.code]
 			})
     		if (response.code != 200) {
-				console.log("not 200");
-				console.log(response.code + ": " + response.message);
-				ssoMainWrapper.querySelector(".signup-error").innerHTML="error"
+				registerApiChecks(response.code);
 				return;
 			}
 	      	else{
 	      		enableBtn(event.target);
 	      		registerUserSsoid = response.data.ssoid;
-	      		registeruserCb(mobile)
+	      		registeruserCb(displayMobile)
 	      	}
     	})
 	}
@@ -948,13 +1019,13 @@ function registerUser(event){
 			isSendOffer = false;
 			userEmailInfo=email;
 			userMobileInfo=mobile;
-			if(mobile.indexOf("+")>=0){
+			if(mobile.indexOf("+")>-1){
 				mobile=mobile;
 			}else if(mobile){
 				mobile=addCountryCode()+mobile;
 			}
 			if(window.recaptcha){
-				signUpUser(event,firstName, lastName, gender, dob, email, mobile, password, isSendOffer,recaptcha, termsAccepted, shareDataAllowed,policy)	
+				signUpUser(event,firstName, lastName, gender, dob, email, mobile, password, isSendOffer,grecaptcha.getResponse(), termsAccepted, shareDataAllowed,policy)	
 			}else
 			signUpUser(event,firstName, lastName, gender, dob, email, mobile, password, isSendOffer,"", termsAccepted, shareDataAllowed,policy)	
 	}else{
@@ -965,6 +1036,7 @@ function registerUser(event){
 
 
 function checkPassword(event){
+	event.target.value=event.target.value.trim();
 	passwordEntered=event.target.value;
 	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
 		pwdError.innerHTML="";
@@ -999,7 +1071,7 @@ function passwordValidation(pwdStrength){
 	var numeric = /\d/
 	var lowerCase = /.*[a-z].*/
 
-	if(passwordEntered.length>6){
+	if(passwordEntered.length>=6){
 		showSection(pwdStrength.querySelector(".chk1"),"uncheck","checked")
 	}else{
 		hideSection(pwdStrength.querySelector(".chk1"),"checked","uncheck")
@@ -1101,6 +1173,7 @@ function resendOtpCb(event){
 			getEmailForgotPasswordOtp(customInput)
 		}
 	}else{
+			val=addCountryCode()+val;
 		if(event.target.classList.contains("otpResentLink")){
 			updateGTMDataLayer({
 				'event':'click_resend_otp_signup',
@@ -1161,7 +1234,7 @@ window.JssoLoginCompleteCallback=function(response){
 }
 //social Login
 function FacebookLogin(channelData){
-	jsso.socialLogin("FACEBOOK",configParam.facebookClientId,SocialLoginRu)
+	jsso.socialLogin("FACEBOOK",configParam.facebookClientId,configParam.socialLoginRu)
 	updateGTMDataLayer({
 		'event':'signin_with_facebook',
 		'eventCategory':'SignIn',
@@ -1177,7 +1250,7 @@ function FacebookLogin(channelData){
 			
 }
 function GoogleplusLogin(channelData){
-	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId,SocialLoginRu)
+	jsso.socialLogin("GOOGLEPLUS",configParam.googleClientId,configParam.socialLoginRu)
 	updateGTMDataLayer({
 		'event':'signin_with_google',
 		'eventCategory':'SignIn',
@@ -1219,6 +1292,7 @@ function linkedinLogin(channelData,socialCallback){
 function pwdOtpCb(event){
 	otp="";
 	var otpLength="";
+	event.target.value=event.target.value.trim()
 	var errElement=event.target.parentElement.parentElement.nextElementSibling;
 		errElement.innerHTML="";
 		customRemoveErrorHighLight(event.target.closest(".custom-input"))
@@ -1245,8 +1319,10 @@ function pwdOtpCb(event){
 		}else if(event.target.classList.contains("pwdPrefernce")){
 			passwordEntered="";
 			passwordEntered=event.target.value;
-			enableBtn(ssoMainWrapper.querySelector(".pwdSubmit"))
-			if(!passwordEntered){
+			if(passwordEntered && passwordEntered.length>=6){
+				enableBtn(ssoMainWrapper.querySelector(".pwdSubmit"))
+			}
+			if(!passwordEntered || passwordEntered.length<6){
 				disableBtn(ssoMainWrapper.querySelector(".pwdSubmit"))
 			}
 		}else if(event.target.classList.contains("verifyInput")){
@@ -1280,29 +1356,29 @@ function pwdOtpCb(event){
 			otp=event.target.value;
 		}	
 }
-function skipLinkCb(){
-	var skipLink=ssoMainWrapper.querySelector(".skipLink")
-	hideSection(skipLink,"show","hide")
-	updateGTMDataLayer({
-		'event':'click_skip',
-		'eventCategory':'SingUp',
-		'eventAction':'click_skip_signup',
-		'eventLabel':inputIdentifier
-	})
-	console.log({
-		'event':'click_skip',
-		'eventCategory':'SingUp',
-		'eventAction':'click_skip_signup',
-		'eventLabel':inputIdentifier
-	})
-	if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"){
-		var verifySection=ssoMainWrapper.querySelector(".verifySection1");
-		var otpSentTo=verifySection.querySelector(".user-otp-info");
-		showNextVerifyField(otpSentTo.innerText,verifySection)
-	}else{
-		verifySuccessCb();
-	}
-}
+// function skipLinkCb(){
+// 	var skipLink=ssoMainWrapper.querySelector(".skipLink")
+// 	hideSection(skipLink,"show","hide")
+// 	updateGTMDataLayer({
+// 		'event':'click_skip',
+// 		'eventCategory':'SingUp',
+// 		'eventAction':'click_skip_signup',
+// 		'eventLabel':inputIdentifier
+// 	})
+// 	console.log({
+// 		'event':'click_skip',
+// 		'eventCategory':'SingUp',
+// 		'eventAction':'click_skip_signup',
+// 		'eventLabel':inputIdentifier
+// 	})
+// 	if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="emailormobile"){
+// 		var verifySection=ssoMainWrapper.querySelector(".verifySection1");
+// 		var otpSentTo=verifySection.querySelector(".user-otp-info");
+// 		showNextVerifyField(otpSentTo.innerText,verifySection)
+// 	}else{
+// 		verifySuccessCb();
+// 	}
+// }
 function verifySuccessCb(){
 	var component=ssoMainWrapper.querySelector(".verify-user");
 	var loginForm=ssoMainWrapper.querySelector(".loginForm");
@@ -1331,29 +1407,35 @@ function showNextVerifyField(identifer,verifiedSection){
 	}
 	hideSection(verifiedSection,"show","hide");
 	++verifySectionIndex;
-	var section2=ssoMainWrapper.querySelector(".verifySection2")
-	var valueExist=section2.querySelector(".user-otp-info");
-	if(section2 && verifySectionIndex==1 && valueExist.innerText){
-		resetOtpTimer(section2.querySelector(".custom-input"));
-	 	showSection(section2 ,"hide","show")	
-	 	if(configParam.signupForm.MandatoryVerifyVia.length==1){
-	 		var skipLink=ssoMainWrapper.querySelector(".skipLink");
-	 		showSection(skipLink,"hide","show");
-	 	}
-	}else{
-		verifySuccessCb()
+	if(configParam.signupForm.MandatoryVerifyVia.length==2 && verifySectionIndex==1){
+		var section2=ssoMainWrapper.querySelector(".verifySection2")
+		var valueExist=section2.querySelector(".user-otp-info");
+		//if(section2 && verifySectionIndex==1 && valueExist.innerText){
+			resetOtpTimer(section2.querySelector(".custom-input"));
+		 	showSection(section2 ,"hide","show")	
+		 //}
+
 	}
+	//  	if(configParam.signupForm.MandatoryVerifyVia.length==1){
+	//  		var skipLink=ssoMainWrapper.querySelector(".skipLink");
+	//  		showSection(skipLink,"hide","show");
+	//  	}
+	// }else{
+		else{
+			verifySuccessCb()
+		}
+	//}
 }
 function verifyUserCb(event){
 	disableBtn(event.target);
 	var component=ssoMainWrapper.querySelector(".verify-user");
 	var verifySection=component.querySelectorAll(".sectionToVerify")[verifySectionIndex];
 	//var verifyInput=component.querySelectorAll(".verifyInput")[verifySectionIndex];
-	var verifyOtp=verifySection.querySelectorAll(".verifyInput");
+	var verifyOtp=verifySection.querySelector(".verifyInput");
 	//var userOtp=component.querySelectorAll(".user-otp-info");
 	var otpSentTo=verifySection.querySelector(".user-otp-info");
 	var errElement=verifySection.querySelector(".signIn-error");
-	var skipLink=verifySection.querySelector(".skipLink");
+	//var skipLink=verifySection.querySelector(".skipLink");
 	function verifyMobileSignUpPromise(mobile, ssoid, otp){
 		return new Promise(function (resolve,reject){
 			jsso.verifyMobileSignUp(mobile, ssoid, otp, function(response){
@@ -1372,7 +1454,7 @@ function verifyUserCb(event){
 		//when only  email field is to be validated	
 	 if(otpSentTo.innerText.indexOf("@")>0){
 		verifyEmailSignUpPromise(otpSentTo.innerText,registerUserSsoid,verifyOtp.value).then(function(response){
-			enableBtn(event.target)
+			
 			updateGTMDataLayer({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
@@ -1388,11 +1470,11 @@ function verifyUserCb(event){
 			}
 		})
 			if(response.code==200){
-				customRemoveErrorHighLight
 				customRemoveErrorHighLight(verifySection.querySelector(".custom-input"))
 				errElement.innerHTML=""
 				showNextVerifyField(otpSentTo.innerText,verifySection)
 			}else{
+				enableBtn(event.target)
 				customAddErrorHighLight(verifySection.querySelector(".custom-input"))
 				errElement.innerHTML=errCode[response.code]
 			}
@@ -1400,8 +1482,9 @@ function verifyUserCb(event){
 		})
 		//when only  mobile field is to be validated	
 	}else{
-		verifyMobileSignUpPromise(otpSentTo.innerText,registerUserSsoid,verifyOtp.value).then(function(response){
-			enableBtn(event.target)
+		var mobile=addCountryCode()+otpSentTo.innerText;
+		verifyMobileSignUpPromise(mobile,registerUserSsoid,verifyOtp.value).then(function(response){
+			
 			updateGTMDataLayer({
 			'event':'click_verify_signup',
 			'eventCategory':'SingUp',
@@ -1419,6 +1502,7 @@ function verifyUserCb(event){
 				errElement.innerHTML=""
 				showNextVerifyField(otpSentTo.innerText,verifySection)
 			}else{
+				enableBtn(event.target)
 				//showSection(skipLink,"hide","show")
 				customAddErrorHighLight(verifySection.querySelector(".custom-input"))
 				errElement.innerHTML=errCode[response.code]
@@ -1429,11 +1513,12 @@ function verifyUserCb(event){
 
 
 //forgot password
-function submitResetPwdCb(){
+function submitResetPwdCb(event){
+	disableBtn(event.target)
 	if(inputIdentifier.indexOf("@")>0){
-		verifyEmailForgotPassword()
+		verifyEmailForgotPassword(event.target)
 	}else{
-		verifyMobileForgotPassword()
+		verifyMobileForgotPassword(event.target)
 	}
 }
 
@@ -1450,7 +1535,7 @@ function verifyMobileForgotPasswordCb(){
 	toggleClass(el);
 }
 
-function verifyEmailForgotPassword(){
+function verifyEmailForgotPassword(btn){
 	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
 	jsso.verifyEmailForgotPassword(inputIdentifier,otp,passwordEntered,passwordEntered,function(response){
 		
@@ -1469,11 +1554,18 @@ function verifyEmailForgotPassword(){
 		});
 			verifyEmailForgotPasswordCb()
 		}else if(response.code==418){
+			enableBtn(btn);
 			pwdError.innerHTML="";
 			customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[1])
 			ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".passwordInfo").classList.add("error")
 		}
+		else if(response.code==414 || response.code==415 || response.code==416){
+			enableBtn(btn);
+			customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[0])
+			ssoMainWrapper.querySelector(".forgot-password").querySelector(".signIn-error").innerHTML=errCode[response.code];
+		}
 		else{
+			enableBtn(btn);
 			updateGTMDataLayer({
 				'event':'click_continue_after_entering_new_password',
 				'eventCategory':'SignIn',
@@ -1487,14 +1579,15 @@ function verifyEmailForgotPassword(){
 				'eventLabel':errCode[response.code]
 			});
 			pwdError.innerHTML=errCode[response.code]
-			customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[0])
+			//customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[0])
 		}
 		
 	})
 }
-function verifyMobileForgotPassword(){
+function verifyMobileForgotPassword(btn){
 	var pwdError=ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".password-error");
 	jsso.verifyMobileForgotPassword(inputIdentifier,otp,passwordEntered,passwordEntered,function(response){
+		
 		if(response.code==200){
 			updateGTMDataLayer({
 			'event':'click_continue_after_entering_new_password',
@@ -1510,11 +1603,18 @@ function verifyMobileForgotPassword(){
 		});
 			verifyEmailForgotPasswordCb()
 		}else if(response.code==418){
+			enableBtn(btn);
 			pwdError.innerHTML="";
 			customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[1])
 			ssoMainWrapper.querySelector(".nonSignupPwdSection").querySelector(".passwordInfo").classList.add("error")
 		}
+		else if(response.code==414 || response.code==415 || response.code==416){
+			enableBtn(btn);
+			ssoMainWrapper.querySelector(".forgot-password").querySelector(".signIn-error").innerHTML=errCode[response.code]
+			customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[0])
+		}
 		else{
+			enableBtn(btn);
 			updateGTMDataLayer({
 				'event':'click_continue_after_entering_new_password',
 				'eventCategory':'SignIn',
@@ -1528,7 +1628,7 @@ function verifyMobileForgotPassword(){
 				'eventLabel':errCode[response.code]
 			});
 			pwdError.innerHTML=errCode[response.code]
-			customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[0])
+			//customAddErrorHighLight(ssoMainWrapper.querySelector(".forgot-password").querySelectorAll(".custom-input")[0])
 		}
 		
 	})
@@ -1549,8 +1649,9 @@ function selectRadio(event){
 
 
 function MobileNumberRestriction(event){
+	var onlynumeric=new RegExp(/^[0-9]*$/);
 	inputIdentifier=event.target.value;
-	if(inputIdentifier.length>10){
+	if(!onlynumeric.test(inputIdentifier) || inputIdentifier.length>10){
 		event.target.value=inputIdentifier.substring(0,inputIdentifier.length-1)
 	}
 }
@@ -1586,19 +1687,19 @@ function signInSucess(event){
 			var tempSocialLogin={
 				"Google":{
 					"logoUrl":assestPath.staticPath+"/src/img/google.png",
-					"label":"with Google"
+					"label":"Google"
 				},
 				"Facebook":{
 					"logoUrl":assestPath.staticPath+"/src/img/fb.png",
-					"label":"with facebook"
+					"label":"facebook"
 				},
 				"TrueCaller":{
 					"logoUrl":assestPath.staticPath+"/src/img/truecaller.png",
-					"label":"with Truecaller"
+					"label":"Truecaller"
 				},
 				"Twitter":{
 					"logoUrl":assestPath.staticPath+"/src/img/twitter.png",
-					"label":"with Twitter"
+					"label":"Twitter"
 				}
 
 			}
@@ -1607,8 +1708,9 @@ function signInSucess(event){
 				resendOtpTimer:10,
 				isMobileView: mq.matches,
 				channelName:"timespoints",
+				displayChannel:"TimesPoint",
 				showSuccessScreen:true,
-				SocialLoginRu:window.location.href,
+				socialLoginRu:window.location.href,
 				// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
 				channelLogo:"",
 				title:"",
@@ -1624,7 +1726,7 @@ function signInSucess(event){
 					signUpFields:{
 						"Email":{
 							placeholder:"Enter email",
-							required:true
+							required:false
 						},
 						"MobileNumber":{
 							placeholder:"Enter Mobile Number",
@@ -1632,7 +1734,7 @@ function signInSucess(event){
 						},
 					},
 					signupVia:["Password"],
-					MandatoryVerifyVia:["emailorMobile"]
+					MandatoryVerifyVia:["Mobile"]
 				},
 				termsConditionLink:"",
 				privacyPolicyLink:"",
@@ -1657,7 +1759,21 @@ function signInSucess(event){
 			else{
 					ssoObj["socialLogin"]=[]
 				}
+
 			configParam={...defaultConfig,...ssoObj};
+			//adding required based on verify input
+			if(configParam.signupForm.MandatoryVerifyVia && configParam.signupForm.MandatoryVerifyVia.length==1){
+				if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="email"){
+					configParam.signupForm.signUpFields.Email["required"]=true
+				}
+				else if(configParam.signupForm.MandatoryVerifyVia[0].toLowerCase()=="mobile"){
+					configParam.signupForm.signUpFields.MobileNumber["required"]=true
+				}
+			}else if(configParam.signupForm.MandatoryVerifyVia && configParam.signupForm.MandatoryVerifyVia.length==2){
+					configParam.signupForm.signUpFields.Email["required"]=true;
+					configParam.signupForm.signUpFields.MobileNumber["required"]=true;
+			}
+
 			configParam.staticPath=assestPath.staticPath;
 				channelName = ssoObj.channelName && ssoObj.channelName.toLowerCase() ;
 				ru = ssoObj.ru;
@@ -1694,7 +1810,7 @@ function signInSucess(event){
 			var successBtn=ssoMainWrapper.querySelector(".successBtn");
 			var MobileNumber=ssoMainWrapper.querySelector(".mobilenumber");
 			var crossIcon=ssoMainWrapper.querySelector(".cross-icon")
-			var skipLink=ssoMainWrapper.querySelector(".skip");
+			//var skipLink=ssoMainWrapper.querySelector(".skip");
 			var termsConditionLink=ssoMainWrapper.querySelector(".termsConditionLink")
 			//for futire reference
 			var forgetContinueBtn=ssoMainWrapper.querySelectorAll(".forgetContinueBtn")[0]
@@ -1714,7 +1830,7 @@ function signInSucess(event){
 			 eyeIcon && multipleEvent(eyeIcon,"click",eyeIconCb)
 			 termsConditionLink && eventListener(termsConditionLink,"click",termsConditionLinkCb)
 			 crossIcon && eventListener(crossIcon,"click",crossIconCb)
-			skipLink && eventListener(skipLink,"click",skipLinkCb)
+			//skipLink && eventListener(skipLink,"click",skipLinkCb)
 			MobileNumber && eventListener(MobileNumber,"input",MobileNumberRestriction)
 			inputData && eventListener(inputData,"input",emailAndMobileValidation);
 			continueLoginBtn && eventListener(continueLoginBtn,"click",continueLoginBtnCb);

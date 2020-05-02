@@ -19,7 +19,7 @@ export var errCode={
 	422:"Email entered is already registered",
 	423:"Mobile no. entered is already registered",
 	424:"Invalid OTP. Please enter correct OTP",
-	425:"Wrong OTP. Please enter correct OTP",
+	425:"Please enter correct OTP/Password",
 	427:"Email is not valid",
 	428:"Email is not valid",
 	429:"This id is already registered with us",

@@ -48,7 +48,7 @@
 		closeIcon:true,
 		showSuccessScreen:true,
 		closeCallBack:function(){alert("modal closed")},
-		SocialLoginRu:window.location.origin,
+		socialLoginRu:window.location.origin,
 		// desktopViewWidth:
 		// mobileViewWidth:
 		// channelLogo:"https://jsso.indiatimes.com/staticsso/1/images/nbt.png",
@@ -78,23 +78,18 @@
 			signUpFields:{
 				"Email":{
 					placeholder:"Enter Email",
-					required:false
 				},
 				"MobileNumber":{
 					placeholder:"enter mobile number",
-					required:false
 				},
-				"firstName":{
-					placeholder:"enter first name",
-					required:true
-				}
+				
 			},
 			// recaptcha:{
 			// 	required:true
 			// },
 			signupVia:["Password"],
 			// MandatoryVerifyVia:["email","mobile"]
-			MandatoryVerifyVia:["email","mobile"]
+			MandatoryVerifyVia:["emailormobile"]
 			
 		},
 		termsConditionLink:"https://www.google.com/",
